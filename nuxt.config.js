@@ -1,5 +1,4 @@
 export default {
-  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'client-onboarder',
     meta: [
@@ -8,39 +7,39 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Condensed:wght@400;700&display=swap' }
     ]
   },
-
-  // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-  ],
-
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-  ],
-
-  // Auto import components (https://go.nuxtjs.dev/config-components)
+  css: ['@/assets/theme.scss'],
   components: true,
-
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module'
-  ],
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
+  buildModules: ['@nuxtjs/eslint-module'],
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/cloudinary'
   ],
-
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  bootstrapVue: {
+    bootstrapCSS: false,
+    bootstrapVueCSS: false,
+    icons: true
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_NAME,
+    apiKey: process.env.CLOUDINARY_SECRET,
+    apiSecret: process.env.CLOUDINARY_KEY,
+    useComponent: true
+  },
+  axios: {
+    browserBaseURL: `//${process.env.BROWSER_URL}`
+  },
   build: {
+    extend (config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient
+          ? 'source-map'
+          : 'inline-source-map'
+      }
+    }
   }
 }

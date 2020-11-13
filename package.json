@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/cloudinary": "^1.0.1",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
@@ -28,6 +29,8 @@
     "eslint": "^7.10.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.5.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0",
     "vue-jest": "^3.0.4"
   }
 }

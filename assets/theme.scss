@@ -1,0 +1,15 @@
+$font-family-base: 'Roboto', sans-serif;
+$headings-font-family: 'Roboto Condensed', sans-serif;
+$enable-rounded: true;
+$enable-shadows: true;
+$enable-gradients: false;
+$enable-transitions: true;
+$enable-print-styles: false;
+$bv-enable-table-stacked: false;
+$body-bg: #304a69;
+
+// BOOTSTRAP VARIABLES DECLARED ABOVE
+@import 'bootstrap/scss/bootstrap.scss';
+@import 'bootstrap-vue/src/index.scss';
+
+// OVERRIDES BELOW
