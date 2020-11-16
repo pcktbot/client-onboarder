@@ -1,3 +1,10 @@
+$theme-colors: (
+  'primary': #0d2340,
+  'primary-10': #dee7ed,
+  'gray-10': #dee7ed,
+  'gray-50': #657a8a,
+  'secondary': #339698
+);
 $font-family-base: 'Roboto', sans-serif;
 $headings-font-family: 'Roboto Condensed', sans-serif;
 $enable-rounded: true;
@@ -13,3 +20,9 @@ $body-bg: #304a69;
 @import 'bootstrap-vue/src/index.scss';
 
 // OVERRIDES BELOW
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  box-shadow: inset 0 -5px 0 0 #339698;
+  border-color: #fff #fff #339698;
+  background-color: white;
+}
