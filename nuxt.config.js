@@ -1,4 +1,9 @@
-export default {
+module.exports = {
+  telemetry: false,
+  server: {
+    host: process.env.HOST || 'localhost',
+    port: process.env.PORT || 8085
+  },
   head: {
     title: 'client-onboarder',
     meta: [
