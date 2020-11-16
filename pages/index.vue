@@ -6,36 +6,42 @@
         <div class="px-3 mb-3">
           <search-input />
         </div>
-        <location-list :locations="locations" />
+        <location-list v-bind="{ locations }" />
       </aside>
       <section class="main-content py-5">
-        <b-btn
-          variant="outline-secondary"
-          class="px-4 py-2 h3 font-weight-bold text-uppercase"
-          style="border-width: 3px; border-radius: 6px;"
+        <div class="px-3 selected-location-summary d-flex justify-content-between align-items-center">
+          <div class="">
+            Location name
+          </div>
+          <div>
+            Address
+          </div>
+          <b-btn
+            variant="outline-secondary"
+            class="px-4 py-2 h3 font-weight-bold text-uppercase"
+            style="border-width: 3px; border-radius: 6px;"
+          >
+            Press this button
+          </b-btn>
+        </div>
+        <b-card
+          bg-variant="primary-10"
+          border-variant="primary-10"
+          body-class="d-flex justify-content-between"
         >
-          Press this button
-        </b-btn>
+          <p class="mb-0 text-gray-50 text-uppercase font-weight-bold">
+            Decision Card
+          </p>
+          <b-form-checkbox switch size="lg" />
+        </b-card>
         <b-card no-body>
           <b-tabs card>
             <b-tab title="Tab">
-              <b-card
-                bg-variant="primary-10"
-                border-variant="primary-10"
-                body-class="d-flex justify-content-between"
-              >
-                <p class="mb-0 text-gray-50 text-uppercase font-weight-bold">
-                  Decision Card
-                </p>
-                <b-form-checkbox switch size="lg" />
-              </b-card>
+              <accordion-wrapper />
             </b-tab>
             <b-tab title="Tab" lazy />
           </b-tabs>
         </b-card>
-      </section>
-      <section>
-        <accordion-wrapper />
       </section>
     </article>
   </div>
@@ -46,10 +52,10 @@ export default {
   data () {
     return {
       locations: [
-        { name: 'Location-1', status: 'Incomplete' },
-        { name: 'Location-1', status: 'Incomplete' },
-        { name: 'Location-1', status: 'Incomplete' },
-        { name: 'Location-1', status: 'Incomplete' }
+        { name: 'Location-1', status: 'Incomplete', data: [] },
+        { name: 'Location-1', status: 'Incomplete', data: [] },
+        { name: 'Location-1', status: 'Incomplete', data: [] },
+        { name: 'Location-1', status: 'Incomplete', data: [] }
       ]
     }
   }

@@ -23,7 +23,7 @@ spec:
         version: "current"
     spec:
       nodeSelector:
-        cloud.google.com/gke-nodepool: "pub-sub"
+        cloud.google.com/gke-nodepool: "non-whitelisted-apps"
       containers:
       - name: "{{  .Chart.Name  }}"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -35,11 +35,6 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
-          - name: GCP_PROJECT_ID
-            valueFrom:
-              secretKeyRef:
-                name: project-dashboard
-                key: GCP_PROJECT_ID
           - name: GKE
             value: "true"
           - name: BROWSER_URL
