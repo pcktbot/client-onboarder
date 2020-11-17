@@ -32,12 +32,12 @@
           </p>
           <b-form-checkbox switch size="lg" />
         </b-card>
-        <b-card no-body>
+        <b-card no-body header-class="border-0" class="border-0">
           <b-tabs card>
-            <b-tab title="Tab">
+            <b-tab title="Tab" title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold">
               <accordion-wrapper />
             </b-tab>
-            <b-tab title="Tab" lazy />
+            <b-tab title="Tab" lazy title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold" />
           </b-tabs>
         </b-card>
       </section>
@@ -56,6 +56,24 @@ export default {
           data: []
         },
         { name: 'Location-2', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
         { name: 'Location-3', status: 'Incomplete', data: [] },
         { name: 'Location-4', status: 'Incomplete', data: [] }
       ]

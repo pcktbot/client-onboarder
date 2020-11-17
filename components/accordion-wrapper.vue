@@ -9,8 +9,16 @@
         <b-btn
           block
           variant="transparent"
+          class="px-2 py-1 d-flex align-items-center justify-content-between"
         >
-          Show
+          <h3 class="mb-0 text-uppercase font-weight-bold text-muted">
+            {{ cat.label }}
+            <b-icon-question-circle variant="secondary" scale="0.5em" />
+          </h3>
+          <span class="text-secondary small text-uppercase">
+            Close
+            <b-icon-dash />
+          </span>
         </b-btn>
       </template>
       {{ cat }}
@@ -26,7 +34,8 @@ export default {
       default () {
         return [
           {
-            id: 'details',
+            label: 'Location Details',
+            description: '',
             time: '20 mins',
             isComplete: false,
             data: []

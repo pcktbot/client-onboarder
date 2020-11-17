@@ -21,7 +21,9 @@
       :filter="filter"
       :select-mode="multiselect ? 'multi' : 'single'"
       selectable
+      sticky-header
       borderless
+      style="max-height: 80vh;"
       class="p-0 m-0 border-0 hide"
     >
       <template v-slot:cell(location)="{ item }">
@@ -75,5 +77,11 @@ export default {
   height: calc( 1.25rem + 4px);
   box-shadow: 0 0 5px 0 rgba(10, 10, 10, 1);
   border-radius: 50%;
+}
+.table.b-table > tbody > .table-active,
+.table.b-table > tbody > .table-active > th,
+.table.b-table > tbody > .table-active > td {
+  background-color: #4e6f96;
+  box-shadow: inset 10px 0 0 0 #6889b0;
 }
 </style>
