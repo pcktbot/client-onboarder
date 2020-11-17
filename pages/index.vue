@@ -3,9 +3,6 @@
     <primary-nav />
     <article class="content__grid">
       <aside class="py-5">
-        <div class="px-3 mb-3">
-          <search-input />
-        </div>
         <location-list v-bind="{ locations }" />
       </aside>
       <section class="main-content py-5">
@@ -28,6 +25,7 @@
           bg-variant="primary-10"
           border-variant="primary-10"
           body-class="d-flex justify-content-between"
+          class="m-3"
         >
           <p class="mb-0 text-gray-50 text-uppercase font-weight-bold">
             Decision Card
@@ -52,10 +50,14 @@ export default {
   data () {
     return {
       locations: [
-        { name: 'Location-1', status: 'Incomplete', data: [] },
-        { name: 'Location-1', status: 'Incomplete', data: [] },
-        { name: 'Location-1', status: 'Incomplete', data: [] },
-        { name: 'Location-1', status: 'Incomplete', data: [] }
+        {
+          name: 'Location-1',
+          status: 'Incomplete',
+          data: []
+        },
+        { name: 'Location-2', status: 'Incomplete', data: [] },
+        { name: 'Location-3', status: 'Incomplete', data: [] },
+        { name: 'Location-4', status: 'Incomplete', data: [] }
       ]
     }
   }

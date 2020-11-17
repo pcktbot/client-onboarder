@@ -4,7 +4,7 @@
       v-model="search"
       :placeholder="placeholder"
       class="search__input"
-      @input="$emit('on-search', $event)"
+      @input="$emit('search', $event)"
     />
     <b-icon-search class="search__icon" variant="light" scale="1.25em" />
   </b-input-group>
