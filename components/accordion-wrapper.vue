@@ -3,15 +3,15 @@
     <b-card
       v-for="(cat, i) in categories"
       :key="`location-category-${i}`"
-      class="soft-shadow mb-5"
-      role="tab"
+      class="soft-shadow mb-3"
+      no-body
     >
-      <template v-slot:header>
+      <b-card-header role="tab">
         <b-btn
+          v-b-toggle="cat.id"
           block
           variant="transparent"
           class="px-2 py-1 d-flex align-items-center justify-content-between"
-          @click="$root.$emit('bv:toggle:collapse', toKebabCase(cat.label))"
         >
           <h3 class="mb-0 text-uppercase font-weight-bold text-muted">
             {{ cat.label }}
@@ -29,14 +29,14 @@
             <b-icon-dash />
           </span>
         </b-btn>
-      </template>
+      </b-card-header>
       <b-collapse
-        :id="toKebabCase(cat.label)"
+        :id="cat.id"
+        :visible="i === 0"
         accordion="sections-accordion"
         role="tabpanel"
-        visible
       >
-        <slot :name="toKebabCase(cat.label)" />
+        <section-form v-bind="{ fields: cat.fields, fieldData: cat.fieldData }" />
       </b-collapse>
     </b-card>
   </div>
@@ -75,9 +75,9 @@ export default {
     }
   },
   methods: {
-    toKebabCase(string) {
+    toKebabCase (string) {
       return string
-        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
         .replace(/\s+/g, '-')
         .toLowerCase()
     }

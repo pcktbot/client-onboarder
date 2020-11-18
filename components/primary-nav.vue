@@ -4,6 +4,7 @@
     style="height: 65px;"
     toggleable="md"
     type="dark"
+    class="py-0"
   >
     <b-navbar-brand to="/" class="d-flex align-items-center">
       <b-img
@@ -19,7 +20,7 @@
         Client Onboarding
       </h2>
     </b-navbar-brand>
-    <b-navbar-nav class="ml-auto pr-2">
+    <b-navbar-nav class="ml-auto pr-2 align-self-center h-100">
       <slot />
     </b-navbar-nav>
   </b-navbar>

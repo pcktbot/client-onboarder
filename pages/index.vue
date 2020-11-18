@@ -1,47 +1,34 @@
 <template>
   <div class="content">
-    <primary-nav />
+    <primary-nav>
+      <user-dropdown />
+    </primary-nav>
     <article class="content__grid">
       <aside class="py-3">
         <div class="px-3 mb-3">
           <b-input-group v-if="userHasMultipleProjects">
-            <b-form-select :options="['project-1', 'project-2']" />
-            <b-input-group-btn />
+            <b-form-select
+              :options="['project-1', 'project-2']"
+              style="background: transparent; border-width: 1px; border-color: #339698; border-radius: 10px 0 0 10px`;"
+            />
+            <b-input-group-append>
+              <b-btn variant="outline-secondary">
+                Switch
+              </b-btn>
+            </b-input-group-append>
           </b-input-group>
         </div>
         <location-list v-bind="{ locations }" />
       </aside>
-      <section class="main-content py-5">
-        <div class="px-3 selected-location-summary d-flex justify-content-between align-items-center">
-          <div class="">
-            Current Project details
-          </div>
-          <div>
-            Client Details
-          </div>
-          <b-btn
-            variant="outline-secondary"
-            class="px-4 py-2 text-uppercase"
-            style="border-width: 0px; border-radius: 6px; font-size: 0.9em;"
-          >
-            Hide Project Details
-            <b-icon-chevron-down scale="0.75em" />
-          </b-btn>
-        </div>
+      <section class="main-content py-2">
+        <project-details />
         <b-card no-body header-class="border-0" class="border-0">
           <b-tabs card>
-            <b-tab title="General Tab" title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold">
-              <accordion-wrapper v-bind="{ categories }">
-                <template v-slot:domain-information>
-                  <domain-information />
-                </template>
-                <template v-slot:amenities>
-                  <b-form-checkbox />
-                </template>
-                <template v-slot:assets>
-                  <b-form-radio />
-                </template>
-              </accordion-wrapper>
+            <b-tab title="Start" title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold">
+              <location-start />
+            </b-tab>
+            <b-tab title="General" title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold">
+              <accordion-wrapper v-bind="{ categories }" />
             </b-tab>
             <b-tab title="Tab" lazy title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold" />
             <b-tab title="Tab (Disabled)" lazy disabled title-link-class="py-4 px-3 text-uppercase text-muted font-italic" />
@@ -60,18 +47,125 @@ export default {
       categories: [
         {
           label: 'Domain Information',
+          id: 'domain-information',
           description: '',
           time: '20 mins',
           isComplete: false,
           isBulk: false,
           isCorp: true,
-          fields: []
+          fields: [
+            [{
+              type: 'url',
+              label: 'Current Website',
+              id: 'current-website',
+              placeholder: 'Ex. www.domain123.com'
+            }],
+            [{
+              type: 'url',
+              label: 'Domain for G5 to Build On',
+              id: 'domain-to-build-on',
+              placeholder: 'Ex. www.domain.com'
+            }],
+            [{
+              type: 'text',
+              label: 'Domain Registrar',
+              id: 'domain-registar',
+              placeholder: 'Example: GoDaddy'
+            }],
+            [{
+              type: 'text',
+              label: 'Domain Manager Name',
+              group: 'domain-manager',
+              id: 'domain-manager-name',
+              placeholder: ''
+            }],
+            [{
+              type: 'email',
+              label: 'Domain Manager Email',
+              group: 'domain-manager',
+              id: 'domain-manager-email',
+              placeholder: 'Example: user@domain.com'
+            }]
+          ],
+          fieldData: {
+            'current-website': null,
+            'domain-to-build-on': null,
+            'domain-registrar': null,
+            'domain-manager-name': null,
+            'domain-manager-email': null,
+            'domain-credentials-username': null,
+            'domain-credentials-password': null,
+            'other-domains-reference': null
+          }
+        },
+        {
+          label: 'Location Information',
+          id: 'location-information',
+          description: '',
+          time: '45 mins',
+          isComplete: false,
+          isBulk: false,
+          isCorp: false,
+          fields: [
+            [
+              {
+                label: 'Branded Name',
+                id: 'brandedName',
+                type: 'text',
+                placeholder: ''
+              }
+            ],
+            [
+              {
+                label: 'Street Address',
+                id: 'address',
+                type: 'text',
+                placeholder: ''
+              }
+            ],
+            [
+              {
+                label: 'City',
+                id: 'city',
+                type: 'text',
+                placeholder: ''
+              },
+              {
+                label: 'State/Province',
+                id: 'stateProvince',
+                type: 'select',
+                options: ['OK', 'SK', 'OR'], // use standard options
+                placeholder: ''
+              },
+              {
+                label: 'Zip/Postal Code',
+                id: 'postalCode',
+                type: 'text',
+                placeholder: ''
+              }
+            ]
+          ],
+          fieldData: {
+            brandedName: null,
+            address: null,
+            city: null,
+            stateProvince: null,
+            postalCode: null,
+            country: null,
+            propertyPhone: null,
+            forwardToPhone: null,
+            propertyEmail: null,
+            websiteLeadEmail: null,
+            officeHours: null
+          }
         }
       ],
+      selected: [],
       locations: [
         {
-          name: 'Location-1',
+          name: 'The Junction',
           status: 'Incomplete',
+          useCollected: true,
           data: []
         },
         { name: 'Location-2', status: 'Incomplete', data: [] },

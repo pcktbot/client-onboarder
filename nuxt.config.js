@@ -21,20 +21,20 @@ module.exports = {
   buildModules: ['@nuxtjs/eslint-module'],
   modules: [
     'bootstrap-vue/nuxt',
-    '@nuxtjs/axios',
-    '@nuxtjs/cloudinary'
+    // '@nuxtjs/cloudinary',
+    '@nuxtjs/axios'
   ],
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
     icons: true
   },
-  cloudinary: {
-    cloudName: process.env.CLOUDINARY_NAME,
-    apiKey: process.env.CLOUDINARY_SECRET,
-    apiSecret: process.env.CLOUDINARY_KEY,
-    useComponent: true
-  },
+  // cloudinary: {
+  //   cloudName: process.env.CLOUDINARY_NAME,
+  //   apiKey: process.env.CLOUDINARY_SECRET,
+  //   apiSecret: process.env.CLOUDINARY_KEY,
+  //   useComponent: true
+  // },
   axios: {
     browserBaseURL: `//${process.env.BROWSER_URL}`
   },
