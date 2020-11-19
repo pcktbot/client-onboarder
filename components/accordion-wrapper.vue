@@ -2,11 +2,14 @@
   <div class="accordion p-3" role="tablist">
     <b-card
       v-for="(cat, i) in categories"
-      :key="`location-category-${i}`"
+      :key="`${prefix}-location-category-${i}`"
       class="soft-shadow mb-3"
       no-body
     >
-      <b-card-header role="tab">
+      <b-card-header
+        :class="[{ 'bg-secondary-10' : cat.isBulk }]"
+        role="tab"
+      >
         <b-btn
           v-b-toggle="cat.id"
           block
@@ -33,7 +36,7 @@
       <b-collapse
         :id="cat.id"
         :visible="i === 0"
-        accordion="sections-accordion"
+        :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
         <section-form v-bind="{ fields: cat.fields, fieldData: cat.fieldData }" />
@@ -45,6 +48,10 @@
 <script>
 export default {
   props: {
+    prefix: {
+      type: String,
+      default: 'default'
+    },
     categories: {
       type: Array,
       default () {

@@ -10,13 +10,14 @@
       <b-card
         bg-variant="gray-10"
         border-variant="gray-10"
-        body-class="d-flex justify-content-between"
+        body-class="d-flex justify-content-between px-3 py-4"
+        class="mb-2"
       >
         <span class="text-uppercase font-weight-bold">
-          Start with collected location data
+          Start {{ useCollected ? 'with collected location data' : 'from scratch' }}
         </span>
         <b-form-checkbox
-          :checked="useCollected"
+          v-model="useCollected"
           switch
           size="lg"
           @change="$emit('toggle-use-existing', $event)"

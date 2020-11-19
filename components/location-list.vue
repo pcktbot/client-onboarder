@@ -5,14 +5,14 @@
     </div>
     <div class="px-3 mb-3">
       <b-input-group>
-        <b-input-group-prepend class="d-flex align-items-baseline mt-1 px-3 text-light">
-          Update Multiple Locations
-        </b-input-group-prepend>
         <b-form-checkbox
           v-model="multiselect"
           switch
           size="lg"
         />
+        <b-input-group-append class="d-flex align-items-baseline mt-1 px-3 text-light">
+          Update {{ multiselect ? 'Multiple Locations' : 'Single Location' }}
+        </b-input-group-append>
       </b-input-group>
     </div>
     <b-table
@@ -23,7 +23,7 @@
       selectable
       sticky-header
       borderless
-      style="max-height: 80vh;"
+      style="max-height: 75vh;"
       class="p-0 m-0 border-0 hide"
     >
       <template v-slot:cell(location)="{ item }">

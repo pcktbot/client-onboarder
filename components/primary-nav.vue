@@ -15,8 +15,8 @@
         title="G5 Marketing"
         class="mx-3"
       />
-      <h2 class="text-success-0">
-        <b-icon-compass scale="0.75em" />
+      <h2 class="text-success-0 mb-0">
+        <start-icon />
         Client Onboarding
       </h2>
     </b-navbar-brand>
@@ -25,12 +25,3 @@
     </b-navbar-nav>
   </b-navbar>
 </template>
-
-<script>
-export default {
-}
-</script>
-
-<style>
-
-</style>
