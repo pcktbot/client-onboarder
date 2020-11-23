@@ -8,11 +8,22 @@
       <b-form-group
         v-for="f in field"
         :key="f.id"
-        :label="f.label"
         :class="{ 'inline-group-ctn': f.hasMergeConflict }"
         label-class="text-uppercase text-muted font-weight-bold"
-        class="flex-grow-1 mr-2"
+        class="mr-2"
+        :style="fields.length === 2 ? 'flex: 1 0 50%' : 'flex: 1 0 auto'"
       >
+        <!-- form field label starts -->
+        <template v-slot:label>
+          {{ f.label }}
+          <b-icon-info-circle
+            v-if="f.description"
+            v-b-tooltip.hover.v-light="f.description"
+            variant="secondary-20"
+            style="cursor: pointer;"
+          />
+        </template>
+        <!-- form field label ends -->
         <b-form-select
           v-if="f.type === 'select'"
           :value="fieldData[f.id]"
@@ -113,6 +124,8 @@ export default {
         ]
       }
     }
+  },
+  methods: {
   }
 }
 </script>

@@ -26,6 +26,7 @@
       borderless
       style="max-height: 75vh;"
       class="p-0 m-0 border-0 hide"
+      @row-selected="onLocationSelect"
     >
       <template v-slot:cell(location)="{ item }">
         <div class="px-3">
@@ -63,10 +64,13 @@ export default {
   }),
   methods: {
     ...mapActions({
-      toggleBulkMode: 'bulk/toggleBulkMode'
+      toggleBulkMode: 'bulk/toggleBulkMode',
+      updateSelectedLocations: 'bulk/updateSelectedLocations'
     }),
-    onLocationSelect (loc) {
-      this.$emit('location-change', loc)
+    onLocationSelect (selectedLocations) {
+      if (this.isEnabled) {
+        this.updateSelectedLocations({ selectedLocations })
+      }
     }
   }
 }

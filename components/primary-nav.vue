@@ -8,7 +8,9 @@
   >
     <b-navbar-brand
       v-if="showBranding"
-      to="/projects" class="d-flex align-items-center">
+      to="/projects"
+      class="d-flex align-items-center"
+    >
       <b-img
         src="/g5-logo.png"
         width="50"
