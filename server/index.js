@@ -4,7 +4,7 @@ const express = require('express')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 app.use(bodyParser.json({ limit: '1000kb' }))
-// const models = require('./models')
+const models = require('./models')
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
@@ -21,9 +21,9 @@ async function start () {
   }
 
   app.use(nuxt.render)
-  // models.sequelize
-  //   .sync()
-  //   .then(() => console.log('Database Synced'))
+  models.sequelize
+    .sync()
+    .then(() => console.log('Database Synced'))
   app.listen(port, host)
   console.log(`Server listening on http://${host}:${port}`)
 }
