@@ -13,10 +13,14 @@
     </div>
     <b-collapse id="project-details">
       <b-card-group deck class="p-5">
-        <b-card bg-variant="gray-10" border-variant="gray-10">
-          <project-summary />
+        <b-card bg-variant="gray-20" border-variant="gray-20">
+          <project-summary>
+            <template v-slot:cta>
+              <project-selector />
+            </template>
+          </project-summary>
         </b-card>
-        <b-card>
+        <b-card bg-variant="gray-20" border-variant="gray-20">
           <project-client />
         </b-card>
       </b-card-group>

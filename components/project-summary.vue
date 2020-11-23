@@ -30,13 +30,15 @@
         {{ estGoLive }}
       </span>
     </p>
-    <b-btn
-      variant="outline-secondary"
-      block
-    >
-      <b-icon-envelope-fill />
-      Send Reminder to Your Project Team
-    </b-btn>
+    <slot name="cta">
+      <b-btn
+        variant="outline-secondary"
+        block
+      >
+        <b-icon-envelope-fill />
+        Send Reminder to Your Project Team
+      </b-btn>
+    </slot>
   </div>
 </template>
 

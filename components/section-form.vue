@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-2">
+  <div class="px-5 py-3">
     <div
       v-for="(field, i) in fields"
       :key="`field-row-${i}`"
@@ -9,6 +9,7 @@
         v-for="f in field"
         :key="f.id"
         :label="f.label"
+        :class="{ 'inline-group-ctn': f.hasMergeConflict }"
         label-class="text-uppercase text-muted font-weight-bold"
         class="flex-grow-1 mr-2"
       >
@@ -16,18 +17,21 @@
           v-if="f.type === 'select'"
           :value="fieldData[f.id]"
           :options="f.options"
+          :disabled="f.hasMergeConflict"
         />
         <b-form-input
           v-else
           :type="f.type"
           :value="fieldData[f.id]"
           :placeholder="f.placeholder"
+          :disabled="f.hasMergeConflict"
         />
+        <difference-resolver v-if="f.hasMergeConflict" />
       </b-form-group>
     </div>
     <div class="d-flex justify-content-end mb-3">
       <b-btn
-        variant="outline-secondary"
+        variant="outline-error-20"
         class="text-uppercase font-weight-bold mr-2 px-4"
         style="border-width: 0px; border-radius: 8px;"
       >
@@ -114,5 +118,7 @@ export default {
 </script>
 
 <style>
-
+.inline-group-ctn {
+  position: relative;
+}
 </style>

@@ -2,7 +2,9 @@
   <b-nav-item-dropdown class="ml-auto user-bg my-0 px-2 align-items-center">
     <template v-slot:text>
       <b-icon-person-circle />
-      user.name@email.com
+      <span class="text-white">
+        user.name@email.com
+      </span>
     </template>
   </b-nav-item-dropdown>
 </template>

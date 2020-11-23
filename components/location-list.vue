@@ -6,12 +6,13 @@
     <div class="px-3 mb-3">
       <b-input-group>
         <b-form-checkbox
-          v-model="multiselect"
+          :checked="isEnabled"
           switch
           size="lg"
+          @change="toggleBulkMode"
         />
         <b-input-group-append class="d-flex align-items-baseline mt-1 px-3 text-light">
-          Update {{ multiselect ? 'Multiple Locations' : 'Single Location' }}
+          Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
         </b-input-group-append>
       </b-input-group>
     </div>
@@ -19,7 +20,7 @@
       :fields="['location', { key: 'name', tdClass: 'd-none' }]"
       :items="locations"
       :filter="filter"
-      :select-mode="multiselect ? 'multi' : 'single'"
+      :select-mode="isEnabled ? 'multi' : 'single'"
       selectable
       sticky-header
       borderless
@@ -28,10 +29,10 @@
     >
       <template v-slot:cell(location)="{ item }">
         <div class="px-3">
-          <h3 class="mb-0 text-light">
+          <h4 class="mb-0 text-light">
             {{ item.name }}
-          </h3>
-          <p class="mb-0 text-muted">
+          </h4>
+          <p class="mb-0 text-gray-30">
             {{ item.status }}
           </p>
         </div>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   props: {
     locations: {
@@ -52,12 +54,17 @@ export default {
   },
   data () {
     return {
-      multiselect: false,
-      filter: '',
-      selectedLocations: []
+      filter: ''
     }
   },
+  computed: mapState({
+    isEnabled: state => state.bulk.isEnabled,
+    selectedLocations: state => state.bulk.selectedLocations
+  }),
   methods: {
+    ...mapActions({
+      toggleBulkMode: 'bulk/toggleBulkMode'
+    }),
     onLocationSelect (loc) {
       this.$emit('location-change', loc)
     }

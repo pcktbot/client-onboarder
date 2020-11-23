@@ -1,12 +1,14 @@
 <template>
   <b-navbar
-    variant="primary"
-    style="height: 65px;"
+    variant="primary-70"
+    style="height: 65px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5); z-index: 10;"
     toggleable="md"
     type="dark"
     class="py-0"
   >
-    <b-navbar-brand to="/" class="d-flex align-items-center">
+    <b-navbar-brand
+      v-if="showBranding"
+      to="/projects" class="d-flex align-items-center">
       <b-img
         src="/g5-logo.png"
         width="50"
@@ -17,7 +19,7 @@
       />
       <h2 class="text-success-0 mb-0">
         <start-icon />
-        Client Onboarding
+        Project Onboarding
       </h2>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto pr-2 align-self-center h-100">
@@ -25,3 +27,14 @@
     </b-navbar-nav>
   </b-navbar>
 </template>
+
+<script>
+export default {
+  props: {
+    showBranding: {
+      type: Boolean,
+      default: true
+    }
+  }
+}
+</script>

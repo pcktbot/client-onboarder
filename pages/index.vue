@@ -5,48 +5,36 @@
     </primary-nav>
     <article class="content__grid">
       <aside class="py-3">
-        <div class="px-3 mb-3">
-          <b-input-group v-if="userHasMultipleProjects">
-            <b-form-select
-              :options="['project-1', 'project-2']"
-              style="background: transparent; border-width: 1px; border-color: #339698; border-radius: 10px 0 0 10px`;"
-            />
-            <b-input-group-append>
-              <b-btn variant="outline-secondary">
-                Switch Project
-              </b-btn>
-            </b-input-group-append>
-          </b-input-group>
-        </div>
         <location-list v-bind="{ locations }" />
       </aside>
       <section class="main-content py-2">
         <project-details />
-        <b-card no-body header-class="border-0" class="border-0">
-          <b-tabs v-model="currentTab" card>
-            <b-tab title="1. Welcome" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
-              <welcome-start />
-            </b-tab>
-            <b-tab title="2. Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
-              <location-start />
-            </b-tab>
-            <b-tab title="3. General" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
-              <accordion-wrapper v-bind="{ categories, prefix: 'general' }" />
-            </b-tab>
-            <b-tab title="4. Bulk Edit" lazy title-link-class="p-4 text-uppercase text-muted font-weight-bold" class="p-0">
-              <bulk-edit-wrapper>
-                <accordion-wrapper v-bind="{ categories: bulk, prefix: 'bulk' }" />
-              </bulk-edit-wrapper>
-            </b-tab>
-            <b-tab title="5. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" />
-          </b-tabs>
-        </b-card>
+        <transition mode="out-in" name="fade">
+          <bulk-edit-wrapper v-if="bulkIsEnabled">
+            <accordion-wrapper v-bind="{ categories: bulk, prefix: 'bulk' }" />
+          </bulk-edit-wrapper>
+          <b-card v-else no-body header-class="border-0" class="border-0">
+            <b-tabs v-model="currentTab" card>
+              <b-tab title="1. Welcome" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <welcome-start />
+              </b-tab>
+              <b-tab title="2. Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <location-start />
+              </b-tab>
+              <b-tab title="3. General" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <accordion-wrapper v-bind="{ categories, prefix: 'general' }" />
+              </b-tab>
+              <b-tab title="5. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" />
+            </b-tabs>
+          </b-card>
+        </transition>
       </section>
     </article>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -223,6 +211,40 @@ export default {
             status: null,
             demographicTarget: 'N/A'
           }
+        },
+        {
+          label: 'Floor Plans',
+          id: 'floor-plans',
+          description: '',
+          time: '15 mins',
+          isComplete: false,
+          isBulk: true,
+          isCorp: false,
+          fields: [
+            [{
+              label: 'Primary Property & Unit Type',
+              id: 'primaryType',
+              type: 'select',
+              options: ['Apartments', 'Townhomes', 'Condos', 'Apartments & Townhomes']
+            }],
+            [{
+              label: 'Floor Plans',
+              id: 'floor-plans',
+              type: 'select',
+              multiselect: true,
+              hasMergeConflict: true,
+              options: []
+            }]
+          ],
+          fieldData: {
+            primaryType: null,
+            floorplans: [],
+            floorplansOther: null,
+            needNewResidents: null,
+            needNewResidentsOther: null,
+            petFriendly: null,
+            petPolicy: null
+          }
         }
       ],
       selected: [],
@@ -232,7 +254,15 @@ export default {
           name: 'The Junction',
           status: 'Incomplete',
           useCollected: true,
-          data: []
+          data: {
+            primaryType: 'value',
+            floorplans: [],
+            floorplansOther: null,
+            needNewResidents: null,
+            needNewResidentsOther: null,
+            petFriendly: null,
+            petPolicy: null
+          }
         },
         { name: 'Location-2', status: 'Incomplete', data: [] },
         { name: 'Location-3', status: 'Incomplete', data: [] },
@@ -252,6 +282,9 @@ export default {
       ]
     }
   },
+  computed: mapState({
+    bulkIsEnabled: state => state.bulk.isEnabled
+  }),
   created () {
     this.bulk = this.categories.filter(cat => cat.isBulk)
   }

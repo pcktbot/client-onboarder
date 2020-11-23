@@ -1,6 +1,6 @@
 <template>
   <div class="p-5">
-    <b-card border-variant="gray-10" class="soft-shadow py-4">
+    <b-card border-variant="gray-20" class="soft-shadow py-4">
       <h1>
         Location Introduction
       </h1>
@@ -8,8 +8,8 @@
         G5 has gathered some information from your existing location's website. You can either prepopulate fields with the data we collected or start entering location data from scratch.
       </p>
       <b-card
-        bg-variant="gray-10"
-        border-variant="gray-10"
+        bg-variant="tertiary-20"
+        border-variant="tertiary-20"
         body-class="d-flex justify-content-between px-3 py-4"
         class="mb-2"
       >

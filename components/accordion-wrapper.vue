@@ -3,6 +3,8 @@
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"
+      :bg-variant="cat.isComplete ? 'gray-20' : ''"
+      :border-variant="cat.isComplete ? 'gray-20' : ''"
       class="soft-shadow mb-3"
       no-body
     >
@@ -14,22 +16,26 @@
           v-b-toggle="cat.id"
           block
           variant="transparent"
-          class="px-2 py-1 d-flex align-items-center justify-content-between"
+          class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-between"
         >
-          <h3 class="mb-0 text-uppercase font-weight-bold text-muted">
+          <h4 class="mb-0 text-uppercase font-weight-bold text-gray-60">
             {{ cat.label }}
-            <b-icon-question-circle variant="secondary" scale="0.5em" />
-          </h3>
-          <span class="text-gray-50 small align-self-end font-italic">
+            <b-icon-question-circle variant="secondary-20" scale="0.5em" shift-v="3" />
+          </h4>
+          <span class="text-gray-30 small align-self-end font-italic mb-1">
             est. time:
             <span class="font-weight-bold">
               {{ cat.time }}
             </span>
           </span>
           <div class="flex-grow-1" />
-          <span class="text-secondary small text-uppercase">
+          <span class="when-open text-secondary small text-uppercase">
             Close
             <b-icon-dash />
+          </span>
+          <span class="when-closed text-secondary small text-uppercase">
+            Edit
+            <b-icon-plus />
           </span>
         </b-btn>
       </b-card-header>
@@ -80,14 +86,6 @@ export default {
         ]
       }
     }
-  },
-  methods: {
-    toKebabCase (string) {
-      return string
-        .replace(/([a-z])([A-Z])/g, '$1-$2')
-        .replace(/\s+/g, '-')
-        .toLowerCase()
-    }
   }
 }
 </script>
@@ -98,5 +96,9 @@ export default {
   &.card {
     border-radius: 10px;
   }
+}
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
 }
 </style>
