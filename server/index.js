@@ -4,8 +4,8 @@ const express = require('express')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 app.use(bodyParser.json({ limit: '1000kb' }))
-const models = require('./models')
 const config = require('../nuxt.config.js')
+const models = require('./models')
 config.dev = process.env.NODE_ENV !== 'production'
 
 require('./routes')(app)

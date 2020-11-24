@@ -37,6 +37,14 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  async fetch ({ store }) {
+    try {
+      await store.dispatch('projects/init')
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
+  },
   data () {
     return {
       currentTab: 0,
