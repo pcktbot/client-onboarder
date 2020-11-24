@@ -14,17 +14,17 @@
         class="mr-2"
         style="flex: 1 1 auto;"
       >
-        <!-- form field label starts -->
+        <!-- FORM LABEL STARTS -->
         <template v-slot:label>
           {{ f.label }}
           <b-icon-info-circle
             v-if="f.description"
-            v-b-tooltip.hover.v-light="f.description"
-            variant="secondary-20"
+            v-b-tooltip.click.v-tertiary-70="f.description"
+            variant="secondary-30"
             style="cursor: pointer;"
           />
         </template>
-        <!-- form field label ends -->
+        <!-- FORM LABEL ENDS -->
         <span
           v-if="f.type === 'select'"
           class="section-group"
@@ -183,5 +183,8 @@ export default {
   border: 2px solid #93999f;
   border-radius: 6px;
   box-shadow: inset 0 1px 4px rgba(203, 206, 209, 1);
+  &::placeholder {
+    color: #93999f;
+  }
 }
 </style>
