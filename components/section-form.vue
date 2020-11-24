@@ -1,7 +1,7 @@
 <template>
   <div class="px-5 py-5">
     <div
-      v-for="(field, i) in fields"
+      v-for="(field, i) in category.fields"
       :key="`field-row-${i}`"
       class="d-flex justify-content-between w-100 mb-0 flex-wrap"
     >
@@ -30,7 +30,7 @@
           class="section-group"
         >
           <b-form-select
-            :value="fieldData[f.id]"
+            :value="category.fieldData[f.id]"
             :options="f.options"
             :disabled="f.hasMergeConflict"
             class="section-group__select"
@@ -44,7 +44,7 @@
         <b-form-input
           v-else
           :type="f.type"
-          :value="fieldData[f.id]"
+          :value="category.fieldData[f.id]"
           :placeholder="f.placeholder"
           :disabled="f.hasMergeConflict"
           class="section-input"
@@ -72,68 +72,14 @@
 </template>
 
 <script>
+import Fields from '~/mixins/fields'
 export default {
+  mixins: [Fields],
   props: {
-    fieldData: {
+    category: {
       type: Object,
       default () {
-        return {
-          brandedName: null,
-          address: null,
-          city: null,
-          stateProvince: null,
-          postalCode: null,
-          country: null,
-          propertyPhone: null,
-          forwardToPhone: null,
-          propertyEmail: null,
-          websiteLeadEmail: null,
-          officeHours: null
-        }
-      }
-    },
-    fields: {
-      type: Array,
-      default () {
-        return [
-          [
-            {
-              label: 'Branded Name',
-              id: 'brandedName',
-              type: 'text',
-              placeholder: ''
-            }
-          ],
-          [
-            {
-              label: 'Street Address',
-              id: 'address',
-              type: 'text',
-              placeholder: ''
-            }
-          ],
-          [
-            {
-              label: 'City',
-              id: 'city',
-              type: 'text',
-              placeholder: ''
-            },
-            {
-              label: 'State/Province',
-              id: 'stateProvince',
-              type: 'select',
-              options: ['OK', 'SK', 'OR'], // use standard options
-              placeholder: ''
-            },
-            {
-              label: 'Zip/Postal Code',
-              id: 'postalCode',
-              type: 'text',
-              placeholder: ''
-            }
-          ]
-        ]
+        return {}
       }
     }
   },

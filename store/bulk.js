@@ -1,7 +1,6 @@
 export const state = () => {
   return {
     isEnabled: false,
-    selectedLocations: [],
     blendedFieldData: {}
   }
 }
@@ -9,12 +8,6 @@ export const state = () => {
 export const actions = {
   toggleBulkMode ({ commit }, payload) {
     commit('TOGGLE_BULK_MODE', payload)
-    if (!payload) {
-      commit('SET', { selectedLocations: [] })
-    }
-  },
-  updateSelectedLocations ({ commit }, payload) {
-    commit('SET', payload)
   }
 }
 

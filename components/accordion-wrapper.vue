@@ -45,46 +45,30 @@
         :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
-        <section-form v-bind="{ fields: cat.fields, fieldData: cat.fieldData }" />
+        <section-form v-bind="{ category: getCategory(cat.id)}" />
       </b-collapse>
     </b-card>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Fields from '~/mixins/fields'
 export default {
-  props: {
-    prefix: {
-      type: String,
-      default: 'default'
-    },
-    categories: {
-      type: Array,
-      default () {
-        return [
-          {
-            label: 'Location Details',
-            description: '',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          },
-          {
-            label: 'Amenities',
-            description: '',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          },
-          {
-            label: 'Assets',
-            description: '',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          }
-        ]
+  mixins: [Fields],
+  computed: {
+    ...mapState({
+      prefix: (state) => {
+        return state.bulk.isEnabled
+          ? 'bulk'
+          : 'general'
       }
+    })
+  },
+  methods: {
+    getCategory (id) {
+      return this.categories
+        .find(category => id === category.id)
     }
   }
 }

@@ -1,15 +1,22 @@
 export const state = () => ({
   locations: [],
-  projectId: null
+  selectedLocations: []
 })
 export const getters = {}
 
 export const actions = {
-  async set ({ commit }, projectId) {
+  async init ({ commit }, projectId) {
     try {
       const locations = await this.$axios
         .$get(`/api/v1/projects/${projectId}/locations`)
-      commit('SET', { locations, projectId })
+      const updatedLocations = locations.map((location) => {
+        return {
+          ...location,
+          status: 'Incomplete',
+          useCollected: true
+        }
+      })
+      commit('SET', { locations: updatedLocations })
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)
@@ -20,13 +27,17 @@ export const actions = {
   },
   updateLocation ({ commit }, data) {
     commit('UPDATE_LOCATION', data)
+  },
+  set ({ commit }, payload) {
+    commit('SET', payload)
   }
 }
 
 export const mutations = {
-  SET (state, { locations, projectId }) {
-    state.locations = locations
-    state.projectId = projectId
+  SET (state, obj) {
+    const keys = Object.keys(obj)
+    // eslint-disable-next-line no-return-assign
+    keys.forEach(key => state[key] = obj[key])
   },
   UPDATE_LOCATION (state, { locIdx, key, val }) {
     state.locations[locIdx][key] = val

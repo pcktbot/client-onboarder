@@ -9,7 +9,7 @@
           :checked="isEnabled"
           switch
           size="lg"
-          @change="toggleBulkMode"
+          @change="updateBulkMode"
         />
         <b-input-group-append class="d-flex align-items-baseline mt-1 px-3 text-light">
           Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
@@ -31,7 +31,7 @@
       <template v-slot:cell(location)="{ item }">
         <div class="px-3">
           <h4 class="mb-0 text-light">
-            {{ item.name }}
+            {{ item.properties.name }}
           </h4>
           <p class="mb-0 text-gray-30">
             {{ item.status }}
@@ -44,33 +44,27 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Locations from '~/mixins/locations'
 export default {
-  props: {
-    locations: {
-      type: Array,
-      default () {
-        return []
-      }
-    }
-  },
+  mixins: [Locations],
   data () {
     return {
       filter: ''
     }
   },
   computed: mapState({
-    isEnabled: state => state.bulk.isEnabled,
-    selectedLocations: state => state.bulk.selectedLocations
+    isEnabled: state => state.bulk.isEnabled
   }),
   methods: {
     ...mapActions({
-      toggleBulkMode: 'bulk/toggleBulkMode',
-      updateSelectedLocations: 'bulk/updateSelectedLocations'
+      toggleBulkMode: 'bulk/toggleBulkMode'
     }),
     onLocationSelect (selectedLocations) {
-      if (this.isEnabled) {
-        this.updateSelectedLocations({ selectedLocations })
-      }
+      this.updateSelectedLocations({ selectedLocations })
+    },
+    updateBulkMode (val) {
+      this.toggleBulkMode(val)
+      this.updateSelectedLocations({ selectedLocations: [] })
     }
   }
 }

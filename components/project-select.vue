@@ -1,7 +1,12 @@
 <template>
   <div class="projects bg-tertiary-20 p-5">
     <b-form-group label="Select Project" label-class="text-uppercase text-tertiary-60 font-weight-bold" class="projects__group">
-      <b-form-select class="projects__group__select py-4" />
+      <b-form-select
+        :value="selectedProject ? selectedProject.text : null"
+        :options="projects"
+        class="projects__group__select"
+        @change="setSelectedProject($event)"
+      />
       <span class="caret">
         <b-icon-chevron-down
           variant="light"
@@ -16,6 +21,7 @@
       variant="secondary"
       class="py-3 text-uppercase font-weight-bold"
       style="font-size: 1.2em;"
+      to="/"
     >
       Pick this Project
     </b-btn>
@@ -23,8 +29,19 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
-
+  computed: {
+    ...mapState({
+      projects: state => state.projects.projects,
+      selectedProject: state => state.projects.selectedProject
+    })
+  },
+  methods: {
+    ...mapActions({
+      setSelectedProject: 'projects/setSelectedProject'
+    })
+  }
 }
 </script>
 

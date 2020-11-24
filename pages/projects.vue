@@ -16,7 +16,16 @@
 
 <script>
 export default {
-
+  async fetch ({ store }) {
+    try {
+      // will need to hydrate store with user
+      // to initialize projects available to them
+      await store.dispatch('projects/init')
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
+  }
 }
 </script>
 
