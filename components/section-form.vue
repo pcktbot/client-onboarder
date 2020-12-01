@@ -29,8 +29,8 @@
           v-if="f.type === 'select'"
           class="section-group"
         >
+          <!-- :value="category.fieldData[f.id]" -->
           <b-form-select
-            :value="category.fieldData[f.id]"
             :options="f.options"
             :disabled="f.hasMergeConflict"
             class="section-group__select"
@@ -41,10 +41,10 @@
             />
           </span>
         </span>
+        <!-- :value="category.fieldData[f.id]" -->
         <b-form-input
           v-else
           :type="f.type"
-          :value="category.fieldData[f.id]"
           :placeholder="f.placeholder"
           :disabled="f.hasMergeConflict"
           class="section-input"

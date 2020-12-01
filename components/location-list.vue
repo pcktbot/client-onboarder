@@ -45,8 +45,9 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Locations from '~/mixins/locations'
+import Fields from '~/mixins/fields'
 export default {
-  mixins: [Locations],
+  mixins: [Locations, Fields],
   data () {
     return {
       filter: ''
@@ -61,6 +62,8 @@ export default {
     }),
     onLocationSelect (selectedLocations) {
       this.updateSelectedLocations({ selectedLocations })
+      // need to access vertical
+      this.setCategories({ vertical: 'mf', corp: false })
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)
