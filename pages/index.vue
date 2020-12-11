@@ -9,6 +9,7 @@
       </aside>
       <section class="main-content py-2">
         <project-details />
+        <global-inputs />
         <transition mode="out-in" name="fade">
           <bulk-edit-wrapper v-if="bulkIsEnabled">
             <accordion-wrapper v-if="selectedLocations.length > 0" />
@@ -35,7 +36,15 @@
                 </div>
                 <!-- Placeholder for logic until we have a better way-->
               </b-tab>
-              <b-tab title="5. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" />
+              <b-tab title="Manage Users" lazy title-link-class="p-4 text-uppercase text-muted">
+                <template v-slot:title>
+                  <span>
+                    <b-icon-people-fill />
+                    Manage Users
+                  </span>
+                </template>
+              </b-tab>
+              <b-tab title="6. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" />
             </b-tabs>
           </b-card>
         </transition>
