@@ -23,11 +23,24 @@
           @change="$emit('toggle-use-existing', $event)"
         />
       </b-card>
-      <b-card>
-        You have assigned this location to ___________________.
+      <p class="my-4">
+        This location already has most the information we need. You could get it over the finish line in 25 mins.
+      </p>
+      <b-card
+        bg-variant="secondary-10"
+        border-variant="secondary-10"
+        body-class="d-flex justify-content-between px-3 py-4"
+        class="mb-2"
+      >
+        <b-input-group class="w-75">
+          <b-input-group-prepend class="font-weight-bold text-uppercase text-secondary-80 align-items-center px-2 d-flex">
+            You have assigned this location to
+          </b-input-group-prepend>
+          <b-form-select />
+        </b-input-group>
         <b-btn>
           <b-icon-envelope />
-          Send them a reminder.
+          Reminder
         </b-btn>
       </b-card>
     </b-card>
