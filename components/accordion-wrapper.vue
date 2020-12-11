@@ -1,5 +1,6 @@
 <template>
   <div class="accordion p-3" role="tablist">
+    <b-breadcrumb :items="toBreadcrumb(categories)" />
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"
@@ -69,6 +70,14 @@ export default {
     getCategory (id) {
       return this.categories
         .find(category => id === category.id)
+    },
+    toBreadcrumb (categories) {
+      return categories.map((cat) => {
+        return {
+          text: cat.label,
+          href: `#${cat.id}`
+        }
+      })
     }
   }
 }
