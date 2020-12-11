@@ -123,6 +123,10 @@ export default {
     border-radius: 6px;
     text-align: center;
     box-shadow: 0 1px 4px rgba(203, 206, 209, 1);
+    transition: 200ms ease-in;
+  }
+  &:hover > .section-group__caret {
+    transform: translate(-50%, 0.15em);
   }
 }
 .section-input.form-control {

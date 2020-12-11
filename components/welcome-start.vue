@@ -1,49 +1,56 @@
 <template>
-  <b-container fluid>
-    <b-row class="my-3">
-      <b-col>
-        <b-card class="soft-shadow">
-          <b-card title="My Company Name" border-variant="secondary-10">
-            Branding!
-          </b-card>
-          <b-card-group deck>
-            <b-card
-              bg-variant="secondary-10"
-              border-variant="secondary-10"
-            >
-              <project-summary>
-                <template v-slot:cta>
-                  <b-btn variant="outline-primary-70" block>
-                    Make this Project Active
-                  </b-btn>
-                </template>
-              </project-summary>
-            </b-card>
-            <b-card
-              bg-variant="secondary-10"
-              border-variant="secondary-10"
-            >
-              <project-summary />
-            </b-card>
-          </b-card-group>
-        </b-card>
-      </b-col>
-    </b-row>
-    <b-row class="my-5">
-      <b-col>
-        <b-card class="soft-shadow">
-          Location Summaries
-          <b-table :items="locations" outlined small />
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+  <div>
+    <b-card-group deck>
+      <b-card
+        v-for="project in projects"
+        :key="project.id"
+        bg-variant="gray-10"
+        border-variant="gray-10"
+      >
+        <project-summary :project="project" />
+      </b-card>
+    </b-card-group>
+  </div>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      projects: [
+        {
+          id: 'test-project',
+          name: 'ADD-Test-Project',
+          status: 'in-progress',
+          contractDate: '2021-02-01',
+          estGoLiveDate: '2022-01-31',
+          progress: 60,
+          locations: [
+            { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
+            { id: 'loc-2', name: 'Location 2', status: 'incomplete', progress: 70 },
+            { id: 'loc-3', name: 'Location 3', status: 'incomplete', progress: 30 },
+            { id: 'loc-4', name: 'Location 4', status: 'incomplete', progress: 20 }
+          ]
+        },
+        {
+          id: 'test-project',
+          name: 'ADD-Another-Test-Project',
+          status: 'in-progress',
+          contractDate: '2021-02-01',
+          estGoLiveDate: '2022-01-31',
+          progress: 30,
+          locations: [
+            { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
+            { id: 'loc-2', name: 'Location 2', status: 'incomplete', progress: 70 },
+            { id: 'loc-3', name: 'Location 3', status: 'incomplete', progress: 30 },
+            { id: 'loc-4', name: 'Location 4', status: 'incomplete', progress: 20 },
+            { id: 'loc-5', name: 'Location 5', status: 'incomplete', progress: 20 },
+            { id: 'loc-6', name: 'Location 6', status: 'incomplete', progress: 20 },
+            { id: 'loc-7', name: 'Location 7', status: 'incomplete', progress: 20 },
+            { id: 'loc-8', name: 'Location 8', status: 'incomplete', progress: 20 }
+          ]
+        }
+      ],
       currentProject: 'project-1',
       myProjects: ['project-1', 'project-2'],
       locations: [
