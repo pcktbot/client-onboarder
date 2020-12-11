@@ -33,6 +33,9 @@
           <h4 class="mb-0 text-light">
             {{ item.properties.name }}
           </h4>
+          <b-progress :max="100">
+            <b-progress-bar :value="60" variant="primary-70" />
+          </b-progress>
           <p class="mb-0 text-gray-30">
             {{ item.status }}
           </p>
