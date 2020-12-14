@@ -20,11 +20,11 @@ export default {
       projects: [
         {
           id: 'test-project',
-          name: 'ADD-Test-Project',
+          projectName: 'ADD-Test-Project',
           status: 'in-progress',
           contractDate: '2021-02-01',
-          estGoLiveDate: '2022-01-31',
-          progress: 60,
+          estGoLive: '2022-01-31',
+          progress: 95,
           locations: [
             { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
             { id: 'loc-2', name: 'Location 2', status: 'incomplete', progress: 70 },
@@ -34,10 +34,10 @@ export default {
         },
         {
           id: 'test-project',
-          name: 'ADD-Another-Test-Project',
+          projectName: 'ADD-Another-Test-Project',
           status: 'in-progress',
           contractDate: '2021-02-01',
-          estGoLiveDate: '2022-01-31',
+          estGoLive: '2022-01-31',
           progress: 30,
           locations: [
             { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
