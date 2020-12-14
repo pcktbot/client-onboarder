@@ -21,22 +21,22 @@
           </bulk-edit-wrapper>
           <b-card v-else no-body header-class="border-0" class="border-0">
             <b-tabs v-model="currentTab" card>
-              <b-tab title="1. Welcome" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+              <b-tab title="Projects" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <welcome-start />
               </b-tab>
-              <b-tab title="2. Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+              <b-tab title="Location Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <location-start />
               </b-tab>
-              <b-tab title="3. General" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+              <b-tab title="Location Details" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <!-- wait to enable accordion wrapper until location is selected then pass in location in props -->
                 <accordion-wrapper v-if="selectedLocations.length === 1" />
                 <!-- Placeholder for logic until we have a better way-->
-                <div v-else>
-                  Select a location to update
+                <div v-else class="text-center">
+                  Select a location first.
                 </div>
                 <!-- Placeholder for logic until we have a better way-->
               </b-tab>
-              <b-tab title="Manage Users" lazy title-link-class="p-4 text-uppercase text-muted">
+              <b-tab lazy title-link-class="p-4 text-uppercase text-muted">
                 <template v-slot:title>
                   <span>
                     <b-icon-people-fill />
@@ -44,7 +44,7 @@
                   </span>
                 </template>
               </b-tab>
-              <b-tab title="6. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" />
+              <!-- <b-tab title="6. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" /> -->
             </b-tabs>
           </b-card>
         </transition>

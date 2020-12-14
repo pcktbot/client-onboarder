@@ -7,23 +7,23 @@
     </div>
     <div class="project__header">
       <h2 class="mb-0">
-        {{ project.name }}
+        {{ project.projectName }}
       </h2>
       <p class="text-uppercase small text-muted mb-0">
-        Go-Live: {{ project.estGoLiveDate }}
+        Go-Live: {{ project.estGoLive }}
       </p>
       <b-badge>
         {{ project.status }}
       </b-badge>
       <b-badge variant="gray-20">
         <b-icon-building />
-        {{ project.locations.length }} Locations
+        {{ project.locationCount }} Locations
       </b-badge>
     </div>
     <div>
       <b-table
         :fields="fields"
-        :items="project.locations"
+        :items="locations"
         sticky-header
         head-variant="light"
         small
@@ -75,10 +75,13 @@ export default {
       default () {
         return {
           id: 'test-project',
-          name: 'ADD-Test-Project',
+          projectName: 'ADD-Test-Project',
+          projectId: '',
+          clientName: '',
+          clientId: '',
           status: 'in-progress',
           contractDate: '2021-02-01',
-          estGoLiveDate: '2022-01-31',
+          estGoLive: '2022-01-31',
           progress: 60,
           locations: [
             { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
@@ -96,11 +99,17 @@ export default {
         { key: 'name', sortable: true },
         { key: 'status', sortable: true },
         { key: 'progress', sortable: true, tdClass: 'v-middle' }
+      ],
+      locations: [
+        { id: 'loc-1', name: 'Location 1', status: 'incomplete', progress: 50 },
+        { id: 'loc-2', name: 'Location 2', status: 'incomplete', progress: 70 },
+        { id: 'loc-3', name: 'Location 3', status: 'incomplete', progress: 30 },
+        { id: 'loc-4', name: 'Location 4', status: 'incomplete', progress: 20 }
       ]
     }
   },
   methods: {
-    setVariant(progress) {
+    setVariant (progress) {
       return progress < 30
         ? 'error-70'
         : progress < 40
@@ -117,7 +126,7 @@ export default {
 .v-middle { vertical-align: middle !important; }
 .project {
   position: relative;
-  min-width: 400px;
+  // min-width: 400px;
   border: 1px solid #c1c1c1;
   border-radius: 0 0 5px 5px;
   // box-shadow: 0 10px 20px rgba(10, 10, 10, 0.4);
@@ -131,7 +140,7 @@ export default {
     border: 2px solid #c1c1c1;
     border-radius: 6px;
     z-index: 2;
-    box-shadow: 0 2px 10px rgba(10, 10, 10, 0.2);
+    // box-shadow: 0 2px 10px rgba(10, 10, 10, 0.2);
   }
   &__progress {
     border: 1px solid #c1c1c1;
