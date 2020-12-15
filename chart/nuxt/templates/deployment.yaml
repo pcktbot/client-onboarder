@@ -35,6 +35,10 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
+          - name: INCLUDE_G5_AUTH
+            value: "false"
+          - name: INCLUDE_G5_UPDATABLES
+            value: "false"
           - name: GKE
             value: "true"
           - name: BROWSER_URL
