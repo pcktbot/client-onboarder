@@ -1,4 +1,5 @@
 const models = require('../../models')
+const LocationOnboardingForm = require('../../controllers/location-onboarding-form')
 module.exports = (app) => {
   app.get('/api/v1/projects', async (req, res) => {
     const projects = await models.project.displayAll()
@@ -69,5 +70,22 @@ module.exports = (app) => {
       }
     }
     res.json(200)
+  })
+
+  app.get('/api/v1/projects/:projectId/locations/:locationId/form', async (req, res) => {
+    const { locationId: locationProjectId } = req.params
+    const location = await models.location.findOne({
+      where: { locationProjectId },
+      include: [
+        {
+          model: models.package,
+          attributes: ['salesforceId']
+        }
+      ]
+    })
+
+    const form = new LocationOnboardingForm(location)
+    await form.build()
+    res.json({ sections: form.display() })
   })
 }
