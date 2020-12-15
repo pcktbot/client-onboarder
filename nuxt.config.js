@@ -1,7 +1,7 @@
 module.exports = {
   telemetry: false,
   server: {
-    host: process.env.HOST || 'localhost',
+    host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 8085
   },
   head: {

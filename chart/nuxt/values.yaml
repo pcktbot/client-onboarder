@@ -2,7 +2,7 @@ replicaCount: 1
 revisionHistoryLimit: 1
 image:
   repository: g5opex/client-onboarder
-  tag: 1.0.19
+  tag: 1.0.20
   pullPolicy: IfNotPresent
   resources:
     requests:
