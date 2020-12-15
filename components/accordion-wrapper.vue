@@ -1,59 +1,83 @@
 <template>
   <div class="accordion p-3" role="tablist">
+    <b-breadcrumb :items="toBreadcrumb(categories)" />
     <b-card
       v-for="(cat, i) in categories"
-      :key="`location-category-${i}`"
-      class="soft-shadow mb-5"
+      :key="`${prefix}-location-category-${i}`"
+      :bg-variant="cat.isComplete ? 'gray-20' : ''"
+      :border-variant="cat.isComplete ? 'gray-20' : ''"
+      class="soft-shadow mb-3"
+      no-body
     >
-      <template v-slot:header>
+      <b-card-header
+        :class="[{ 'bg-secondary-10' : cat.isBulk }]"
+        role="tab"
+      >
         <b-btn
+          v-b-toggle="cat.id"
           block
           variant="transparent"
-          class="px-2 py-1 d-flex align-items-center justify-content-between"
+          class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-between"
         >
-          <h3 class="mb-0 text-uppercase font-weight-bold text-muted">
+          <h4 class="mb-0 text-uppercase font-weight-bold text-gray-60">
             {{ cat.label }}
-            <b-icon-question-circle variant="secondary" scale="0.5em" />
-          </h3>
-          <span class="text-secondary small text-uppercase">
+            <b-icon-question-circle variant="secondary-20" scale="0.5em" shift-v="3" />
+          </h4>
+          <span class="text-gray-30 small align-self-end font-italic mb-1">
+            est. time:
+            <span class="font-weight-bold">
+              {{ cat.time }}
+            </span>
+          </span>
+          <div class="flex-grow-1" />
+          <span class="when-open text-secondary small text-uppercase">
             Close
             <b-icon-dash />
           </span>
+          <span class="when-closed text-secondary small text-uppercase">
+            Edit
+            <b-icon-plus />
+          </span>
         </b-btn>
-      </template>
-      {{ cat }}
+      </b-card-header>
+      <b-collapse
+        :id="cat.id"
+        :visible="i === 0"
+        :accordion="`${prefix}-accordion`"
+        role="tabpanel"
+      >
+        <section-form v-bind="{ category: getCategory(cat.id)}" />
+      </b-collapse>
     </b-card>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Fields from '~/mixins/fields'
 export default {
-  props: {
-    categories: {
-      type: Array,
-      default () {
-        return [
-          {
-            label: 'Location Details',
-            description: '',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          },
-          {
-            id: 'amenities',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          },
-          {
-            id: 'assets',
-            time: '20 mins',
-            isComplete: false,
-            data: []
-          }
-        ]
+  mixins: [Fields],
+  computed: {
+    ...mapState({
+      prefix: (state) => {
+        return state.bulk.isEnabled
+          ? 'bulk'
+          : 'general'
       }
+    })
+  },
+  methods: {
+    getCategory (id) {
+      return this.categories
+        .find(category => id === category.id)
+    },
+    toBreadcrumb (categories) {
+      return categories.map((cat) => {
+        return {
+          text: cat.label,
+          href: `#${cat.id}`
+        }
+      })
     }
   }
 }
@@ -61,9 +85,13 @@ export default {
 
 <style lang="scss">
 .soft-shadow {
-  box-shadow: 0 5px 20px 0 rgba(10, 10, 10, 0.2);
-  & .card {
+  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.2);
+  &.card {
     border-radius: 10px;
   }
+}
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
 }
 </style>

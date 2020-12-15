@@ -1,84 +1,91 @@
 <template>
   <div class="content">
-    <primary-nav />
+    <primary-nav>
+      <user-dropdown />
+    </primary-nav>
     <article class="content__grid">
-      <aside class="py-5">
-        <location-list v-bind="{ locations }" />
+      <aside class="py-3">
+        <location-list />
       </aside>
-      <section class="main-content py-5">
-        <div class="px-3 selected-location-summary d-flex justify-content-between align-items-center">
-          <div class="">
-            Location name
-          </div>
-          <div>
-            Address
-          </div>
-          <b-btn
-            variant="outline-secondary"
-            class="px-4 py-2 h3 font-weight-bold text-uppercase"
-            style="border-width: 3px; border-radius: 6px;"
-          >
-            Press this button
-          </b-btn>
-        </div>
-        <b-card
-          bg-variant="primary-10"
-          border-variant="primary-10"
-          body-class="d-flex justify-content-between"
-          class="m-3"
-        >
-          <p class="mb-0 text-gray-50 text-uppercase font-weight-bold">
-            Decision Card
-          </p>
-          <b-form-checkbox switch size="lg" />
-        </b-card>
-        <b-card no-body header-class="border-0" class="border-0">
-          <b-tabs card>
-            <b-tab title="Tab" title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold">
-              <accordion-wrapper />
-            </b-tab>
-            <b-tab title="Tab" lazy title-link-class="py-4 px-3 text-uppercase text-muted font-weight-bold" />
-          </b-tabs>
-        </b-card>
+      <section class="main-content py-2">
+        <project-details />
+        <transition mode="out-in" name="fade">
+          <bulk-edit-wrapper v-if="bulkIsEnabled">
+            <accordion-wrapper v-if="selectedLocations.length > 0" />
+            <!-- Placeholder for logic until we have a better way-->
+            <div v-else>
+              Select locations to bulk update
+            </div>
+            <!-- Placeholder for logic until we have a better way-->
+          </bulk-edit-wrapper>
+          <b-card v-else no-body header-class="border-0" class="border-0">
+            <b-tabs v-model="currentTab" card>
+              <b-tab title="My Projects" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <welcome-start />
+              </b-tab>
+              <b-tab title="Location Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <location-start />
+              </b-tab>
+              <b-tab title="Location Details" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <global-inputs />
+                <!-- wait to enable accordion wrapper until location is selected then pass in location in props -->
+                <accordion-wrapper v-if="selectedLocations.length === 1" />
+                <!-- Placeholder for logic until we have a better way-->
+                <div v-else class="text-center">
+                  Select a location first.
+                </div>
+                <!-- Placeholder for logic until we have a better way-->
+              </b-tab>
+              <b-tab lazy title-link-class="p-4 text-uppercase text-muted">
+                <template v-slot:title>
+                  <span>
+                    <b-icon-people-fill />
+                    Manage Users
+                  </span>
+                </template>
+                <user-management />
+              </b-tab>
+              <!-- <b-tab title="6. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" /> -->
+            </b-tabs>
+          </b-card>
+        </transition>
       </section>
     </article>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Locations from '~/mixins/locations'
+import Fields from '~/mixins/fields'
 export default {
+  mixins: [Locations, Fields],
+  async fetch ({ store }) {
+    try {
+      // projectId will be extracted from the url params once we make the page dynamic
+      let projectId = store.state.projects.selectedProject
+        ? store.state.projects.selectedProject.projectId
+        : null
+      // temporary if statement to add a selected projectId while in dev if its not already selected
+      if (!projectId) {
+        await store.dispatch('projects/init')
+        projectId = store.state.projects.projects[0].projectId
+        await store.dispatch('projects/setSelectedProject', projectId)
+      }
+      await store.dispatch('locations/init', projectId)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e)
+    }
+  },
   data () {
     return {
-      locations: [
-        {
-          name: 'Location-1',
-          status: 'Incomplete',
-          data: []
-        },
-        { name: 'Location-2', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-3', status: 'Incomplete', data: [] },
-        { name: 'Location-4', status: 'Incomplete', data: [] }
-      ]
+      currentTab: 0
     }
-  }
+  },
+  computed: mapState({
+    bulkIsEnabled: state => state.bulk.isEnabled
+  })
 }
 </script>
 

@@ -1,11 +1,11 @@
 module.exports = {
   telemetry: false,
   server: {
-    host: process.env.HOST || 'localhost',
+    host: process.env.HOST || '0.0.0.0',
     port: process.env.PORT || 8085
   },
   head: {
-    title: 'client-onboarder',
+    title: 'Onboarding',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -13,7 +13,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Heebo:wght@400;700&display=swap' }
     ]
   },
   css: ['@/assets/theme.scss'],
@@ -21,20 +21,20 @@ module.exports = {
   buildModules: ['@nuxtjs/eslint-module'],
   modules: [
     'bootstrap-vue/nuxt',
-    '@nuxtjs/axios',
-    '@nuxtjs/cloudinary'
+    // '@nuxtjs/cloudinary',
+    '@nuxtjs/axios'
   ],
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
     icons: true
   },
-  cloudinary: {
-    cloudName: process.env.CLOUDINARY_NAME,
-    apiKey: process.env.CLOUDINARY_SECRET,
-    apiSecret: process.env.CLOUDINARY_KEY,
-    useComponent: true
-  },
+  // cloudinary: {
+  //   cloudName: process.env.CLOUDINARY_NAME,
+  //   apiKey: process.env.CLOUDINARY_SECRET,
+  //   apiSecret: process.env.CLOUDINARY_KEY,
+  //   useComponent: true
+  // },
   axios: {
     browserBaseURL: `//${process.env.BROWSER_URL}`
   },

@@ -5,33 +5,38 @@
     </div>
     <div class="px-3 mb-3">
       <b-input-group>
-        <b-input-group-prepend class="d-flex align-items-baseline mt-1 px-3 text-light">
-          Update Multiple Locations
-        </b-input-group-prepend>
         <b-form-checkbox
-          v-model="multiselect"
+          :checked="isEnabled"
           switch
           size="lg"
+          @change="updateBulkMode"
         />
+        <b-input-group-append class="d-flex align-items-baseline mt-1 px-3 text-light">
+          Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
+        </b-input-group-append>
       </b-input-group>
     </div>
     <b-table
       :fields="['location', { key: 'name', tdClass: 'd-none' }]"
       :items="locations"
       :filter="filter"
-      :select-mode="multiselect ? 'multi' : 'single'"
+      :select-mode="isEnabled ? 'multi' : 'single'"
       selectable
       sticky-header
       borderless
-      style="max-height: 80vh;"
+      style="max-height: 75vh;"
       class="p-0 m-0 border-0 hide"
+      @row-selected="onLocationSelect"
     >
       <template v-slot:cell(location)="{ item }">
         <div class="px-3">
-          <h3 class="mb-0 text-light">
-            {{ item.name }}
-          </h3>
-          <p class="mb-0 text-muted">
+          <h4 class="mb-0 text-light">
+            {{ item.properties.name }}
+          </h4>
+          <!-- <b-progress :max="100">
+            <b-progress-bar :value="60" variant="primary-70" />
+          </b-progress> -->
+          <p class="mb-0 text-gray-30">
             {{ item.status }}
           </p>
         </div>
@@ -41,25 +46,31 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import Locations from '~/mixins/locations'
+import Fields from '~/mixins/fields'
 export default {
-  props: {
-    locations: {
-      type: Array,
-      default () {
-        return []
-      }
-    }
-  },
+  mixins: [Locations, Fields],
   data () {
     return {
-      multiselect: false,
-      filter: '',
-      selectedLocations: []
+      filter: ''
     }
   },
+  computed: mapState({
+    isEnabled: state => state.bulk.isEnabled
+  }),
   methods: {
-    onLocationSelect (loc) {
-      this.$emit('location-change', loc)
+    ...mapActions({
+      toggleBulkMode: 'bulk/toggleBulkMode'
+    }),
+    onLocationSelect (selectedLocations) {
+      this.updateSelectedLocations({ selectedLocations })
+      // need to access vertical
+      this.setCategories({ vertical: 'mf', corp: false })
+    },
+    updateBulkMode (val) {
+      this.toggleBulkMode(val)
+      this.updateSelectedLocations({ selectedLocations: [] })
     }
   }
 }
