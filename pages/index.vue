@@ -9,7 +9,6 @@
       </aside>
       <section class="main-content py-2">
         <project-details />
-        <global-inputs />
         <transition mode="out-in" name="fade">
           <bulk-edit-wrapper v-if="bulkIsEnabled">
             <accordion-wrapper v-if="selectedLocations.length > 0" />
@@ -21,13 +20,14 @@
           </bulk-edit-wrapper>
           <b-card v-else no-body header-class="border-0" class="border-0">
             <b-tabs v-model="currentTab" card>
-              <b-tab title="Projects" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+              <b-tab title="My Projects" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <welcome-start />
               </b-tab>
               <b-tab title="Location Start" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <location-start />
               </b-tab>
               <b-tab title="Location Details" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                <global-inputs />
                 <!-- wait to enable accordion wrapper until location is selected then pass in location in props -->
                 <accordion-wrapper v-if="selectedLocations.length === 1" />
                 <!-- Placeholder for logic until we have a better way-->
@@ -43,6 +43,7 @@
                     Manage Users
                   </span>
                 </template>
+                <user-management />
               </b-tab>
               <!-- <b-tab title="6. Tab (Disabled)" lazy disabled title-link-class="p-4 text-uppercase text-muted font-italic" /> -->
             </b-tabs>

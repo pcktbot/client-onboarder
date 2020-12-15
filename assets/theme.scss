@@ -58,6 +58,7 @@ $body-bg: #304a69;
 // BOOTSTRAP VARIABLES DECLARED ABOVE
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
+@import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 // OVERRIDES BELOW
 .nav-tabs .nav-link.active,

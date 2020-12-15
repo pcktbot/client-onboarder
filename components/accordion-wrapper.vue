@@ -85,7 +85,7 @@ export default {
 
 <style lang="scss">
 .soft-shadow {
-  box-shadow: 0 5px 20px 0 rgba(10, 10, 10, 0.2);
+  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.2);
   &.card {
     border-radius: 10px;
   }
