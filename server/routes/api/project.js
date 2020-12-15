@@ -86,6 +86,6 @@ module.exports = (app) => {
 
     const form = new LocationOnboardingForm(location)
     await form.build()
-    res.json(form.display())
+    res.json({ sections: form.display() })
   })
 }
