@@ -21,9 +21,9 @@ async function start () {
   }
 
   app.use(nuxt.render)
-  // models.sequelize
-  //   .sync()
-  //   .then(() => console.log('Database Synced'))
+  models.sequelize
+    .sync()
+    .then(() => console.log('Database Synced'))
   app.listen(port, host)
   console.log(`Server listening on http://${host}:${port}`)
 }
