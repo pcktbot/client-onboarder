@@ -41,7 +41,7 @@ export default {
     background-color: #256a6a;
   }
   & .custom-control-label::after {
-    top: calc(0.25rem - 2px);
+    top: calc(0.25rem - 3px);
     left: calc(-2.25rem - 2px);
     width: calc(1rem + 4px);
     height: calc(1rem + 4px);

@@ -13,12 +13,12 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Heebo:wght@400;700&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap' }
     ]
   },
   css: ['@/assets/theme.scss'],
   components: true,
-  buildModules: ['@nuxtjs/eslint-module'],
+  // buildModules: ['@nuxtjs/eslint-module'],
   modules: [
     'bootstrap-vue/nuxt',
     // '@nuxtjs/cloudinary',
