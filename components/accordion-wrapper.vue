@@ -1,6 +1,15 @@
 <template>
   <div class="accordion p-3" role="tablist">
-    <b-breadcrumb :items="toBreadcrumb(categories)" />
+    <b-breadcrumb>
+      <b-breadcrumb-item
+        v-for="(cat, i) in toBreadcrumb(categories)"
+        :key="`bcrumb-${i}`"
+        :href="cat.href"
+      >
+        <b-icon-check-circle-fill variant="secondary" scale="1.1em" />
+        {{ cat.text }}
+      </b-breadcrumb-item>
+    </b-breadcrumb>
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"
@@ -10,7 +19,7 @@
       no-body
     >
       <b-card-header
-        :class="[{ 'bg-secondary-10' : cat.isBulk }]"
+        :class="[{ 'bg-secondary-10' : cat.isBulk }, 'border-0']"
         role="tab"
       >
         <b-btn
@@ -75,6 +84,7 @@ export default {
       return categories.map((cat) => {
         return {
           text: cat.label,
+          status: 'complete',
           href: `#${cat.id}`
         }
       })
@@ -85,7 +95,7 @@ export default {
 
 <style lang="scss">
 .soft-shadow {
-  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.2);
+  box-shadow: 0 2px 4px 0 rgba(10, 10, 10, 0.2);
   &.card {
     border-radius: 10px;
   }

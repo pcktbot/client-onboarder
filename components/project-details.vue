@@ -12,28 +12,36 @@
       </b-btn>
     </div>
     <b-collapse id="project-details">
-      <b-card-group deck class="p-5">
-        <b-card bg-variant="gray-20" border-variant="gray-20">
-          <project-summary>
-            <template v-slot:cta>
-              <project-selector />
-            </template>
-          </project-summary>
-        </b-card>
-        <b-card bg-variant="gray-20" border-variant="gray-20">
-          <project-client />
-        </b-card>
-      </b-card-group>
+      <div class="inset-jumbo mr-5 p-5">
+        <b-progress :max="100" style="border-radius: 25px;" class="mb-3">
+          <b-progress-bar :value="50" variant="primary-80" />
+        </b-progress>
+        <span class="text-tertiary text-uppercase h3 font-weight-bold">
+          {{ project.projectName }}
+        </span>
+      </div>
     </b-collapse>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    project: {
+      type: Object,
+      default () {
+        return {
+          projectName: 'G5 Test Project Name'
+        }
+      }
+    }
+  }
 }
 </script>
 
 <style>
-
+.inset-jumbo {
+  background-color: #dfe7ee;
+  border-radius: 0 0 30px 0;
+}
 </style>

@@ -1,8 +1,12 @@
 <template>
   <div class="project bg-white">
     <div class="project__progress">
-      <b-progress :max="100" height="2em" class="rounded-0">
-        <b-progress-bar :value="project.progress" :variant="setVariant(project.progress)" />
+      <b-progress :max="100" height="2em" class="rounded-0 p-1">
+        <b-progress-bar
+          :value="project.progress"
+          variant="primary-70"
+          style="border-radius: 25px;"
+        />
       </b-progress>
     </div>
     <div class="project__header">
@@ -26,40 +30,41 @@
         :items="locations"
         sticky-header
         head-variant="light"
+        thead-class="text-uppercase font-weight-bold text-gray-30"
         small
         striped
-        outlined
+        borderless
       >
         <template v-slot:cell(name)="{ item }">
           <div class="d-flex align-items-center">
             <b-btn
               pill
               size="sm"
-              variant="gray-20"
-              class="mr-2"
+              variant="transparent"
+              class="mr-2 text-secondary"
             >
-              <b-icon-pencil-fill />
+              <b-icon-pencil />
             </b-btn>
             {{ item.name }}
           </div>
         </template>
         <template v-slot:cell(progress)="{ item }">
-          <b-progress :max="100">
+          <b-progress :max="100" style="border-radius: 25px;">
             <b-progress-bar :value="item.progress" :variant="setVariant(item.progress)" />
           </b-progress>
         </template>
       </b-table>
     </div>
     <b-btn-group size="sm" class="w-100 rounded-0">
-      <b-btn variant="outline-secondary">
-        <b-icon-pencil-fill />
+      <b-btn variant="transparent" class="text-secondary py-2">
+        <b-icon-pencil />
         Manage Project
       </b-btn>
-      <b-btn variant="outline-secondary">
+      <b-btn variant="transparent" class="text-secondary py-2">
         <b-icon-envelope-fill />
         Project Manager
       </b-btn>
-      <b-btn>
+      <b-btn class="py-2">
         <b-icon-envelope-fill />
         Team Members
       </b-btn>
@@ -116,7 +121,7 @@ export default {
           ? 'error'
           : progress < 70
             ? 'warning-60'
-            : 'success'
+            : 'success-70'
     }
   }
 }
@@ -137,8 +142,8 @@ export default {
     margin: 0 auto;
     transform: translateY(-10px);
     background-color: white;
-    border: 2px solid #c1c1c1;
-    border-radius: 6px;
+    border: 0.5px solid #c1c1c1;
+    border-radius: 10px;
     z-index: 2;
     // box-shadow: 0 2px 10px rgba(10, 10, 10, 0.2);
   }
@@ -146,8 +151,8 @@ export default {
     border: 1px solid #c1c1c1;
     position: absolute;
     top: 0;
-    left: -2px;
-    width: calc(100% + 4px);
+    left: -1px;
+    width: calc(100% + 2px);
     overflow: hidden;
     border-radius: 5px 5px 0 0;
     transform: translateY(-100%);

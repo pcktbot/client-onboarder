@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 py-5">
+  <div class="px-5 py-3">
     <div
       v-for="(field, i) in category.fields"
       :key="`field-row-${i}`"
@@ -37,7 +37,7 @@
           />
           <span class="section-group__caret">
             <b-icon-chevron-down
-              variant="light"
+              variant="gray-80"
             />
           </span>
         </span>
@@ -98,6 +98,7 @@ export default {
 </script>
 
 <style lang="scss">
+$gray: #c1c1c1;
 .inline-group-ctn {
   position: relative;
 }
@@ -106,7 +107,7 @@ export default {
   &__select {
     background: none;
     background-color: white;
-    border: 2px solid #93999f;
+    border: 2px solid $gray;
     border-radius: 6px;
     box-shadow: inset 0 1px 4px rgba(203, 206, 209, 1);
   }
@@ -118,11 +119,10 @@ export default {
     width: 1.5em;
     height: 1.5em;
     transform: translate(-50%, 0.25em);
-    background-color: #93999f;
+    color: #93999f;
     z-index: 11;
     border-radius: 6px;
     text-align: center;
-    box-shadow: 0 1px 4px rgba(203, 206, 209, 1);
     transition: 200ms ease-in;
   }
   &:hover > .section-group__caret {
@@ -130,9 +130,9 @@ export default {
   }
 }
 .section-input.form-control {
-  border: 2px solid #93999f;
+  border: 2px solid $gray;
   border-radius: 6px;
-  box-shadow: inset 0 1px 4px rgba(203, 206, 209, 1);
+  box-shadow: inset 0 1px 3px rgba(203, 206, 209, 0.5);
   &::placeholder {
     color: #93999f;
   }
