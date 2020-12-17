@@ -54,18 +54,18 @@
     </div>
     <div class="d-flex justify-content-end mb-3 mt-4">
       <b-btn
-        variant="outline-error-20"
-        class="text-uppercase font-weight-bold mr-2 px-4"
-        style="border-width: 0px; border-radius: 6px;"
-      >
-        Abandon Changes
-      </b-btn>
-      <b-btn
         variant="secondary"
-        class="text-uppercase font-weight-bold mr-2 px-4"
-        style="border-radius: 8px;"
+        class="text-uppercase font-weight-bold mr-2 px-3 py-2"
+        style="border-radius: 4px;"
       >
         Save Changes
+      </b-btn>
+      <b-btn
+        variant="transparent"
+        class="text-uppercase text-secondary-30 font-weight-bold mr-2 py-3 px-4"
+        style="border-width: 0px; border-radius: 4px;"
+      >
+        Abandon Changes
       </b-btn>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="accordion p-3" role="tablist">
-    <b-breadcrumb>
+  <div class="accordion py-1 px-3" role="tablist">
+    <b-breadcrumb class="bg-white mb-3">
       <b-breadcrumb-item
         v-for="(cat, i) in toBreadcrumb(categories)"
         :key="`bcrumb-${i}`"
@@ -19,7 +19,7 @@
       no-body
     >
       <b-card-header
-        :class="[{ 'bg-secondary-10' : cat.isBulk }, 'border-0']"
+        :class="[{ 'bg-gray-10' : cat.isBulk }, 'border-0']"
         role="tab"
       >
         <b-btn

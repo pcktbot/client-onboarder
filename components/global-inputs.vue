@@ -1,5 +1,5 @@
 <template>
-  <div class="global border border-gray-30 m-4 p-4 d-flex justify-content-between align-items-center">
+  <div class="global m-4 p-4 d-flex justify-content-between align-items-center bg-secondary-10">
     <b-input-group>
       <b-form-checkbox
         :checked="showRequiredOnly"
@@ -51,7 +51,8 @@ export default {
     box-shadow: 0 1px 2px rgba(10, 10, 10, 0.6);
   }
   & .custom-control-input:checked ~ .custom-control-label::after {
-    background-color: #e2eeef !important;
+    // background-color: #e2eeef !important;
+    background-color: white !important;
   }
 }
 </style>

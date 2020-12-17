@@ -53,7 +53,8 @@ $enable-gradients: false;
 $enable-transitions: true;
 $enable-print-styles: false;
 $bv-enable-table-stacked: false;
-$body-bg: #304a69;
+$body-bg: white;
+// $body-bg: #304a69;
 
 // BOOTSTRAP VARIABLES DECLARED ABOVE
 @import 'bootstrap/scss/bootstrap.scss';

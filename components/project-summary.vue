@@ -29,8 +29,8 @@
         :fields="fields"
         :items="locations"
         sticky-header
-        head-variant="light"
-        thead-class="text-uppercase font-weight-bold text-gray-30"
+        thead-class="text-uppercase font-weight-bold text-tertiary-60"
+        head-row-variant="gray-10"
         small
         striped
         borderless
@@ -56,7 +56,11 @@
       </b-table>
     </div>
     <b-btn-group size="sm" class="w-100 rounded-0">
-      <b-btn variant="transparent" class="text-secondary py-2">
+      <b-btn
+        variant="secondary"
+        class="py-2"
+        @click="$store.dispatch('projects/setSelectedProject', project.projectId)"
+      >
         <b-icon-pencil />
         Manage Project
       </b-btn>
@@ -64,7 +68,7 @@
         <b-icon-envelope-fill />
         Project Manager
       </b-btn>
-      <b-btn class="py-2">
+      <b-btn variant="transparent" class="text-secondary py-2">
         <b-icon-envelope-fill />
         Team Members
       </b-btn>
