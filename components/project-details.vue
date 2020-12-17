@@ -16,9 +16,10 @@
         <b-progress :max="100" style="border-radius: 25px;" class="mb-3">
           <b-progress-bar :value="50" variant="primary-80" />
         </b-progress>
-        <span class="text-tertiary text-uppercase h3 font-weight-bold">
+        <span class="text-tertiary text-uppercase font-weight-bold">
           {{ project.projectName }}
         </span>
+        {{ project }}
       </div>
     </b-collapse>
   </div>
@@ -26,14 +27,9 @@
 
 <script>
 export default {
-  props: {
-    project: {
-      type: Object,
-      default () {
-        return {
-          projectName: 'G5 Test Project Name'
-        }
-      }
+  computed: {
+    project () {
+      return this.$store.state.projects.selectedProject
     }
   }
 }

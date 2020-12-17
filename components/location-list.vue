@@ -33,7 +33,7 @@
           <h4 class="mb-0 text-gray-80 flex-grow-1">
             {{ item.properties.name }}
           </h4>
-          <b-progress :max="100" style="width: 50px;" class="align-self-center border border-primary-70 p-1">
+          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-70 p-1">
             <b-progress-bar :value="60" variant="primary-70" />
           </b-progress>
         </div>
@@ -54,16 +54,19 @@ export default {
     }
   },
   computed: mapState({
+    projectId: state => state.projects.selectedProject.projectId,
     isEnabled: state => state.bulk.isEnabled
   }),
   methods: {
     ...mapActions({
-      toggleBulkMode: 'bulk/toggleBulkMode'
+      toggleBulkMode: 'bulk/toggleBulkMode',
+      setFields: 'fields/setFields'
     }),
     onLocationSelect (selectedLocations) {
       this.updateSelectedLocations({ selectedLocations })
       // need to access vertical
       this.setCategories({ vertical: 'mf', corp: false })
+      this.setFields({ projectId: this.projectId, locationId: selectedLocations[0].locationId })
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)

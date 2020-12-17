@@ -7,7 +7,7 @@
     >
       <b-form-group
         v-for="f in field"
-        :key="f.id"
+        :key="toKebab(f.label)"
         :class="{ 'inline-group-ctn': f.hasMergeConflict }"
         :style="{ 'max-width: 50%;': field.length > 1 }"
         label-class="text-uppercase text-muted font-weight-bold"
@@ -31,6 +31,7 @@
         >
           <!-- :value="category.fieldData[f.id]" -->
           <b-form-select
+            :id="f.dataKey"
             :options="f.options"
             :disabled="f.hasMergeConflict"
             class="section-group__select"
@@ -44,6 +45,7 @@
         <!-- :value="category.fieldData[f.id]" -->
         <b-form-input
           v-else
+          :id="f.dataKey"
           :type="f.type"
           :placeholder="f.placeholder"
           :disabled="f.hasMergeConflict"
