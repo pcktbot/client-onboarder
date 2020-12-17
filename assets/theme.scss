@@ -46,14 +46,15 @@ $theme-colors: (
   'error-70': #7b1433
 );
 $font-family-base: 'Roboto', sans-serif;
-$headings-font-family: 'Heebo', 'Roboto', sans-serif;
+$headings-font-family: 'Roboto Condensed', 'Roboto', sans-serif;
 $enable-rounded: true;
 $enable-shadows: false;
 $enable-gradients: false;
 $enable-transitions: true;
 $enable-print-styles: false;
 $bv-enable-table-stacked: false;
-$body-bg: #304a69;
+$body-bg: white;
+// $body-bg: #304a69;
 
 // BOOTSTRAP VARIABLES DECLARED ABOVE
 @import 'bootstrap/scss/bootstrap.scss';
@@ -66,6 +67,10 @@ $body-bg: #304a69;
   box-shadow: inset 0 -5px 0 0 #339698;
   border-color: #fff #fff #339698;
   background-color: white;
+}
+.nav-tabs .nav-link {
+  font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+  font-size: 1.1em;
 }
 .custom-control-input:checked ~ .custom-control-label::before {
   border-color: #0f2240;

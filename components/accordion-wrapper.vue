@@ -1,6 +1,17 @@
 <template>
-  <div class="accordion p-3" role="tablist">
-    <b-breadcrumb :items="toBreadcrumb(categories)" />
+  <div class="accordion py-1 px-3" role="tablist">
+    <b-breadcrumb class="bg-white mb-3">
+      <b-breadcrumb-item
+        v-for="(cat, i) in toBreadcrumb(categories)"
+        :key="`bcrumb-${i}`"
+        :href="cat.href"
+      >
+      <span style="max-width: 200px;" class="text-truncate">
+        <b-icon-check-circle-fill :variant="cat.status" scale="1.1em" />
+        {{ cat.text }}
+      </span>
+      </b-breadcrumb-item>
+    </b-breadcrumb>
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"
@@ -10,18 +21,22 @@
       no-body
     >
       <b-card-header
-        :class="[{ 'bg-secondary-10' : cat.isBulk }]"
+        :class="[{ 'bg-gray-10' : cat.isBulk }, 'border-0']"
         role="tab"
       >
         <b-btn
           v-b-toggle="cat.id"
           block
           variant="transparent"
-          class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-between"
+          class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-start"
         >
+          <b-badge :variant="setStatus(cat)" class="mr-2">
+            <b-icon-check-circle-fill />
+            Review Needed
+          </b-badge>
           <h4 class="mb-0 text-uppercase font-weight-bold text-gray-60">
-            {{ cat.label }}
-            <b-icon-question-circle variant="secondary-20" scale="0.5em" shift-v="3" />
+            {{ cat.name }}
+            <b-icon-question-circle variant="secondary-20" scale="0.5em" />
           </h4>
           <span class="text-gray-30 small align-self-end font-italic mb-1">
             est. time:
@@ -46,7 +61,8 @@
         :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
-        <section-form v-bind="{ category: getCategory(cat.id)}" />
+        <!-- <section-form v-bind="{ category: cat }" /> -->
+        {{ cat }}
       </b-collapse>
     </b-card>
   </div>
@@ -69,12 +85,20 @@ export default {
   methods: {
     getCategory (id) {
       return this.categories
-        .find(category => id === category.id)
+        .find(category => category.id === id)
+    },
+    setStatus (category) {
+      return category.isComplete
+        ? category.isReviewed
+          ? 'secondary-70'
+          : 'warning-70'
+        : 'error-70'
     },
     toBreadcrumb (categories) {
       return categories.map((cat) => {
         return {
-          text: cat.label,
+          text: cat.name,
+          status: this.setStatus(cat),
           href: `#${cat.id}`
         }
       })
@@ -85,7 +109,7 @@ export default {
 
 <style lang="scss">
 .soft-shadow {
-  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.2);
+  box-shadow: 0 2px 4px 0 rgba(10, 10, 10, 0.2);
   &.card {
     border-radius: 10px;
   }

@@ -11,7 +11,7 @@
           size="lg"
           @change="updateBulkMode"
         />
-        <b-input-group-append class="d-flex align-items-baseline mt-1 px-3 text-light">
+        <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
           Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
         </b-input-group-append>
       </b-input-group>
@@ -29,16 +29,13 @@
       @row-selected="onLocationSelect"
     >
       <template v-slot:cell(location)="{ item }">
-        <div class="px-3">
-          <h4 class="mb-0 text-light">
+        <div class="px-2 d-flex justify-content-between">
+          <h4 class="mb-0 text-gray-80 flex-grow-1">
             {{ item.properties.name }}
           </h4>
-          <!-- <b-progress :max="100">
+          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-70 p-1">
             <b-progress-bar :value="60" variant="primary-70" />
-          </b-progress> -->
-          <p class="mb-0 text-gray-30">
-            {{ item.status }}
-          </p>
+          </b-progress>
         </div>
       </template>
     </b-table>
@@ -57,16 +54,19 @@ export default {
     }
   },
   computed: mapState({
+    projectId: state => state.projects.selectedProject.projectId,
     isEnabled: state => state.bulk.isEnabled
   }),
   methods: {
     ...mapActions({
-      toggleBulkMode: 'bulk/toggleBulkMode'
+      toggleBulkMode: 'bulk/toggleBulkMode',
+      setFields: 'fields/setFields'
     }),
     onLocationSelect (selectedLocations) {
       this.updateSelectedLocations({ selectedLocations })
       // need to access vertical
       this.setCategories({ vertical: 'mf', corp: false })
+      this.setFields({ projectId: this.projectId, locationId: selectedLocations[0].locationId })
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)
@@ -92,7 +92,10 @@ export default {
 .table.b-table > tbody > .table-active,
 .table.b-table > tbody > .table-active > th,
 .table.b-table > tbody > .table-active > td {
-  background-color: #4e6f96;
-  box-shadow: inset 10px 0 0 0 #6889b0;
+  background-color: #e3e3e3;
+  color: #2d8081;
+  // background-color: #4e6f96;
+  box-shadow: inset 10px 0 0 0 #2d8081;
+  // box-shadow: inset 10px 0 0 0 #6889b0;
 }
 </style>

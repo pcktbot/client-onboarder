@@ -12,9 +12,11 @@
       variant="transparent"
       @click="onClear"
     >
-      <b-icon-x variant="white" scale="2em" />
+      <b-icon-x variant="tertiary-30" scale="2em" />
+      <!-- <b-icon-x variant="white" scale="2em" /> -->
     </b-btn>
-    <b-icon-search class="search__icon" variant="light" scale="1.25em" />
+    <b-icon-search class="search__icon" variant="tertiary-60" scale="1.25em" />
+    <!-- <b-icon-search class="search__icon" variant="light" scale="1.25em" /> -->
   </b-input-group>
 </template>
 
@@ -47,18 +49,24 @@ $bg-slate: #64778e;
   &__input {
     padding: 1.5em 1.25em;
     border-radius: 25px / 50% !important;
-    border: none;
-    background: $bg-slate;
+    border: 1px solid $bg-slate;
+    // border: none;
+    background: white;
+    // background: $bg-slate;
     opacity: 0.8;
     &::placeholder {
-      color: white;
+      color: $bg-slate;
+      // color: white;
     }
     &:active,
     &:focus {
       opacity: 1;
-      background: $bg-slate;
-      border-color: white;
-      color: white;
+      background: white;
+      // background: $bg-slate;
+      border-color: $bg-slate;
+      // border-color: white;
+      color: $bg-slate;
+      // color: white;
       box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.075);
     }
   }

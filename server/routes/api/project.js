@@ -17,7 +17,7 @@ module.exports = (app) => {
       const locations = await models.project.locationsByProjectId(projectId)
       const val = locations.map((location) => {
         return {
-          locationId: location.locationId,
+          locationId: location.locationProjectId,
           crawled: location.crawled,
           scraped: location.scraped,
           g5Approved: location.g5Approved,
@@ -73,19 +73,20 @@ module.exports = (app) => {
   })
 
   app.get('/api/v1/projects/:projectId/locations/:locationId/form', async (req, res) => {
-    const { locationId: locationProjectId } = req.params
-    const location = await models.location.findOne({
-      where: { locationProjectId },
-      include: [
-        {
+    try {
+      const { locationId: locationProjectId } = req.params
+      const location = await models.location.findOne({
+        where: { locationProjectId },
+        include: [{
           model: models.package,
           attributes: ['salesforceId']
-        }
-      ]
-    })
-
-    const form = new LocationOnboardingForm(location)
-    await form.build()
-    res.json({ sections: form.display() })
+        }]
+      })
+      const form = new LocationOnboardingForm(location)
+      await form.build()
+      res.json({ sections: form.display() })
+    } catch (error) {
+      res.status(500).json(error)
+    }
   })
 }

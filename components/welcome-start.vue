@@ -3,7 +3,7 @@
     <b-card-group deck>
       <b-card
         v-for="project in projects"
-        :key="project.id"
+        :key="project.projectId"
         bg-variant="gray-10"
         border-variant="gray-10"
       >
@@ -19,7 +19,7 @@ export default {
     return {
       projects: [
         {
-          id: 'test-project',
+          projectId: 'test-project',
           projectName: 'ADD-Test-Project',
           status: 'in-progress',
           contractDate: '2021-02-01',
@@ -33,7 +33,7 @@ export default {
           ]
         },
         {
-          id: 'test-project',
+          projectId: 'a0E3l00000KzAr2EAF',
           projectName: 'ADD-Another-Test-Project',
           status: 'in-progress',
           contractDate: '2021-02-01',

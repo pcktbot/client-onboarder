@@ -24,19 +24,38 @@
         Project Onboarding
       </h2>
     </b-navbar-brand>
-    <b-navbar-nav class="ml-auto pr-2 align-self-center h-100">
-      <slot />
-    </b-navbar-nav>
+    <b-nav-text>
+      <b-badge variant="error-20" class="font-weight-bold px-2">
+        BETA
+      </b-badge>
+      v{{ version }}
+    </b-nav-text>
+    <b-navbar-toggle target="nav-collapse" />
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav class="ml-auto pr-2 align-self-center h-100">
+        <slot />
+      </b-navbar-nav>
+    </b-collapse>
   </b-navbar>
 </template>
 
 <script>
+import { version } from '~/package.json'
 export default {
   props: {
     showBranding: {
       type: Boolean,
       default: true
     }
+  },
+  data () {
+    return { version }
   }
 }
 </script>
+
+<style>
+.navbar-collapse {
+  height: 100%;
+}
+</style>

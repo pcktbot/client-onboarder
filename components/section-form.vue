@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 py-5">
+  <div class="px-5 py-3">
     <div
       v-for="(field, i) in category.fields"
       :key="`field-row-${i}`"
@@ -7,7 +7,7 @@
     >
       <b-form-group
         v-for="f in field"
-        :key="f.id"
+        :key="toKebab(f.label)"
         :class="{ 'inline-group-ctn': f.hasMergeConflict }"
         :style="{ 'max-width: 50%;': field.length > 1 }"
         label-class="text-uppercase text-muted font-weight-bold"
@@ -31,19 +31,21 @@
         >
           <!-- :value="category.fieldData[f.id]" -->
           <b-form-select
+            :id="f.dataKey"
             :options="f.options"
             :disabled="f.hasMergeConflict"
             class="section-group__select"
           />
           <span class="section-group__caret">
             <b-icon-chevron-down
-              variant="light"
+              variant="gray-80"
             />
           </span>
         </span>
         <!-- :value="category.fieldData[f.id]" -->
         <b-form-input
           v-else
+          :id="f.dataKey"
           :type="f.type"
           :placeholder="f.placeholder"
           :disabled="f.hasMergeConflict"
@@ -54,18 +56,18 @@
     </div>
     <div class="d-flex justify-content-end mb-3 mt-4">
       <b-btn
-        variant="outline-error-20"
-        class="text-uppercase font-weight-bold mr-2 px-4"
-        style="border-width: 0px; border-radius: 6px;"
-      >
-        Abandon Changes
-      </b-btn>
-      <b-btn
         variant="secondary"
-        class="text-uppercase font-weight-bold mr-2 px-4"
-        style="border-radius: 8px;"
+        class="text-uppercase font-weight-bold mr-2 px-3 py-2"
+        style="border-radius: 4px;"
       >
         Save Changes
+      </b-btn>
+      <b-btn
+        variant="transparent"
+        class="text-uppercase text-secondary-30 font-weight-bold mr-2 py-3 px-4"
+        style="border-width: 0px; border-radius: 4px;"
+      >
+        Abandon Changes
       </b-btn>
     </div>
   </div>
@@ -98,6 +100,7 @@ export default {
 </script>
 
 <style lang="scss">
+$gray: #c1c1c1;
 .inline-group-ctn {
   position: relative;
 }
@@ -106,7 +109,7 @@ export default {
   &__select {
     background: none;
     background-color: white;
-    border: 2px solid #93999f;
+    border: 2px solid $gray;
     border-radius: 6px;
     box-shadow: inset 0 1px 4px rgba(203, 206, 209, 1);
   }
@@ -118,11 +121,10 @@ export default {
     width: 1.5em;
     height: 1.5em;
     transform: translate(-50%, 0.25em);
-    background-color: #93999f;
+    color: #93999f;
     z-index: 11;
     border-radius: 6px;
     text-align: center;
-    box-shadow: 0 1px 4px rgba(203, 206, 209, 1);
     transition: 200ms ease-in;
   }
   &:hover > .section-group__caret {
@@ -130,9 +132,9 @@ export default {
   }
 }
 .section-input.form-control {
-  border: 2px solid #93999f;
+  border: 2px solid $gray;
   border-radius: 6px;
-  box-shadow: inset 0 1px 4px rgba(203, 206, 209, 1);
+  box-shadow: inset 0 1px 3px rgba(203, 206, 209, 0.5);
   &::placeholder {
     color: #93999f;
   }

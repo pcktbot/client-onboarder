@@ -107,6 +107,7 @@ export default {
   min-height: 100%;
   border-radius: 50px 0 0 0;
   overflow-y: scroll;
-  box-shadow: -2px 0 20px rgba(12, 35, 64, 0.5);
+  box-shadow: -1px -1px 0 rgba(12, 35, 64, 0.25);
+  // box-shadow: -2px 0 20px rgba(12, 35, 64, 0.5);
 }
 </style>
