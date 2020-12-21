@@ -62,7 +62,7 @@
         role="tabpanel"
       >
         <!-- <section-form v-bind="{ category: cat }" /> -->
-        {{ cat }}
+        {{ cat.fields }}
       </b-collapse>
     </b-card>
   </div>
@@ -92,7 +92,7 @@ export default {
         ? category.isReviewed
           ? 'secondary-70'
           : 'warning-70'
-        : 'error-70'
+        : 'error-30'
     },
     toBreadcrumb (categories) {
       return categories.map((cat) => {

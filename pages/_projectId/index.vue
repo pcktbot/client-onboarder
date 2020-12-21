@@ -1,23 +1,26 @@
 <template>
   <div class="content">
     <primary-nav>
-      <b-btn :to="`/${$nuxt._route.params.projectId}/users`">
+      <b-btn :to="`/${$nuxt._route.params.projectId}/users`" class="align-self-center mr-2" variant="outline-secondary">
         Users
       </b-btn>
-      <b-btn to="/projects">
+      <b-btn to="/projects" class="align-self-center mr-2" variant="outline-secondary">
         Projects
       </b-btn>
-      <b-btn :to="`/${$nuxt._route.params.projectId}`">
+      <b-btn :to="`/${$nuxt._route.params.projectId}`" class="align-self-center mr-2" variant="outline-secondary">
         Project
       </b-btn>
       <user-dropdown />
     </primary-nav>
-    <article class="content__grid">
+    <article :class="[{ 'is-tidy': isTidy }, 'content__grid']">
       <aside class="py-3">
         <location-list />
       </aside>
       <section class="main-content py-2">
         <project-details />
+        <b-btn class="main-content__btn" @click="isTidy = !isTidy">
+          <b-icon-chevron-compact-left /> TEST
+        </b-btn>
         <transition mode="out-in" name="fade">
           <bulk-edit-wrapper v-if="bulkIsEnabled" />
           <b-card v-else no-body header-class="border-0" class="border-0">
@@ -46,7 +49,8 @@ export default {
   },
   data () {
     return {
-      currentTab: 0
+      currentTab: 0,
+      isTidy: false
     }
   },
   computed: mapState({
@@ -67,6 +71,9 @@ export default {
     display: grid;
     grid-template-columns: minmax(min-content, 300px) auto;
     overflow-y: hidden;
+    &.is-tidy {
+      grid-template-columns: 75px auto;
+    }
   }
 }
 .main-content {
@@ -74,7 +81,7 @@ export default {
   min-height: 100%;
   border-radius: 50px 0 0 0;
   overflow-y: scroll;
-  box-shadow: -1px -1px 0 rgba(12, 35, 64, 0.25);
-  // box-shadow: -2px 0 20px rgba(12, 35, 64, 0.5);
+  // box-shadow: -1px -1px 0 rgba(12, 35, 64, 0.25);
+  box-shadow: -2px 0 20px rgba(12, 35, 64, 0.25);
 }
 </style>

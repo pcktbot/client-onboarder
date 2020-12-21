@@ -92,10 +92,13 @@ export default {
 .table.b-table > tbody > .table-active,
 .table.b-table > tbody > .table-active > th,
 .table.b-table > tbody > .table-active > td {
-  background-color: #e3e3e3;
-  color: #2d8081;
+  background-color: var(--tertiary-30);
+  // background-color: #f7dddd;
+  color: var(--primary);
+  // color: #2d8081;
   // background-color: #4e6f96;
-  box-shadow: inset 10px 0 0 0 #2d8081;
+  box-shadow: inset 10px 0 0 0 var(--primary);
+  // box-shadow: inset 10px 0 0 0 #2d8081;
   // box-shadow: inset 10px 0 0 0 #6889b0;
 }
 </style>

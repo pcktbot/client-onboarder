@@ -53,13 +53,14 @@ $enable-gradients: false;
 $enable-transitions: true;
 $enable-print-styles: false;
 $bv-enable-table-stacked: false;
-$body-bg: white;
+$body-bg: #dfe7ed;
 // $body-bg: #304a69;
 
 // BOOTSTRAP VARIABLES DECLARED ABOVE
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
 @import 'vue-multiselect/dist/vue-multiselect.min.css';
+@import "vue-multiselect-listbox/src/scss/vue-multi-select-listbox.scss";
 
 // OVERRIDES BELOW
 .nav-tabs .nav-link.active,
