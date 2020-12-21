@@ -36,7 +36,14 @@ const sequelize = new Sequelize(dbUrl, {
   logging: (logging === 'true')
 })
 
-const db = {}
+const updatableModels = require('@getg5/g5-updatable').models(sequelize)
+const db = {
+  ...updatableModels
+}
+
+// db.user.associate = (models) => {
+//   models.user.hasMany(models.seoAssignment, { foreignKey: 'userId', sourceKey: 'id' })
+// }
 
 fs.readdirSync(__dirname)
   .filter(file => file.indexOf('.') !== 0 &&
@@ -58,7 +65,6 @@ Object.keys(db)
       db[modelName].associate(db)
     }
   })
-
 require('./prototypes')(db, sequelize, Sequelize)
 require('./hooks')(db, sequelize, Sequelize)
 
