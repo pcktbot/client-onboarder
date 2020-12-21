@@ -1,7 +1,7 @@
 const { INTEGER, STRING, JSONB, BOOLEAN } = require('sequelize')
 
 module.exports = (sequelize) => {
-  const subSection = sequelize.define('subSection', {
+  const subSection = sequelize.define('subsection', {
     id: {
       type: INTEGER,
       autoIncrement: true,

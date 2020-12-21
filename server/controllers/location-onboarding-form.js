@@ -1,6 +1,6 @@
 const models = require('../models')
 class LocationOnboardingForm {
-  constructor(location) {
+  constructor (location) {
     this.location = location
     this.verticalMap = {
       'Self Storage': 'SS',
@@ -13,20 +13,20 @@ class LocationOnboardingForm {
     this.isCorporate = null
   }
 
-  findPackageIds() {
+  findPackageIds () {
     if (this.location.dataValues.packages.length === 0) { throw new Error('this location is not associated with any packages') }
     this.packageIds = this.location.dataValues.packages.map(p => p.salesforceId)
   }
 
-  findVertical() {
+  findVertical () {
     this.vertical = this.verticalMap[this.location.dataValues.properties.vertical]
   }
 
-  corpStatus() {
+  corpStatus () {
     this.isCorporate = this.location.dataValues.properties.corp || false
   }
 
-  async loadSections() {
+  async loadSections () {
     if (!this.packageIds) { throw new Error('packageIds must be set') }
     this.sections = await models.section.findAll({
       include: [
@@ -39,7 +39,7 @@ class LocationOnboardingForm {
           }
         },
         {
-          model: models.subSection,
+          model: models.subsection,
           include: [
             {
               model: models.field
@@ -53,11 +53,11 @@ class LocationOnboardingForm {
     })
   }
 
-  filterEmptySections() {
-    this.form = this.form.filter(s => s.fields.length !== 0)
+  filterEmptySections () {
+    this.form = this.form.filter(s => (s.fields.length !== 0 || s.subsections.length !== 0))
   }
 
-  filterFields(fields) {
+  filterFields (fields) {
     return fields.filter(f => f.dataValues.displayVertical.includes(this.vertical))
   }
 
@@ -75,26 +75,38 @@ class LocationOnboardingForm {
     })
   }
 
-  filterMapFields(fields) {
+  filterMapFields (fields) {
     const f = this.filterFields(fields)
     return this.mapField(f)
   }
 
-  mapSections() {
+  mapSections () {
     this.form = this.sections.map((section) => {
-      const { name, priority, subSections, fields: f } = section
+      const { name, priority, subsections: s, fields: f, id } = section
       // console.log({ fields })
       // return section
       const fields = this.filterMapFields(f)
+      const subsections = s.map((s) => {
+        const { name, priority, fields: f, id } = s
+        const fields = this.filterMapFields(f)
+        return {
+          name: name[this.vertical] || name.default,
+          priority,
+          fields,
+          id
+        }
+      })
       return {
         name: name[this.vertical] || name.default,
         priority,
-        fields
+        fields,
+        subsections,
+        id
       }
     })
   }
 
-  fieldSettings(settings) {
+  fieldSettings (settings) {
     if (!settings) { return null }
     const s = {}
     const keys = Object.keys(settings)
@@ -104,17 +116,17 @@ class LocationOnboardingForm {
     return s
   }
 
-  locationSettings() {
+  locationSettings () {
     this.findPackageIds()
     this.findVertical()
     this.corpStatus()
   }
 
-  async build() {
+  async build () {
     this.locationSettings()
     await this.loadSections()
     this.mapSections()
-    this.filterEmptySections()
+    // this.filterEmptySections()
   }
 
   display () {
