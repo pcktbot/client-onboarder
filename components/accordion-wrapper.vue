@@ -35,7 +35,7 @@
             Review Needed
           </b-badge>
           <h4 class="mb-0 text-uppercase font-weight-bold text-gray-60">
-            {{ cat.label }}
+            {{ cat.name }}
             <b-icon-question-circle variant="secondary-20" scale="0.5em" />
           </h4>
           <span class="text-gray-30 small align-self-end font-italic mb-1">
@@ -61,8 +61,8 @@
         :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
-        <section-form v-bind="{ category: cat }" />
-        <!-- {{ cat.fields }} -->
+        <!-- <section-form v-bind="{ category: cat }" /> -->
+        {{ cat }}
       </b-collapse>
     </b-card>
   </div>

@@ -1,15 +1,14 @@
 <template>
   <div class="px-5 py-3">
     <div
-      v-for="(field, i) in category.fields"
+      v-for="(fields, i) in category.fields"
       :key="`field-row-${i}`"
       class="d-flex justify-content-between w-100 mb-0 flex-wrap"
     >
       <b-form-group
-        v-for="f in field"
-        :key="toKebab(f.label)"
-        :class="{ 'inline-group-ctn': f.hasMergeConflict }"
-        :style="{ 'max-width: 50%;': field.length > 1 }"
+        v-for="f in fields"
+        :key="f.dataKey"
+        :style="{ 'max-width: 50%;': fields.length > 1 }"
         label-class="text-uppercase text-muted font-weight-bold"
         class="mr-2"
         style="flex: 1 1 auto;"
@@ -26,10 +25,9 @@
         </template>
         <!-- FORM LABEL ENDS -->
         <span
-          v-if="f.type === 'select'"
+          v-if="f.inputType === 'select'"
           class="section-group"
         >
-          <!-- :value="category.fieldData[f.id]" -->
           <b-form-select
             :id="f.dataKey"
             :options="f.options"
@@ -42,11 +40,10 @@
             />
           </span>
         </span>
-        <!-- :value="category.fieldData[f.id]" -->
         <b-form-input
           v-else
           :id="f.dataKey"
-          :type="f.type"
+          :type="f.inputType"
           :placeholder="f.placeholder"
           :disabled="f.hasMergeConflict"
           class="section-input"

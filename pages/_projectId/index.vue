@@ -28,6 +28,9 @@
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
               </b-tab>
+              <b-tab title="Flattened Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+                {{ categories }}
+              </b-tab>
             </b-tabs>
           </b-card>
         </transition>
@@ -39,8 +42,9 @@
 <script>
 import { mapState } from 'vuex'
 import LocationsMixin from '~/mixins/locations'
+import FieldProcessor from '~/mixins/fieldProcessor'
 export default {
-  mixins: [LocationsMixin],
+  mixins: [LocationsMixin, FieldProcessor],
   async fetch ({ store, params }) {
     const { projectId } = params
     await store.dispatch('projects/init')

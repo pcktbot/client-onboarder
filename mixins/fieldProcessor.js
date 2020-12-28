@@ -13,7 +13,7 @@ const mapExample = {
  * @param {Array} acc - empty array used to accumulate field objects
  * @returns {Array} - Array of accumlated values
  */
-function flattenFields (obj, label, acc) {
+function flattenFields (obj, label, acc = []) {
   if (typeof obj === 'object') {
     for (const key in obj) {
       if (key === label && Array.isArray(obj[label])) {
@@ -30,7 +30,7 @@ function flattenFields (obj, label, acc) {
 }
 
 /**
- * Wraps each field object in an array and clucsters items in the map together
+ * Wraps each field object in an array and clusters items in the map together
  * @param {Array} fields - array of field object
  * @param {Object} map = object with key equal to `section{section.id}` or `subsection{section.id}`
  * @returns {Array} - mutated fields
@@ -90,4 +90,10 @@ function mapFields(payload, sectionMap) {
   return payload.sections.map(section => fieldFormatter(section, sectionMap, false))
 }
 
-export { flattenFields, mapFields }
+// export { flattenFields, mapFields }
+export default {
+  methods: {
+    mapFields,
+    flattenFields
+  }
+}
