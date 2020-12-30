@@ -3,13 +3,11 @@ export default {
   data () {
     return {}
   },
-  computed: {
-    ...mapState({
-      locations: state => state.locations.locations,
-      projectId: state => state.projects.selectedProject.projectId,
-      selectedLocations: state => state.locations.selectedLocations
-    })
-  },
+  computed: mapState({
+    locations: state => state.locations.locations,
+    projectId: state => state.projects.selectedProject.projectId,
+    selectedLocations: state => state.locations.selectedLocations
+  }),
   methods: {
     ...mapActions({
       updateLocationProp: 'locations/updateLocationProp',

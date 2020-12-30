@@ -8,12 +8,12 @@ const mapExample = {
  * Function will traverse through nested object
  * until it finds label param. If label param is array, it will
  * push all items into the acc param
- * @param {Object} obj - json or js object
+ * @param {Object} obj
  * @param {String} label - property to accumulate values from
- * @param {Array} acc - empty array used to accumulate field objects
- * @returns {Array} - Array of accumlated values
+ * @param {Array} acc - array used to accumulate field objects
+ * @returns {Array}
  */
-function flattenFields (obj, label, acc = []) {
+export function flattenFields (obj, label, acc = []) {
   if (typeof obj === 'object') {
     for (const key in obj) {
       if (key === label && Array.isArray(obj[label])) {
@@ -82,15 +82,14 @@ function fieldFormatter (obj, fieldMap, isSubsection = false) {
 /**
  * Mutates server response with fieldMap
  * @param {Object} obj - server payload
- * @param {Object} fieldMap - field mapping
+ * @param {Object} sectionMap - field mapping
  * @param {Boolean} isSubsection - boolean
  * @returns
  */
-function mapFields(payload, sectionMap) {
+export function mapFields(payload, sectionMap) {
   return payload.sections.map(section => fieldFormatter(section, sectionMap, false))
 }
 
-// export { flattenFields, mapFields }
 export default {
   methods: {
     mapFields,

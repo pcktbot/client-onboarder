@@ -12,15 +12,12 @@
       </b-btn>
       <user-dropdown />
     </primary-nav>
-    <article :class="[{ 'is-tidy': isTidy }, 'content__grid']">
+    <article :class="['content__grid']">
       <aside class="py-3">
         <location-list />
       </aside>
       <section class="main-content py-2">
         <project-details />
-        <b-btn class="main-content__btn" @click="isTidy = !isTidy">
-          <b-icon-chevron-compact-left /> TEST
-        </b-btn>
         <transition mode="out-in" name="fade">
           <bulk-edit-wrapper v-if="bulkIsEnabled" />
           <b-card v-else no-body header-class="border-0" class="border-0">
@@ -28,8 +25,8 @@
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
               </b-tab>
-              <b-tab title="Flattened Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
-                {{ categories }}
+              <b-tab title="Advanced Mode" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
+                <flatten-test :items="fields" />
               </b-tab>
             </b-tabs>
           </b-card>
@@ -42,9 +39,9 @@
 <script>
 import { mapState } from 'vuex'
 import LocationsMixin from '~/mixins/locations'
-import FieldProcessor from '~/mixins/fieldProcessor'
+import FormUtil from '~/mixins/form-util'
 export default {
-  mixins: [LocationsMixin, FieldProcessor],
+  mixins: [LocationsMixin, FormUtil],
   async fetch ({ store, params }) {
     const { projectId } = params
     await store.dispatch('projects/init')
@@ -53,13 +50,13 @@ export default {
   },
   data () {
     return {
-      currentTab: 0,
-      isTidy: false
+      currentTab: 0
     }
   },
   computed: mapState({
     bulkIsEnabled: state => state.bulk.isEnabled,
-    categories: state => state.fields.categories
+    categories: state => state.fields.categories,
+    fields: state => state.fields.fields
   })
 }
 </script>

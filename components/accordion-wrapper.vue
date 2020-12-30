@@ -25,7 +25,7 @@
         role="tab"
       >
         <b-btn
-          v-b-toggle="cat.id"
+          v-b-toggle="`category-${cat.id}`"
           block
           variant="transparent"
           class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-start"
@@ -56,13 +56,12 @@
         </b-btn>
       </b-card-header>
       <b-collapse
-        :id="cat.id"
+        :id="`category-${cat.id}`"
         :visible="i === 0"
         :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
-        <!-- <section-form v-bind="{ category: cat }" /> -->
-        {{ cat }}
+        <section-form v-bind="{ category: cat }" />
       </b-collapse>
     </b-card>
   </div>
@@ -97,7 +96,7 @@ export default {
     toBreadcrumb (categories) {
       return categories.map((cat) => {
         return {
-          text: cat.label,
+          text: cat.name,
           status: this.setStatus(cat),
           href: `#${cat.id}`
         }

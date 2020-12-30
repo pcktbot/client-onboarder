@@ -36,8 +36,9 @@ export const actions = {
 export const mutations = {
   SET (state, obj) {
     const keys = Object.keys(obj)
-    // eslint-disable-next-line no-return-assign
-    keys.forEach(key => state[key] = obj[key])
+    keys.forEach((key) => {
+      state[key] = obj[key]
+    })
   },
   UPDATE_LOCATION (state, { locIdx, key, val }) {
     state.locations[locIdx][key] = val

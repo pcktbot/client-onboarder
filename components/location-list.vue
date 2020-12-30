@@ -64,9 +64,16 @@ export default {
     }),
     onLocationSelect (selectedLocations) {
       this.updateSelectedLocations({ selectedLocations })
-      // need to access vertical
+      // TODO need to access vertical
       this.setCategories({ vertical: 'mf', corp: false })
-      this.setFields({ projectId: this.projectId, locationId: selectedLocations[0].locationId })
+      if (selectedLocations.length > 0 && this.projectId) {
+        this.setFields({
+          projectId: this.projectId,
+          locationId: selectedLocations[0].locationId
+        })
+      } else {
+        // TODO needs to clear fields/set
+      }
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)
