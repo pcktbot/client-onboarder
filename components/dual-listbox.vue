@@ -1,42 +1,77 @@
 <template>
-  <div>
-    <b-form-group
-      label-class="text-uppercase text-muted font-weight-bold"
-      class="mr-2"
-      style="flex: 1 1 auto;"
-    >
-      <template v-slot:label>
-        {{ label }}
-        <b-icon-info-circle
-          v-if="description"
-          v-b-tooltip.click.v-tertiary-70="description"
-          variant="secondary-30"
-          style="cursor: pointer;"
-        />
-      </template>
-      <b-btn>
-        <b-icon-x />
-      </b-btn>
-      <b-btn>
-        <b-icon-plus />
-      </b-btn>
-      <v-multiselect-listbox
-        :options="settings.options"
-        :reduce-display-property="(option) => option.text"
-        :reduce-value-property="(option) => option.value"
-        :show-select-all-buttons="false"
-        no-options-found-text="Not found"
-        no-selected-options-found-text="No selection found"
-        search-input-class="dual-search-input"
+  <b-row>
+    <b-col>
+      <h3>Move your Amenities</h3>
+      <b-form-input
+        v-model="search"
+        placeholder="search..."
+        type="search"
       />
-    </b-form-group>
-  </div>
+      <draggable
+        class="dragArea list-group"
+        :list="filteredList"
+        :group="{ name: 'amenities', pull: 'clone', put: false }"
+        :clone="cloneItem"
+        @change="log"
+      >
+        <div
+          v-for="element in filteredList"
+          :key="element.value"
+          class="list-group-item"
+        >
+          {{ element.text }}
+        </div>
+      </draggable>
+    </b-col>
+
+    <b-col>
+      <h3>Choosen Amenities</h3>
+      <div class="form-inline">
+        <b-button
+          variant="secondary"
+          @click="addItem()"
+        >
+          Add
+          <b-icon icon="plus" />
+        </b-button>
+        <b-form-input
+          v-model="addInput"
+          placeholder="add additional amenities"
+        />
+      </div>
+      <draggable
+        class="dragArea list-group"
+        :list="amenities"
+        group="amenities"
+        @change="log"
+      >
+        <div
+          v-for="element in amenities"
+          :key="element.name"
+          class="list-group-item"
+        >
+          {{ element.text }}
+          <span class="m-0 p-0" onmouseover="" style="cursor: pointer;" @click="removeAt(element.id)">
+            <b-img width="15" height="15" src="/red-x.svg" style="vertical-align: middle" />
+          </span>
+        </div>
+      </draggable>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 export default {
+  components: {
+    draggable
+  },
   data () {
     return {
+      idGlobal: 0,
+      search: '',
+      addInput: '',
+      amenities: [],
       dataKey: 'apartment_amenities',
       component: 'dual-listbox',
       mappedFields: [
@@ -80,23 +115,46 @@ export default {
       validation: null,
       placeholder: null
     }
+  },
+  computed: {
+    filteredList () {
+      return this.settings.options.filter((amenity) => {
+        return amenity.text.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  },
+  mounted () {
+    this.idGlobal = this.amenities.length
+  },
+  methods: {
+    cloneItem ({ text }) {
+      return {
+        id: this.idGlobal++,
+        text,
+        value: this.camelize(text)
+      }
+    },
+    addItem () {
+      const id = this.idGlobal++
+      this.amenities.push({ text: this.addInput, value: this.camelize(this.addInput), id })
+      this.addInput = ''
+    },
+    removeAt (id) {
+      const index = this.amenities.findIndex(amenity => amenity.id === id)
+      this.amenities.splice(index, 1)
+    },
+    log (evt) {
+      window.console.log(evt)
+    },
+    camelize (str) {
+      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+        return index === 0 ? word.toLowerCase() : word.toUpperCase()
+      }).replace(/\s+/g, '')
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.dual-search-input {
-  border: 2px solid #c8c8c8;
-  border-radius: 10px;
-  padding: 0.25em 1.5em;
-}
-.msl-multi-select {
-  width: 100%;
-  max-width: 800px;
-}
-.msl-searchable-list__item {
-  margin: 0.5em 0.25em;
-  border: 2px solid #c1c1c1;
-  border-radius: 4px;
-}
+
 </style>
