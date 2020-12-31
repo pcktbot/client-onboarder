@@ -13,6 +13,8 @@ export default {
     })
   },
   methods: {
+    onSave () {},
+    onRevert () {},
     toKebab (str) {
       return str
         .replace(/([a-z])([A-Z])/g, '$1-$2')

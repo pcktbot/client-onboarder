@@ -28,6 +28,12 @@
               <b-tab title="Advanced Mode" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <flatten-test :items="fields" />
               </b-tab>
+              <b-tab title="Checkbox Group Expanded" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
+                <checkbox-group-expanded />
+              </b-tab>
+              <b-tab title="Dual Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
+                <dual-listbox />
+              </b-tab>
             </b-tabs>
           </b-card>
         </transition>

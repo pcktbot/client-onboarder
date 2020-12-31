@@ -56,6 +56,14 @@ $bv-enable-table-stacked: false;
 $body-bg: #dfe7ed;
 // $body-bg: #304a69;
 
+$msl-multi-select-items-box-border-color: #ababab !default;
+$msl-multi-select-item-border-bottom-color: #c1c1c1 !default;
+$msl-multi-select-item-hover-bg: #90acc1 !default;
+$msl-multi-select-item-hover-font-color: #fff !default;
+$msl-multi-select-no-item-font-color: #c0c2c6 !default;
+$msl-multi-select-action-hover-font-color: #c0c2c6 !default;
+$msl-multi-select-action-icon-font-color: #666666 !default;
+
 // BOOTSTRAP VARIABLES DECLARED ABOVE
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';
