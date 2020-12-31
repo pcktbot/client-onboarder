@@ -21,6 +21,7 @@
         <b-icon-plus />
       </b-btn>
       <v-multiselect-listbox
+        ref="testRef"
         :options="settings.options"
         :reduce-display-property="(option) => option.text"
         :reduce-value-property="(option) => option.value"
@@ -79,6 +80,11 @@ export default {
       description: null,
       validation: null,
       placeholder: null
+    }
+  },
+  computed: {
+    searchText () {
+      return this.$refs.testRef.$children[0].searchText
     }
   }
 }
