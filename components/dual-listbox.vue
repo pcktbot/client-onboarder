@@ -14,10 +14,17 @@
           style="cursor: pointer;"
         />
       </template>
+      <b-btn>
+        <b-icon-x />
+      </b-btn>
+      <b-btn>
+        <b-icon-plus />
+      </b-btn>
       <v-multiselect-listbox
         :options="settings.options"
         :reduce-display-property="(option) => option.text"
         :reduce-value-property="(option) => option.value"
+        :show-select-all-buttons="false"
         no-options-found-text="Not found"
         no-selected-options-found-text="No selection found"
         search-input-class="dual-search-input"
