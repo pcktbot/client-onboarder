@@ -33,8 +33,8 @@
           <h4 class="mb-0 text-gray-80 flex-grow-1">
             {{ item.properties.name }}
           </h4>
-          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-70 p-1">
-            <b-progress-bar :value="60" variant="primary-70" />
+          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-30 p-1">
+            <b-progress-bar :value="60" variant="primary-70" style="border-radius: 10px;" />
           </b-progress>
         </div>
       </template>

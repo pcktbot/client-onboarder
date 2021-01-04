@@ -40,6 +40,7 @@
             v-else
             :type="item.inputType"
             :placeholder="item.placeholder"
+            class="section-input"
           />
         </b-form-group>
       </template>

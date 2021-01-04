@@ -56,6 +56,7 @@
         variant="secondary"
         class="text-uppercase font-weight-bold mr-2 px-3 py-2"
         style="border-radius: 4px;"
+        @click="onSave(category.id, category.fields)"
       >
         Save Changes
       </b-btn>
@@ -63,6 +64,7 @@
         variant="transparent"
         class="text-uppercase text-secondary-30 font-weight-bold mr-2 py-3 px-4"
         style="border-width: 0px; border-radius: 4px;"
+        @click="onRevert(category.id)"
       >
         Abandon Changes
       </b-btn>

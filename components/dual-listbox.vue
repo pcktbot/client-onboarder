@@ -6,18 +6,23 @@
         v-model="search"
         placeholder="search..."
         type="search"
+        class="mb-3"
       />
       <draggable
-        class="dragArea list-group"
         :list="filteredList"
         :group="{ name: 'amenities', pull: 'clone', put: false }"
         :clone="cloneItem"
+        class="dragArea list-group"
+        style="max-height: 400px; overflow-y: scroll;"
+        @start="isDragging = true"
+        @end="onEnd"
         @change="log"
       >
         <div
           v-for="element in filteredList"
           :key="element.value"
           class="list-group-item"
+          style="cursor: grab;"
         >
           {{ element.text }}
         </div>
@@ -26,33 +31,49 @@
 
     <b-col>
       <h3>Choosen Amenities</h3>
-      <div class="form-inline">
-        <b-button
-          variant="secondary"
-          @click="addItem()"
-        >
-          Add
-          <b-icon icon="plus" />
-        </b-button>
+      <b-input-group class="w-100 mb-3">
+        <b-input-group-prepend>
+          <b-button
+            variant="secondary"
+            @click="addItem"
+          >
+            <b-icon icon="plus" />
+            Add
+          </b-button>
+        </b-input-group-prepend>
         <b-form-input
-          v-model="addInput"
-          placeholder="add additional amenities"
+          v-model.trim="addInput"
+          class="flex-grow-1 mb-0"
+          placeholder="Add additional amenities"
         />
-      </div>
+      </b-input-group>
       <draggable
-        class="dragArea list-group"
         :list="amenities"
+        :class="[{ 'is-dragging': isDragging }]"
+        class="dragArea p-2"
+        style="min-height: 400px; background-color: #c1c1c1;"
         group="amenities"
         @change="log"
       >
         <div
           v-for="element in amenities"
           :key="element.name"
-          class="list-group-item"
+          class="bg-white px-3 py-1 mb-2 d-flex align-items-center justify-content-between"
+          style="border-radius: 6px;"
         >
           {{ element.text }}
-          <span class="m-0 p-0" onmouseover="" style="cursor: pointer;" @click="removeAt(element.id)">
-            <b-img width="15" height="15" src="/red-x.svg" style="vertical-align: middle" />
+          <span
+            class="m-0 p-0"
+            onmouseover=""
+            style="cursor: pointer;"
+            @click="removeAt(element.id)"
+          >
+            <b-img
+              width="25"
+              height="25"
+              src="/red-x.svg"
+              style="vertical-align: middle;"
+            />
           </span>
         </div>
       </draggable>
@@ -69,6 +90,7 @@ export default {
   data () {
     return {
       idGlobal: 0,
+      isDragging: false,
       search: '',
       addInput: '',
       amenities: [],
@@ -127,6 +149,9 @@ export default {
     this.idGlobal = this.amenities.length
   },
   methods: {
+    onEnd () {
+      this.isDragging = false
+    },
     cloneItem ({ text }) {
       return {
         id: this.idGlobal++,
@@ -156,5 +181,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.is-dragging {
+  border: 4px dashed #a8a8a8;
+}
 </style>
