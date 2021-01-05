@@ -1,5 +1,15 @@
 <template>
   <div class="px-1 py-3">
+    <b-input-group>
+      <b-input-group-prepend>
+        <b-icon-search />
+      </b-input-group-prepend>
+      <b-form-input
+        v-model.trim="search"
+        debounce="200"
+        type="search"
+      />
+    </b-input-group>
     <b-table
       :fields="['required', 'label', 'dataKey'].map(l => ({ key: l, sortable: true }))"
       :items="items"

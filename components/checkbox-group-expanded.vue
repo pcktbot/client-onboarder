@@ -20,7 +20,7 @@
         switches
         stacked
         style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 0.5em 0;"
-        class="mt-3 ml-3 global-checkbox"
+        class="mt-3 ml-3 global-checkbox font-weight-bold"
       />
       <b-form-input
         v-if="fieldData.includes('other')"

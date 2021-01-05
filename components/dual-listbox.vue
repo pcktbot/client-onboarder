@@ -1,84 +1,96 @@
 <template>
-  <b-row>
-    <b-col>
-      <h3>Move your Amenities</h3>
-      <b-form-input
-        v-model="search"
-        placeholder="search..."
-        type="search"
-        class="mb-3"
-      />
-      <draggable
-        :list="filteredList"
-        :group="{ name: 'amenities', pull: 'clone', put: false }"
-        :clone="cloneItem"
-        class="dragArea list-group"
-        style="max-height: 400px; overflow-y: scroll;"
-        @start="isDragging = true"
-        @end="onEnd"
-        @change="log"
-      >
-        <div
-          v-for="element in filteredList"
-          :key="element.value"
-          class="list-group-item"
-          style="cursor: grab;"
+  <b-container fluid>
+    <b-row style="max-width: 1200px;">
+      <b-col cols="12">
+        <h3>
+          Pick your Amenities
+        </h3>
+      </b-col>
+    </b-row>
+    <b-row style="max-width: 1200px; max-height: 800px;">
+      <b-col cols="6">
+        <b-input-group>
+          <b-input-group-prepend class="d-flex">
+            <b-icon-search />
+          </b-input-group-prepend>
+          <b-form-input
+            v-model="search"
+            placeholder="search..."
+            type="search"
+            class="mb-3"
+          />
+        </b-input-group>
+        <draggable
+          :list="filteredList"
+          :group="{ name: 'amenities', pull: 'clone', put: false }"
+          :clone="cloneItem"
+          class="dragArea p-2"
+          style="max-height: 400px; overflow-y: scroll;"
+          @start="isDragging = true"
+          @end="onEnd"
+          @change="log"
         >
-          {{ element.text }}
-        </div>
-      </draggable>
-    </b-col>
-
-    <b-col>
-      <h3>Choosen Amenities</h3>
-      <b-input-group class="w-100 mb-3">
-        <b-input-group-prepend>
-          <b-button
-            variant="secondary"
-            @click="addItem"
+          <div
+            v-for="element in filteredList"
+            :key="element.value"
+            class="bg-white px-3 py-2 mb-2 d-flex align-items-center justify-content-between font-weight-bold"
+            style="cursor: grab; border-radius: 4px; box-shadow: 0 1px 4px #a8a8a8; border: 1px solid #a8a8a8;"
           >
-            <b-icon icon="plus" />
-            Add
-          </b-button>
-        </b-input-group-prepend>
-        <b-form-input
-          v-model.trim="addInput"
-          class="flex-grow-1 mb-0"
-          placeholder="Add additional amenities"
-        />
-      </b-input-group>
-      <draggable
-        :list="amenities"
-        :class="[{ 'is-dragging': isDragging }]"
-        class="dragArea p-2"
-        style="min-height: 400px; background-color: #c1c1c1;"
-        group="amenities"
-        @change="log"
-      >
-        <div
-          v-for="element in amenities"
-          :key="element.name"
-          class="bg-white px-3 py-1 mb-2 d-flex align-items-center justify-content-between"
-          style="border-radius: 6px;"
+            {{ element.text }}
+          </div>
+        </draggable>
+      </b-col>
+      <b-col cols="6">
+        <b-input-group class="w-100 mb-3">
+          <b-form-input
+            v-model.trim="addInput"
+            class="flex-grow-1 mb-0"
+            placeholder="Add additional amenities"
+          />
+          <b-input-group-append>
+            <b-button
+              variant="secondary"
+              class="px-4"
+              @click="addItem"
+            >
+              <b-icon icon="plus" />
+              Add
+            </b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <draggable
+          :list="amenities"
+          :class="[{ 'is-dragging': isDragging }]"
+          class="dragArea p-2"
+          style="min-height: 400px; background-color: #d1d1d1; border-radius: 4px;"
+          group="amenities"
+          @change="log"
         >
-          {{ element.text }}
-          <span
-            class="m-0 p-0"
-            onmouseover=""
-            style="cursor: pointer;"
-            @click="removeAt(element.id)"
+          <div
+            v-for="element in amenities"
+            :key="element.name"
+            class="bg-white px-3 py-2 mb-2 d-flex align-items-center justify-content-between font-weight-bold"
+            style="border-radius: 4px; box-shadow: 0 1px 2px #a8a8a8;"
           >
-            <b-img
-              width="25"
-              height="25"
-              src="/red-x.svg"
-              style="vertical-align: middle;"
-            />
-          </span>
-        </div>
-      </draggable>
-    </b-col>
-  </b-row>
+            {{ element.text }}
+            <span
+              class="m-0 p-0"
+              onmouseover=""
+              style="cursor: pointer;"
+              @click="removeAt(element.id)"
+            >
+              <b-img
+                width="25"
+                height="25"
+                src="/red-x.svg"
+                style="vertical-align: middle;"
+              />
+            </span>
+          </div>
+        </draggable>
+      </b-col>
+    </b-row>
+</b-container>
 </template>
 
 <script>
@@ -182,6 +194,6 @@ export default {
 
 <style lang="scss">
 .is-dragging {
-  border: 4px dashed #a8a8a8;
+  border: 2px dashed #a8a8a8;
 }
 </style>
