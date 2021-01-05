@@ -1,4 +1,5 @@
 const models = require('../models')
+const { reject } = require('../utilities/object')
 class LocationOnboardingForm {
   constructor (location) {
     this.location = location
@@ -54,7 +55,7 @@ class LocationOnboardingForm {
   }
 
   filterEmptySections () {
-    this.form = this.form.filter(s => (s.fields.length !== 0 || s.subsections.length !== 0))
+    this.form = this.form.filter(s => !(s.fields.length === 0 && s.subsections.length === 0))
   }
 
   filterFields (fields) {
@@ -63,14 +64,16 @@ class LocationOnboardingForm {
 
   mapField (fields) {
     return fields.map((f) => {
-      const { label, placeholder, inputType, required, settings, dataKey } = f
+      const { label, placeholder, type, required, settings, dataKey, validation, component } = f
       return {
         label: label[this.vertical] || label.default,
         placeholder: placeholder ? (placeholder[this.vertical || placeholder.default]) : null,
-        inputType,
+        type,
         required,
         settings: this.fieldSettings(settings),
-        dataKey
+        dataKey,
+        validation: (Object.keys(validation).length > 0 ? validation : null),
+        component
       }
     })
   }
@@ -83,37 +86,40 @@ class LocationOnboardingForm {
   mapSections () {
     this.form = this.sections.map((section) => {
       const { name, priority, subsections: s, fields: f, id } = section
-      // console.log({ fields })
-      // return section
+
       const fields = this.filterMapFields(f)
       const subsections = s.map((s) => {
-        const { name, priority, fields: f, id } = s
-        const fields = this.filterMapFields(f)
+        const { name, priority, fields: sf, id } = s
+        const subFields = this.filterMapFields(sf)
         return {
           name: name[this.vertical] || name.default,
           priority,
-          fields,
+          fields: subFields,
           id
         }
       })
+        .filter(s => s.fields.length > 0)
       return {
         name: name[this.vertical] || name.default,
         priority,
         fields,
-        subsections,
+        subsections: subsections || [],
         id
       }
     })
   }
 
-  fieldSettings (settings) {
+  fieldSettings(settings) {
     if (!settings) { return null }
     const s = {}
-    const keys = Object.keys(settings)
-    keys.forEach((k) => {
-      s[k] = settings[k][this.vertical] || settings[k].default
-    })
-    return s
+    const keepers = reject(settings, ['initialValue'])
+    const keeperKeys = Object.keys(keepers)
+    if (keeperKeys.length > 0) {
+      keeperKeys.forEach((k) => {
+        s[k] = settings[k][this.vertical] || settings[k].default
+      })
+    }
+    return (Object.keys(s).length > 0) ? s : null
   }
 
   locationSettings () {
@@ -126,7 +132,7 @@ class LocationOnboardingForm {
     this.locationSettings()
     await this.loadSections()
     this.mapSections()
-    // this.filterEmptySections()
+    this.filterEmptySections()
   }
 
   display () {
