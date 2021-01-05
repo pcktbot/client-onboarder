@@ -34,9 +34,9 @@
               <b-tab title="Dual Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <dual-listbox />
               </b-tab>
-              <b-tab title="Former Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
+              <!-- <b-tab title="Former Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <dual-listbox-old />
-              </b-tab>
+              </b-tab> -->
             </b-tabs>
           </b-card>
         </transition>
