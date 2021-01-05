@@ -26,9 +26,10 @@
         v-if="fieldData.includes('other')"
         v-model.trim="other"
         style="max-width: 50%;"
+        class="mt-2"
       />
     </b-form-group>
-    {{ fieldData }}, {{ other }}
+    {{ totalSelected }}
   </div>
 </template>
 
@@ -68,6 +69,11 @@ export default {
       description: null,
       validation: null,
       placeholder: null
+    }
+  },
+  computed: {
+    totalSelected () {
+      return [...this.fieldData, this.other].filter(i => i !== 'other')
     }
   }
 }
