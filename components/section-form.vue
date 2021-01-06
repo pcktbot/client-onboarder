@@ -31,7 +31,6 @@
           <b-form-select
             :id="f.dataKey"
             :options="f.options"
-            :disabled="f.hasMergeConflict"
             class="section-group__select"
           />
           <span class="section-group__caret">
@@ -45,10 +44,8 @@
           :id="f.dataKey"
           :type="f.inputType"
           :placeholder="f.placeholder"
-          :disabled="f.hasMergeConflict"
           class="section-input"
         />
-        <difference-resolver v-if="f.hasMergeConflict" />
       </b-form-group>
     </div>
     <div class="d-flex justify-content-end mb-3 mt-4">
