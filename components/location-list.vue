@@ -3,7 +3,7 @@
     <div class="px-3 mb-3">
       <search-input :filter="filter" @search="filter = $event" />
     </div>
-    <div class="px-3 mb-3">
+    <!-- <div class="px-3 mb-3">
       <b-input-group>
         <b-form-checkbox
           :checked="isEnabled"
@@ -15,7 +15,7 @@
           Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
         </b-input-group-append>
       </b-input-group>
-    </div>
+    </div> -->
     <b-table
       :fields="['location', { key: 'name', tdClass: 'd-none' }]"
       :items="locations"
@@ -33,9 +33,9 @@
           <h4 class="mb-0 text-gray-80 flex-grow-1">
             {{ item.properties.name }}
           </h4>
-          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-30 p-1">
+          <!-- <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-30 p-1">
             <b-progress-bar :value="60" variant="primary-70" style="border-radius: 10px;" />
-          </b-progress>
+          </b-progress> -->
         </div>
       </template>
     </b-table>

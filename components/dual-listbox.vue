@@ -1,12 +1,12 @@
 <template>
   <b-container fluid>
-    <b-row style="max-width: 1200px;">
+    <!-- <b-row style="max-width: 1200px;">
       <b-col cols="12">
         <h3>
           Pick your Amenities
         </h3>
       </b-col>
-    </b-row>
+    </b-row> -->
     <b-row style="max-width: 1200px; max-height: 800px;">
       <b-col cols="6">
         <b-input-group>
@@ -99,6 +99,14 @@ export default {
   components: {
     draggable
   },
+  props: {
+    field: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       idGlobal: 0,
@@ -152,7 +160,7 @@ export default {
   },
   computed: {
     filteredList () {
-      return this.settings.options.filter((amenity) => {
+      return this.field.settings.options.filter((amenity) => {
         return amenity.text.toLowerCase().includes(this.search.toLowerCase())
       })
     }
