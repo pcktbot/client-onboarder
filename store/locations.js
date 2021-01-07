@@ -1,5 +1,3 @@
-import { arryToObject } from '~/mixins/form-util'
-
 export const state = () => ({
   locations: {},
   selected: []
@@ -11,23 +9,14 @@ export const actions = {
     try {
       const locations = await this.$axios
         .$get(`/api/v1/projects/${projectId}/locations`)
-      // const updatedLocations = locations.reduce((acc, curr) => {
-      //   acc[curr.locationId] = {
-      //     ...curr,
-      //     status: 'Incomplete',
-      //     useCollected: true
-      //   }
-      //   return acc
-      // })
-      const locWithAddedVal = locations.map((location) => {
-        return {
-          ...location,
+      const updatedLocations = locations.reduce((acc, curr) => {
+        acc[curr.locationId] = {
+          ...curr,
           status: 'Incomplete',
           useCollected: true
         }
-      })
-      const updatedLocations = arryToObject(locWithAddedVal, 'locationId')
-
+        return acc
+      }, {})
       commit('SET', { locations: updatedLocations })
     } catch (e) {
       // eslint-disable-next-line no-console
