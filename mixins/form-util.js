@@ -37,7 +37,7 @@ function fieldMapper (fields, map) {
     const arr = map ? map.find(subArr => subArr.includes(dataKey)) : null
     const len = newFields.length
     if (arr) {
-      if (!groupMap.hasOwnProperty(arr[0])) {
+      if (!Object.prototype.hasOwnProperty.call(groupMap, arr[0])) {
         arr.forEach((item) => {
           groupMap[item] = len
         })
@@ -62,10 +62,10 @@ function fieldFormatter (obj, fieldMap, isSubsection = false) {
   const title = isSubsection ? 'subsection' : 'section'
   if (typeof obj === 'object') {
     const mapKey = `${title}${obj.id}`
-    if (obj.hasOwnProperty('fields')) {
+    if (Object.prototype.hasOwnProperty.call(obj, 'fields')) {
       obj.fields = fieldMapper(obj.fields, fieldMap[mapKey])
     }
-    if (obj.hasOwnProperty('subsections')) {
+    if (Object.prototype.hasOwnProperty.call(obj, 'subsections')) {
       for (let i = 0; i < obj.subsections.length; i++) {
         obj.subsections[i] = fieldFormatter(obj.subsections[i], fieldMap, true)
       }
@@ -80,13 +80,29 @@ function fieldFormatter (obj, fieldMap, isSubsection = false) {
  * @param {Boolean} isSubsection - boolean
  * @returns
  */
-export function mapFields(payload, sectionMap) {
+export function mapFields (payload, sectionMap) {
   return payload.sections.map(section => fieldFormatter(section, sectionMap, false))
+}
+
+/**
+ * Updates array of objects to Object
+ * where each key is pulled from original object matching
+ * key param
+ * @param {Array} arr - original arr
+ * @param {String} key - field mappin
+ * @returns {Object}
+ */
+export function arryToObject (arr, key) {
+  return arr.reduce((acc, current) => {
+    acc[current[key]] = current
+    return acc
+  }, {})
 }
 
 export default {
   methods: {
     mapFields,
-    flattenFields
+    flattenFields,
+    arryToObject
   }
 }

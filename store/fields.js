@@ -29,11 +29,6 @@ export const actions = {
       commit('SET', { categories, fields: flattened })
     }
   }
-  // ,
-  // setCategories ({ commit }, { vertical, corp }) {
-  //   const categories = getCategories(vertical, corp)
-  //   commit('SET', categories)
-  // }
 }
 
 export const mutations = {
