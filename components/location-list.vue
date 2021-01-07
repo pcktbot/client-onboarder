@@ -18,7 +18,7 @@
     </div> -->
     <b-table
       :fields="['location', { key: 'name', tdClass: 'd-none' }]"
-      :items="locations"
+      :items="locationsArr"
       :filter="filter"
       :select-mode="isEnabled ? 'multi' : 'single'"
       selectable
@@ -45,33 +45,41 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Locations from '~/mixins/locations'
-import Fields from '~/mixins/fields'
 export default {
-  mixins: [Locations, Fields],
+  mixins: [Locations],
   data () {
     return {
       filter: ''
     }
   },
-  computed: mapState({
-    projectId: state => state.projects.selectedProject.projectId,
-    isEnabled: state => state.bulk.isEnabled,
-    selected: state => state.selected.selected
-  }),
+  computed: {
+    ...mapState({
+      projectId: state => state.projects.selectedProject.projectId,
+      isEnabled: state => state.bulk.isEnabled,
+      selected: state => state.selected.selected
+    }),
+    locationsArr () {
+      return Object.values(this.locations)
+    }
+  },
   methods: {
     ...mapActions({
       toggleBulkMode: 'bulk/toggleBulkMode',
       setFields: 'fields/setFields',
-      setSelected: 'selected/set'
+      setSelected: 'locations/setSelected'
     }),
+    getSelectedIds (selected) {
+      return selected.reduce((acc, curr) => {
+        acc.push(curr.locationId)
+        return acc
+      }, [])
+    },
     onLocationSelect (selected) {
-      // TODO need to access vertical
-      // this.setCategories({ vertical: 'mf', corp: false })
-      const location = selected.length > 0 ? selected[0] : null
-      const fieldsPayload = location && this.projectId
+      const selectedIds = this.getSelectedIds(selected)
+      const fieldsPayload = selectedIds.length > 0 && this.projectId
         ? { projectId: this.projectId, locationId: selected[0].locationId }
         : { projectId: null, locationId: null }
-      this.setSelected(location)
+      this.setSelected(selectedIds)
       this.setFields(fieldsPayload)
     },
     updateBulkMode (val) {

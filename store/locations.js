@@ -1,5 +1,8 @@
+import { arryToObject } from '~/mixins/form-util'
+
 export const state = () => ({
-  locations: []
+  locations: {},
+  selected: []
 })
 export const getters = {}
 
@@ -8,27 +11,32 @@ export const actions = {
     try {
       const locations = await this.$axios
         .$get(`/api/v1/projects/${projectId}/locations`)
-      const updatedLocations = locations.map((location) => {
+      // const updatedLocations = locations.reduce((acc, curr) => {
+      //   acc[curr.locationId] = {
+      //     ...curr,
+      //     status: 'Incomplete',
+      //     useCollected: true
+      //   }
+      //   return acc
+      // })
+      const locWithAddedVal = locations.map((location) => {
         return {
           ...location,
           status: 'Incomplete',
           useCollected: true
         }
       })
+      const updatedLocations = arryToObject(locWithAddedVal, 'locationId')
+
       commit('SET', { locations: updatedLocations })
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)
     }
   },
-  updateLocationProp ({ commit }, data) {
-    commit('UPDATE_LOCATION_PROP', data)
-  },
-  updateLocation ({ commit }, data) {
-    commit('UPDATE_LOCATION', data)
-  },
-  set ({ commit }, payload) {
-    commit('SET', payload)
+  setSelected ({ commit }, ids) {
+    const val = ids || []
+    commit('SET_SELECTED', val)
   }
 }
 
@@ -39,10 +47,7 @@ export const mutations = {
       state[key] = obj[key]
     })
   },
-  UPDATE_LOCATION (state, { locIdx, key, val }) {
-    state.locations[locIdx][key] = val
-  },
-  UPDATE_LOCATION_PROP (state, { locIdx, key, val }) {
-    state.locations[locIdx].properties[key] = val
+  SET_SELECTED (state, val) {
+    state.selected = val
   }
 }

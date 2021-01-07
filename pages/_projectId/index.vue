@@ -32,10 +32,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import LocationsMixin from '~/mixins/locations'
-import FormUtil from '~/mixins/form-util'
 export default {
-  mixins: [LocationsMixin, FormUtil],
   async fetch ({ store, params }) {
     const { projectId } = params
     await store.dispatch('projects/init')
