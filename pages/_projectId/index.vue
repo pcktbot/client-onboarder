@@ -1,15 +1,6 @@
 <template>
   <div class="content">
     <primary-nav>
-      <b-btn :to="`/${$nuxt._route.params.projectId}/users`" class="align-self-center mr-2" variant="outline-secondary">
-        Users
-      </b-btn>
-      <b-btn to="/projects" class="align-self-center mr-2" variant="outline-secondary">
-        Projects
-      </b-btn>
-      <b-btn :to="`/${$nuxt._route.params.projectId}`" class="align-self-center mr-2" variant="outline-secondary">
-        Project
-      </b-btn>
       <user-dropdown />
     </primary-nav>
     <article :class="['content__grid']">
@@ -22,21 +13,12 @@
           <bulk-edit-wrapper v-if="bulkIsEnabled" />
           <b-card v-else no-body header-class="border-0" class="border-0">
             <b-tabs v-model="currentTab" card>
-              <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
+              <b-tab title="Edit Location" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
               </b-tab>
-              <b-tab title="Advanced Mode" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
+              <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <flatten-test :items="fields" />
               </b-tab>
-              <b-tab title="Checkbox Group Expanded" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
-                <checkbox-group-expanded />
-              </b-tab>
-              <b-tab title="Dual Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
-                <dual-listbox />
-              </b-tab>
-              <!-- <b-tab title="Former Listbox" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
-                <dual-listbox-old />
-              </b-tab> -->
             </b-tabs>
           </b-card>
         </transition>

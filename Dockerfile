@@ -1,7 +1,7 @@
 FROM node:12
 
-# ARG NPM_TOKEN
-ENV BROWSER_URL=pcktbot.ml
+ARG NPM_TOKEN
+ENV BROWSER_URL=onboarder-opex-staging.g5devops.com
 
 RUN mkdir -p /usr/src/opex
 WORKDIR /usr/src/opex

@@ -17,7 +17,7 @@ module.exports = {
     ]
   },
   css: ['@/assets/theme.scss'],
-  plugins: ['@/plugins/vue-listbox.js', '@/plugins/vuelidate.js'],
+  plugins: ['@/plugins/vuelidate.js'],
   components: true,
   // buildModules: ['@nuxtjs/eslint-module'],
   modules: [

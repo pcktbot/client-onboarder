@@ -1,23 +1,22 @@
 <template>
   <b-container fluid>
-    <b-row style="max-width: 1200px;">
+    <!-- <b-row style="max-width: 1200px;">
       <b-col cols="12">
         <h3>
           Pick your Amenities
         </h3>
       </b-col>
-    </b-row>
+    </b-row> -->
     <b-row style="max-width: 1200px; max-height: 800px;">
       <b-col cols="6">
-        <b-input-group>
-          <b-input-group-prepend class="d-flex">
-            <b-icon-search />
+        <b-input-group class="mb-2">
+          <b-input-group-prepend class="d-flex align-items-center justify-content-center px-3">
+            <b-icon-search variant="gray" />
           </b-input-group-prepend>
           <b-form-input
             v-model="search"
             placeholder="search..."
             type="search"
-            class="mb-3"
           />
         </b-input-group>
         <draggable
@@ -34,7 +33,7 @@
             v-for="element in filteredList"
             :key="element.value"
             class="bg-white px-3 py-2 mb-2 d-flex align-items-center justify-content-between font-weight-bold"
-            style="cursor: grab; border-radius: 4px; box-shadow: 0 1px 4px #a8a8a8; border: 1px solid #a8a8a8;"
+            style="cursor: grab; border-radius: 4px; box-shadow: 0 1px 1px #a8a8a8; border: 1px solid #a8a8a8;"
           >
             {{ element.text }}
           </div>
@@ -99,6 +98,14 @@ export default {
   components: {
     draggable
   },
+  props: {
+    field: {
+      type: Object,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       idGlobal: 0,
@@ -152,7 +159,7 @@ export default {
   },
   computed: {
     filteredList () {
-      return this.settings.options.filter((amenity) => {
+      return this.field.settings.options.filter((amenity) => {
         return amenity.text.toLowerCase().includes(this.search.toLowerCase())
       })
     }
