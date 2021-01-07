@@ -27,6 +27,8 @@
         <checkbox-group-expanded
           v-if="f.component === 'checkbox-group-expanded'"
           :field="f"
+          @input="onInput"
+          @change="onChange"
         />
         <dual-listbox
           v-else-if="f.component === 'dual-listbox'"
@@ -38,6 +40,7 @@
           <b-form-checkbox
             switch
             class="global-checkbox"
+            @change="onChange"
           />
           <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
             {{ f.settings.options }}
@@ -115,6 +118,8 @@ export default {
     }
   },
   methods: {
+    onInput () {},
+    onChange () {},
     validUrl (str) {
       const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name

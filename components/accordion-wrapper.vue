@@ -38,12 +38,12 @@
             {{ cat.name }}
             <b-icon-question-circle variant="secondary-20" scale="0.5em" />
           </h4>
-          <span class="text-gray-30 small align-self-end font-italic mb-1">
+          <!-- <span class="text-gray-30 small align-self-end font-italic mb-1">
             est. time:
             <span class="font-weight-bold">
               {{ cat.time }}
             </span>
-          </span>
+          </span> -->
           <div class="flex-grow-1" />
           <span class="when-open text-secondary small text-uppercase">
             Close
