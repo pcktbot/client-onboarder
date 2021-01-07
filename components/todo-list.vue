@@ -5,12 +5,13 @@
   >
     <div
       v-for="(item, i) in items"
-      :key="`${field}-${i}`"
+      :key="`${field.dataKey}-${i}`"
       class="mb-3"
     >
       <b-input-group>
         <b-form-input
-          :value="item.value"
+          :value="items[i]"
+          @input="update(i, $event)"
         />
         <b-input-group-append>
           <b-btn
@@ -34,27 +35,32 @@
 export default {
   props: {
     field: {
-      type: String,
-      default: 'todo-list-field'
+      type: Object,
+      default () {
+        return {
+          dataKey: 'todo-list-field'
+        }
+      }
     },
     items: {
       type: Array,
       default () {
-        return []
+        return ['']
       }
     }
   },
   data () {
     return {
       defaultItem () {
-        return {
-          value: null
-        }
-      },
-      items: []
+        return ''
+      }
     }
   },
   methods: {
+    update (i, evt) {
+      this.items[i] = evt
+      this.$emit('input', i, this.field.dataKey, evt)
+    },
     add () {
       this.items.push(this.defaultItem())
     },

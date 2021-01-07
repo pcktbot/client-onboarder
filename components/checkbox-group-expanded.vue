@@ -78,9 +78,12 @@ export default {
       }
     },
     fieldData: {
-      type: Array,
+      type: Object,
       default () {
-        return []
+        return {
+          trendy: true,
+          playful: true
+        }
       }
     }
   },

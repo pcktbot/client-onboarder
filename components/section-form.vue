@@ -26,7 +26,7 @@
         <!-- FORM LABEL ENDS -->
         <checkbox-group-expanded
           v-if="f.component === 'checkbox-group-expanded'"
-          v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
+          v-bind="{ field:f, fieldData: { one: true, sudio: true }}"
         />
         <dual-listbox
           v-else-if="f.component === 'dual-listbox'"
