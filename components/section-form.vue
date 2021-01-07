@@ -26,7 +26,7 @@
         <!-- FORM LABEL ENDS -->
         <checkbox-group-expanded
           v-if="f.component === 'checkbox-group-expanded'"
-          :field="f"
+          v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
         />
         <dual-listbox
           v-else-if="f.component === 'dual-listbox'"
@@ -36,8 +36,10 @@
           v-else-if="f.component === 'checkbox'"
         >
           <b-form-checkbox
+            :checked="locationProperties[f.dataKey]"
             switch
             class="global-checkbox"
+            @change="updatedSelected({ key: f.dataKey, val: $event})"
           />
           <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
             {{ f.settings.options }}
@@ -45,11 +47,15 @@
         </b-input-group>
         <b-form-radio-group
           v-else-if="f.component === 'radio-group'"
+          :checked="locationProperties[f.dataKey]"
           :options="f.settings.options"
+          @change="updatedSelected({ key: f.dataKey, val: $event})"
         />
         <b-form-textarea
           v-else-if="f.component === 'text-area'"
           rows="3"
+          :value="locationProperties[f.dataKey]"
+          @input="updatedSelected({ key: f.dataKey, val: $event})"
         />
         <todo-list
           v-else-if="f.component === 'todo-list'"
@@ -60,8 +66,10 @@
         >
           <b-form-select
             :id="f.dataKey"
+            :value="locationProperties[f.dataKey]"
             :options="f.settings.options"
             class="section-group__select"
+            @change="updatedSelected({ key: f.dataKey, val: $event})"
           />
           <span class="section-group__caret">
             <b-icon-chevron-down
@@ -72,9 +80,11 @@
         <b-form-input
           v-else-if="f.component === 'input'"
           :id="f.dataKey"
+          :value="locationProperties[f.dataKey]"
           :type="f.type"
           :placeholder="f.placeholder"
           class="section-input"
+          @input="updatedSelected({ key: f.dataKey, val: $event})"
         />
         <div v-else>
           {{ f }}
@@ -103,9 +113,11 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import Locations from '~/mixins/locations'
 import Fields from '~/mixins/fields'
 export default {
-  mixins: [Fields],
+  mixins: [Fields, Locations],
   props: {
     category: {
       type: Object,
@@ -114,7 +126,15 @@ export default {
       }
     }
   },
+  computed: {
+    locationProperties () {
+      return this.locations[this.selected[0]].properties
+    }
+  },
   methods: {
+    ...mapActions({
+      updatedSelected: 'locations/updateSelected'
+    }),
     validUrl (str) {
       const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name

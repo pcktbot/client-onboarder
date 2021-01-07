@@ -14,26 +14,26 @@
           style="cursor: pointer;"
         />
       </template> -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 0.5em 0;">
-        <b-form-checkbox
-          v-for="f in field.settings.options"
-          :key="`checkbox-${f.value}`"
-          :checked="fieldData[f.value]"
-          switch
-          class="ml-3 global-checkbox font-weight-bold"
-          @change="onChange(f.value, $event)"
-        >
-          {{ f.text }}
-        </b-form-checkbox>
-      </div>
-      <b-form-input
-        v-if="localData.includes('other')"
-        :value="other"
-        placeholder="Enter Additional Here"
-        style="max-width: 50%; border-width: 2px;"
-        class="mt-2"
-        @input="onInput($event)"
-      />
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 0.5em 0;">
+      <b-form-checkbox
+        v-for="f in field.settings.options"
+        :key="`checkbox-${f.value}`"
+        :checked="fieldData[f.value]"
+        switch
+        class="ml-3 global-checkbox font-weight-bold"
+        @change="onChange(f.value, $event)"
+      >
+        {{ f.text }}
+      </b-form-checkbox>
+    </div>
+    <b-form-input
+      v-if="localData.includes('other')"
+      :value="other"
+      placeholder="Enter Additional Here"
+      style="max-width: 50%; border-width: 2px;"
+      class="mt-2"
+      @input="onInput($event)"
+    />
     <!-- </b-form-group> -->
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
   //   }
   // },
   methods: {
-    onChange(fieldValue, checked) {
+    onChange (fieldValue, checked) {
       if (checked) {
         this.localData.push(fieldValue)
       } else {
@@ -105,7 +105,7 @@ export default {
       }
       this.$emit('change', [...this.localData, this.other].filter(l => l !== 'other'))
     },
-    onInput(evt) {
+    onInput (evt) {
       this.other = evt
       this.$emit('input', [...this.localData, this.other].filter(l => l !== 'other'))
     }

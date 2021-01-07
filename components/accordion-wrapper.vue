@@ -6,10 +6,10 @@
         :key="`bcrumb-${i}`"
         :href="cat.href"
       >
-      <span style="max-width: 200px;" class="text-truncate">
-        <b-icon-check-circle-fill :variant="cat.status" scale="1.1em" />
-        {{ cat.text }}
-      </span>
+        <span style="max-width: 200px;" class="text-truncate">
+          <b-icon-check-circle-fill :variant="cat.status" scale="1.1em" />
+          {{ cat.text }}
+        </span>
       </b-breadcrumb-item>
     </b-breadcrumb>
     <b-card

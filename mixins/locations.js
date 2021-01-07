@@ -5,6 +5,7 @@ export default {
   },
   computed: mapState({
     locations: state => state.locations.locations,
+    selected: state => state.locations.selected,
     projectId: state => state.projects.selectedProject.projectId
   }),
   methods: {

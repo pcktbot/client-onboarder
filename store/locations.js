@@ -37,6 +37,9 @@ export const actions = {
   setSelected ({ commit }, ids) {
     const val = ids || []
     commit('SET_SELECTED', val)
+  },
+  updateSelected ({ commit }, data) {
+    commit('UPDATE_SELECTED_LOCATION', data)
   }
 }
 
@@ -49,5 +52,8 @@ export const mutations = {
   },
   SET_SELECTED (state, val) {
     state.selected = val
+  },
+  UPDATE_SELECTED_LOCATION (state, { key, val }) {
+    state.locations[state.selected[0]].properties[key] = val
   }
 }
