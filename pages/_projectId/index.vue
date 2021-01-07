@@ -16,6 +16,9 @@
               <b-tab title="Edit Location" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
               </b-tab>
+              <b-tab title="Upload Assets" disabled title-link-class="p-4 text-uppercase text-muted font-italic">
+                onboarding/
+              </b-tab>
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <flatten-test :items="fields" />
               </b-tab>

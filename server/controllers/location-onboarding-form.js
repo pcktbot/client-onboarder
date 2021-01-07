@@ -62,12 +62,12 @@ class LocationOnboardingForm {
       const { label, placeholder, type, required, settings, dataKey, validation, component } = f
       return {
         label: label[this.vertical] || label.default,
-        placeholder: placeholder ? (placeholder[this.vertical || placeholder.default]) : null,
+        placeholder: placeholder ? (placeholder[this.vertical] || placeholder.default) : null,
         type,
         required,
         settings: this.fieldSettings(settings),
         dataKey,
-        validation: (Object.keys(validation).length > 0 ? validation : null),
+        validation: (Object.keys(validation).length > 0 ? validation : {}),
         component
       }
     })
