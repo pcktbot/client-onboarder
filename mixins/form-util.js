@@ -1,9 +1,3 @@
-// should be defined elsewhere and imported
-const mapExample = {
-  section1: [['current_website', 'registrar'], []],
-  subsection1: [['test', 'test1'], ['test3', 'test4']]
-}
-
 /**
  * Function will traverse through nested object
  * until it finds label param. If label param is array, it will

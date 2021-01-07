@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form-group
+    <!-- <b-form-group
       label-class="text-uppercase text-muted font-weight-bold"
       class="mr-2"
       style="flex: 1 1 auto;"
@@ -13,7 +13,7 @@
           variant="secondary-30"
           style="cursor: pointer;"
         />
-      </template>
+      </template> -->
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 0.5em 0;">
         <b-form-checkbox
           v-for="f in field.settings.options"
@@ -34,7 +34,7 @@
         class="mt-2"
         @input="onInput($event)"
       />
-    </b-form-group>
+    <!-- </b-form-group> -->
   </div>
 </template>
 

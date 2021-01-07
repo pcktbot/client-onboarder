@@ -24,13 +24,43 @@
           />
         </template>
         <!-- FORM LABEL ENDS -->
+        <checkbox-group-expanded
+          v-if="f.component === 'checkbox-group-expanded'"
+          :field="f"
+        />
+        <dual-listbox
+          v-else-if="f.component === 'dual-listbox'"
+          :field="f"
+        />
+        <b-input-group
+          v-else-if="f.component === 'checkbox'"
+        >
+          <b-form-checkbox
+            switch
+            class="global-checkbox"
+          />
+          <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
+            {{ f.settings.options }}
+          </b-input-group-append>
+        </b-input-group>
+        <b-form-radio-group
+          v-else-if="f.component === 'radio-group'"
+          :options="f.settings.options"
+        />
+        <b-form-textarea
+          v-else-if="f.component === 'text-area'"
+          rows="3"
+        />
+        <todo-list
+          v-else-if="f.component === 'todo-list'"
+        />
         <span
-          v-if="f.inputType === 'select'"
+          v-else-if="f.component === 'select'"
           class="section-group"
         >
           <b-form-select
             :id="f.dataKey"
-            :options="f.options"
+            :options="f.settings.options"
             class="section-group__select"
           />
           <span class="section-group__caret">
@@ -40,12 +70,15 @@
           </span>
         </span>
         <b-form-input
-          v-else
+          v-else-if="f.component === 'input'"
           :id="f.dataKey"
-          :type="f.inputType"
+          :type="f.type"
           :placeholder="f.placeholder"
           class="section-input"
         />
+        <div v-else>
+          {{ f }}
+        </div>
       </b-form-group>
     </div>
     <div class="d-flex justify-content-end mb-3 mt-4">

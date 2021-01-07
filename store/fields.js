@@ -2,6 +2,10 @@
 import { mapFields, flattenFields } from '~/mixins/form-util'
 
 const sectionMaps = {
+  section1: [
+    ['current_website', 'registrar'],
+    ['domain_username', 'domain_password']
+  ],
   section2: [
     ['city', 'state', 'postal_code', 'country'],
     ['display_phone_number', 'local_phone_number']
