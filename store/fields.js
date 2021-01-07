@@ -15,13 +15,15 @@ export const state = () => ({
 
 export const actions = {
   async setFields ({ commit }, { projectId, locationId }) {
-    if (!locationId || !projectId) { return }
-    const form = await this.$axios
-      .$get(`api/v1/projects/${projectId}/locations/${locationId}/form`)
-    const flattened = flattenFields(form, 'fields')
-    commit('SET_FIELDS', flattened)
-    const categories = mapFields(form, sectionMaps)
-    commit('SET', categories)
+    if (!locationId || !projectId) {
+      commit('SET', { categories: [], fields: [] })
+    } else {
+      const form = await this.$axios
+        .$get(`api/v1/projects/${projectId}/locations/${locationId}/form`)
+      const flattened = flattenFields(form, 'fields')
+      const categories = mapFields(form, sectionMaps)
+      commit('SET', { categories, fields: flattened })
+    }
   }
   // ,
   // setCategories ({ commit }, { vertical, corp }) {
@@ -31,10 +33,10 @@ export const actions = {
 }
 
 export const mutations = {
-  SET_FIELDS (state, payload) {
-    state.fields = payload
-  },
-  SET (state, categories) {
-    state.categories = categories
+  SET (state, obj) {
+    const keys = Object.keys(obj)
+    keys.forEach((key) => {
+      state[key] = obj[key]
+    })
   }
 }

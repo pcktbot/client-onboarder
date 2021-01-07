@@ -1,6 +1,5 @@
 export const state = () => ({
-  locations: [],
-  selectedLocations: []
+  locations: []
 })
 export const getters = {}
 

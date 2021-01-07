@@ -55,29 +55,28 @@ export default {
   },
   computed: mapState({
     projectId: state => state.projects.selectedProject.projectId,
-    isEnabled: state => state.bulk.isEnabled
+    isEnabled: state => state.bulk.isEnabled,
+    selected: state => state.selected.selected
   }),
   methods: {
     ...mapActions({
       toggleBulkMode: 'bulk/toggleBulkMode',
-      setFields: 'fields/setFields'
+      setFields: 'fields/setFields',
+      setSelected: 'selected/set'
     }),
-    onLocationSelect (selectedLocations) {
-      this.updateSelectedLocations({ selectedLocations })
+    onLocationSelect (selected) {
       // TODO need to access vertical
-      this.setCategories({ vertical: 'mf', corp: false })
-      if (selectedLocations.length > 0 && this.projectId) {
-        this.setFields({
-          projectId: this.projectId,
-          locationId: selectedLocations[0].locationId
-        })
-      } else {
-        // TODO needs to clear fields/set
-      }
+      // this.setCategories({ vertical: 'mf', corp: false })
+      const location = selected.length > 0 ? selected[0] : null
+      const fieldsPayload = location && this.projectId
+        ? { projectId: this.projectId, locationId: selected[0].locationId }
+        : { projectId: null, locationId: null }
+      this.setSelected(location)
+      this.setFields(fieldsPayload)
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)
-      this.updateSelectedLocations({ selectedLocations: [] })
+      this.setSelected(null)
     }
   }
 }

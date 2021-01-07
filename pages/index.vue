@@ -11,7 +11,7 @@
         <project-details />
         <transition mode="out-in" name="fade">
           <bulk-edit-wrapper v-if="bulkIsEnabled">
-            <accordion-wrapper v-if="selectedLocations.length > 0" />
+            <accordion-wrapper v-if="selected" />
             <!-- Placeholder for logic until we have a better way-->
             <div v-else>
               Select locations to bulk update
@@ -29,7 +29,7 @@
               <b-tab title="Location Details" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <global-inputs />
                 <!-- wait to enable accordion wrapper until location is selected then pass in location in props -->
-                <accordion-wrapper v-if="selectedLocations.length === 1" />
+                <accordion-wrapper v-if="selected" />
                 <!-- Placeholder for logic until we have a better way-->
                 <div v-else class="text-center">
                   Select a location first.
