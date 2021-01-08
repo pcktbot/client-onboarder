@@ -1,7 +1,7 @@
 <template>
   <div
     class="p-3 rounded mb-3"
-    style="border: 2px solid #c1c1c1; border-radius: 10px;"
+    style="border: 1px solid #c1c1c1; border-radius: 10px;"
   >
     <div
       v-for="(item, i) in items"
@@ -11,10 +11,12 @@
       <b-input-group>
         <b-form-input
           :value="items[i]"
+          style="border-width: 2px;"
           @input="update(i, $event)"
         />
         <b-input-group-append>
           <b-btn
+            variant="error-30"
             @click="remove(i)"
           >
             <b-icon-trash />
@@ -23,11 +25,13 @@
       </b-input-group>
     </div>
     <b-btn
+      class="px-3 py-2 text-uppercase font-weight-bold"
       @click="add"
     >
+      <b-icon-plus />
       Add
     </b-btn>
-    {{ items }}
+    <!-- {{ items }} -->
   </div>
 </template>
 
