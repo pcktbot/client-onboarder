@@ -27,10 +27,12 @@
         <checkbox-group-expanded
           v-if="f.component === 'checkbox-group-expanded'"
           v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
         />
         <dual-listbox
           v-else-if="f.component === 'dual-listbox'"
-          :field="f"
+          v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
         />
         <b-input-group
           v-else-if="f.component === 'checkbox'"
@@ -41,8 +43,8 @@
             class="global-checkbox"
             @change="updatedSelected({ key: f.dataKey, val: $event})"
           />
-          <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
-            {{ f.settings.options }}
+          <b-input-group-append class="d-flex text-gray-60 align-items-baseline px-3">
+            {{ f.settings.options[locationProperties[f.dataKey]] }}
           </b-input-group-append>
         </b-input-group>
         <b-form-radio-group
@@ -59,6 +61,8 @@
         />
         <todo-list
           v-else-if="f.component === 'todo-list'"
+          v-bind="{ field:f.dataKey, items: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
         />
         <span
           v-else-if="f.component === 'select'"
@@ -67,7 +71,7 @@
           <b-form-select
             :id="f.dataKey"
             :value="locationProperties[f.dataKey]"
-            :options="f.settings.options"
+            :options="getOptions(f)"
             class="section-group__select"
             @change="updatedSelected({ key: f.dataKey, val: $event})"
           />
@@ -78,7 +82,7 @@
           </span>
         </span>
         <b-form-input
-          v-else-if="f.component === 'input'"
+          v-else-if="f.component === 'input' && dependencyMet(f)"
           :id="f.dataKey"
           :value="locationProperties[f.dataKey]"
           :type="f.type"
@@ -113,11 +117,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import Locations from '~/mixins/locations'
+import { mapState, mapActions } from 'vuex'
 import Fields from '~/mixins/fields'
 export default {
-  mixins: [Fields, Locations],
+  mixins: [Fields],
   props: {
     category: {
       type: Object,
@@ -126,15 +129,42 @@ export default {
       }
     }
   },
+  data () {
+    return {
+    }
+  },
   computed: {
+    ...mapState({
+      locations: state => state.locations.locations,
+      selected: state => state.locations.selected
+    }),
     locationProperties () {
       return this.locations[this.selected[0]].properties
     }
   },
   methods: {
     ...mapActions({
-      updatedSelected: 'locations/updateSelected'
+      updatedSelected: 'locations/updateSelected',
+      updatePropObj: 'locations/updatePropObj',
+      addPropArr: 'locations/addPropArr',
+      updatePropArr: 'locations/updatePropArr',
+      removeAtPropArr: 'locations/removeAtPropArr'
     }),
+    dependencyMet (f) {
+      let val = true
+      if (f.settings && f.settings.dependentOn) {
+        val = this.locationProperties[f.settings.dependentOn]
+      }
+      return val
+    },
+    getOptions (f) {
+      const dependency = f.settings.dependentOn
+      let options = f.settings.options
+      if (dependency) {
+        options = f.settings.options[this.locationProperties[dependency]].options
+      }
+      return options
+    },
     validUrl (str) {
       const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name

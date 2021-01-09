@@ -1,12 +1,5 @@
 <template>
   <b-container fluid>
-    <!-- <b-row style="max-width: 1200px;">
-      <b-col cols="12">
-        <h3>
-          Pick your Amenities
-        </h3>
-      </b-col>
-    </b-row> -->
     <b-row style="max-width: 1200px; max-height: 800px;">
       <b-col cols="6">
         <b-input-group class="mb-2">
@@ -27,7 +20,6 @@
           style="max-height: 400px; overflow-y: scroll;"
           @start="isDragging = true"
           @end="onEnd"
-          @change="log"
         >
           <div
             v-for="element in filteredList"
@@ -58,16 +50,15 @@
           </b-input-group-append>
         </b-input-group>
         <draggable
-          :list="amenities"
+          v-model="myList"
           :class="[{ 'is-dragging': isDragging }]"
           class="dragArea p-2"
           style="min-height: 400px; background-color: #d1d1d1; border-radius: 4px;"
           group="amenities"
-          @change="log"
         >
           <div
-            v-for="element in amenities"
-            :key="element.name"
+            v-for="element in myList"
+            :key="`${element.value}-${element.id}`"
             class="bg-white px-3 py-2 mb-2 d-flex align-items-center justify-content-between font-weight-bold"
             style="border-radius: 4px; box-shadow: 0 1px 2px #a8a8a8;"
           >
@@ -89,7 +80,7 @@
         </draggable>
       </b-col>
     </b-row>
-</b-container>
+  </b-container>
 </template>
 
 <script>
@@ -104,6 +95,12 @@ export default {
       default () {
         return {}
       }
+    },
+    fieldData: {
+      type: Array,
+      default () {
+        return []
+      }
     }
   },
   data () {
@@ -111,64 +108,29 @@ export default {
       idGlobal: 0,
       isDragging: false,
       search: '',
-      addInput: '',
-      amenities: [],
-      dataKey: 'apartment_amenities',
-      component: 'dual-listbox',
-      mappedFields: [
-        'apartment_amenity_1',
-        'apartment_amenity_2',
-        'apartment_amenity_3'
-      ],
-      type: null,
-      required: true,
-      displayOnlyOnCorp: false,
-      displayOnCorp: false,
-      bulkEditable: false,
-      isHub: true,
-      displayVertical: ['MF'],
-      label: 'Apartment Amenities',
-      settings: {
-        options: [
-          { text: 'Air Conditioning', value: 'airConditioning' },
-          { text: 'Cable Included', value: 'cableIncluded' },
-          { text: 'Custom Cabinetry', value: 'customCabinetry' },
-          { text: 'Dishwasher', value: 'dishwasher' },
-          { text: 'Energy-Efficient Appliances', value: 'energyEfficientAppliances' },
-          { text: 'Fireplace', value: 'fireplace' },
-          { text: 'Garages Available', value: 'garagesAvailable' },
-          { text: 'Granite Counters', value: 'graniteCounters' },
-          { text: 'Hardwood Flooring', value: 'hardwoodFlooring' },
-          { text: 'High Ceilings', value: 'highCeilings' },
-          { text: 'High Speed Internet Access', value: 'highSpeedInternet' },
-          { text: 'Private Balcony', value: 'privateBalcony' },
-          { text: 'Private Patio', value: 'privatePatio' },
-          { text: 'Soundproof Walls', value: 'soundproofWalls' },
-          { text: 'Stainless-Steel Appliances', value: 'stainlessSteelAppliances' },
-          { text: 'Vaulted Ceilings', value: 'valutedCeilings' },
-          { text: 'Walk-In Closets', value: 'walkInClosets' },
-          { text: 'Washer/Dryer Connections', value: 'washerDryerConnections' },
-          { text: 'Washer/Dryer Included', value: 'washerDryerIncluded' },
-          { text: 'Wood-Style Flooring', value: 'woodStyleFlooring' }
-        ]
-      },
-      description: null,
-      validation: null,
-      placeholder: null
+      addInput: ''
     }
   },
   computed: {
+    myList: {
+      get () {
+        return this.fieldData
+      },
+      set (value) {
+        this.$emit('change', { val: value, key: this.field.dataKey })
+      }
+    },
     filteredList () {
-      return this.field.settings.options.filter((amenity) => {
-        return amenity.text.toLowerCase().includes(this.search.toLowerCase())
+      return this.field.settings.options.filter((item) => {
+        return item.text.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   },
   mounted () {
-    this.idGlobal = this.amenities.length
+    this.idGlobal = this.fieldData.length
   },
   methods: {
-    onEnd () {
+    onEnd (evt) {
       this.isDragging = false
     },
     cloneItem ({ text }) {
@@ -180,15 +142,20 @@ export default {
     },
     addItem () {
       const id = this.idGlobal++
-      this.amenities.push({ text: this.addInput, value: this.camelize(this.addInput), id })
+      const item = {
+        text: this.addInput,
+        value: this.camelize(this.addInput),
+        id
+      }
+      const val = [...this.myList, item]
+      this.$emit('change', { val, key: this.field.dataKey })
       this.addInput = ''
     },
     removeAt (id) {
-      const index = this.amenities.findIndex(amenity => amenity.id === id)
-      this.amenities.splice(index, 1)
-    },
-    log (evt) {
-      window.console.log(evt)
+      const index = this.myList.findIndex(item => item.id === id)
+      const val = [...this.myList]
+      val.splice(index, 1)
+      this.$emit('change', { val, key: this.field.dataKey })
     },
     camelize (str) {
       return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
