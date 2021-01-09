@@ -1,11 +1,11 @@
 <template>
   <div
     class="p-3 rounded mb-3"
-    style="border: 2px solid #c1c1c1; border-radius: 10px;"
+    style="border: 1px solid #c1c1c1; border-radius: 10px;"
   >
     <div
       v-for="(item, i) in items"
-      :key="`${field}-${i}`"
+      :key="`${field.dataKey}-${i}`"
       class="mb-3"
     >
       <b-input-group>
@@ -15,6 +15,7 @@
         />
         <b-input-group-append>
           <b-btn
+            variant="error-30"
             @click="remove(i)"
           >
             <b-icon-trash />
@@ -23,8 +24,10 @@
       </b-input-group>
     </div>
     <b-btn
+      class="px-3 py-2 text-uppercase font-weight-bold"
       @click="add"
     >
+      <b-icon-plus />
       Add
     </b-btn>
   </div>
@@ -34,13 +37,17 @@
 export default {
   props: {
     field: {
-      type: String,
-      default: 'todo-list-field'
+      type: Object,
+      default () {
+        return {
+          dataKey: 'todo-list-field'
+        }
+      }
     },
     items: {
       type: Array,
       default () {
-        return []
+        return ['']
       }
     }
   },

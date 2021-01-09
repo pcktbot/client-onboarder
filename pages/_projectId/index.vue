@@ -16,8 +16,10 @@
               <b-tab title="Edit Location" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
               </b-tab>
-              <b-tab title="Upload Assets" disabled title-link-class="p-4 text-uppercase text-muted font-italic">
-                onboarding/
+              <b-tab title="Upload Assets" title-link-class="p-4 text-uppercase text-muted font-italic">
+                <b-btn @click="openCldWidget">
+                  Upload
+                </b-btn>
               </b-tab>
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <flatten-test :items="fields" />
@@ -33,6 +35,11 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  head () {
+    return {
+      script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }]
+    }
+  },
   async fetch ({ store, params }) {
     const { projectId } = params
     await store.dispatch('projects/init')
@@ -48,7 +55,26 @@ export default {
     bulkIsEnabled: state => state.bulk.isEnabled,
     categories: state => state.fields.categories,
     fields: state => state.fields.fields
-  })
+  }),
+  methods: {
+    createCldWidget () {
+      const newWidget = cloudinary.createUploadWidget({
+        cloudName: 'stratypus',
+        multiple: true,
+        maxFiles: 10
+      },
+      (err, res) => {
+        if (!err && res && res.event === 'success') {
+          this.$emit('success', res)
+        }
+      })
+      return newWidget
+    },
+    openCldWidget () {
+      const widget = this.createCldWidget()
+      widget.open()
+    }
+  }
 }
 </script>
 
