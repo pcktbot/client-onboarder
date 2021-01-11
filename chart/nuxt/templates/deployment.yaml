@@ -35,10 +35,17 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
-          - name: INCLUDE_G5_AUTH
-            value: "false"
-          - name: INCLUDE_G5_UPDATABLES
-            value: "false"
+          - name: GCP_PROJECT_ID
+            valueFrom:
+              secretKeyRef:
+                name: project-dashboard
+                key: GCP_PROJECT_ID
+          - name: ASSET_SCRAPER_URL
+            value: "https://unauth-asset-enwgt7akpq-uw.a.run.app"
+          - name: LINK_DISCOVERER_URL
+            value: "https://link-unauth-enwgt7akpq-uw.a.run.app/discover"
+          - name : "EXCESSIVE_PAGE_LIMIT"
+            value: "25"
           - name: GKE
             value: "true"
           - name: BROWSER_URL
@@ -80,6 +87,21 @@ spec:
               secretKeyRef:
                 name: crs
                 key: REDIS_URL
+          - name: CLOUDINARY_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: project-dashboard
+                key: CLOUDINARY_SECRET
+          - name: CLOUDINARY_KEY
+            valueFrom:
+              secretKeyRef:
+                name: project-dashboard
+                key: CLOUDINARY_KEY
+          - name: CLOUDINARY_NAME
+            valueFrom:
+              secretKeyRef:
+                name: project-dashboard
+                key: CLOUDINARY_NAME
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
         {{- if .Values.image.livenessProbe }}

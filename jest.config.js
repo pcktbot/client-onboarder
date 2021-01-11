@@ -1,4 +1,5 @@
 module.exports = {
+  clearMocks: true,
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
@@ -15,7 +16,14 @@ module.exports = {
   },
   collectCoverage: true,
   collectCoverageFrom: [
+    '<rootDir>/server/**/*.js',
+    '!<rootDir>/server/index.js',
+    '!<rootDir>/server/routes/**',
+    '!<rootDir>/server/models/**',
+    '<rootDir>/server/models/index.js',
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue'
-  ]
+  ],
+  coverageDirectory: "coverage",
+  coverageProvider: "v8"
 }
