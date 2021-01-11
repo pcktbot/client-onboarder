@@ -16,7 +16,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap' }
     ]
   },
-  css: ['@/assets/theme.scss'],
+  css: ['@/assets/theme.scss', '@/assets/transitions.scss'],
   plugins: ['@/plugins/vuelidate.js'],
   components: true,
   // buildModules: ['@nuxtjs/eslint-module'],
