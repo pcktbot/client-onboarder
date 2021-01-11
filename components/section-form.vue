@@ -1,15 +1,14 @@
 <template>
   <div class="px-5 py-3">
     <div
-      v-for="(field, i) in category.fields"
+      v-for="(fields, i) in category.fields"
       :key="`field-row-${i}`"
       class="d-flex justify-content-between w-100 mb-0 flex-wrap"
     >
       <b-form-group
-        v-for="f in field"
-        :key="toKebab(f.label)"
-        :class="{ 'inline-group-ctn': f.hasMergeConflict }"
-        :style="{ 'max-width: 50%;': field.length > 1 }"
+        v-for="f in fields"
+        :key="f.dataKey"
+        :style="{ 'max-width: 50%;': fields.length > 1 }"
         label-class="text-uppercase text-muted font-weight-bold"
         class="mr-2"
         style="flex: 1 1 auto;"
@@ -25,16 +24,56 @@
           />
         </template>
         <!-- FORM LABEL ENDS -->
+        <checkbox-group-expanded
+          v-if="f.component === 'checkbox-group-expanded'"
+          v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
+        />
+        <dual-listbox
+          v-else-if="f.component === 'dual-listbox'"
+          v-bind="{ field:f, fieldData: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
+        />
+        <b-input-group
+          v-else-if="f.component === 'checkbox'"
+        >
+          <b-form-checkbox
+            :checked="locationProperties[f.dataKey]"
+            switch
+            class="global-checkbox"
+            @change="updatedSelected({ key: f.dataKey, val: $event})"
+          />
+          <b-input-group-append class="d-flex text-gray-60 align-items-baseline px-3">
+            {{ f.settings.options[locationProperties[f.dataKey]] }}
+          </b-input-group-append>
+        </b-input-group>
+        <b-form-radio-group
+          v-else-if="f.component === 'radio-group'"
+          :checked="locationProperties[f.dataKey]"
+          :options="f.settings.options"
+          @change="updatedSelected({ key: f.dataKey, val: $event})"
+        />
+        <b-form-textarea
+          v-else-if="f.component === 'text-area'"
+          rows="3"
+          :value="locationProperties[f.dataKey]"
+          @input="updatedSelected({ key: f.dataKey, val: $event})"
+        />
+        <todo-list
+          v-else-if="f.component === 'todo-list'"
+          v-bind="{ field:f.dataKey, items: locationProperties[f.dataKey]}"
+          @change="updatedSelected"
+        />
         <span
-          v-if="f.type === 'select'"
+          v-else-if="f.component === 'select'"
           class="section-group"
         >
-          <!-- :value="category.fieldData[f.id]" -->
           <b-form-select
             :id="f.dataKey"
-            :options="f.options"
-            :disabled="f.hasMergeConflict"
+            :value="locationProperties[f.dataKey]"
+            :options="getOptions(f)"
             class="section-group__select"
+            @change="updatedSelected({ key: f.dataKey, val: $event})"
           />
           <span class="section-group__caret">
             <b-icon-chevron-down
@@ -42,16 +81,18 @@
             />
           </span>
         </span>
-        <!-- :value="category.fieldData[f.id]" -->
         <b-form-input
-          v-else
+          v-else-if="f.component === 'input' && dependencyMet(f)"
           :id="f.dataKey"
+          :value="locationProperties[f.dataKey]"
           :type="f.type"
           :placeholder="f.placeholder"
-          :disabled="f.hasMergeConflict"
           class="section-input"
+          @input="updatedSelected({ key: f.dataKey, val: $event})"
         />
-        <difference-resolver v-if="f.hasMergeConflict" />
+        <div v-else>
+          {{ f }}
+        </div>
       </b-form-group>
     </div>
     <div class="d-flex justify-content-end mb-3 mt-4">
@@ -59,6 +100,7 @@
         variant="secondary"
         class="text-uppercase font-weight-bold mr-2 px-3 py-2"
         style="border-radius: 4px;"
+        @click="onSave(category.id, category.fields)"
       >
         Save Changes
       </b-btn>
@@ -66,6 +108,7 @@
         variant="transparent"
         class="text-uppercase text-secondary-30 font-weight-bold mr-2 py-3 px-4"
         style="border-width: 0px; border-radius: 4px;"
+        @click="onRevert(category.id)"
       >
         Abandon Changes
       </b-btn>
@@ -74,6 +117,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import Fields from '~/mixins/fields'
 export default {
   mixins: [Fields],
@@ -85,7 +129,42 @@ export default {
       }
     }
   },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapState({
+      locations: state => state.locations.locations,
+      selected: state => state.locations.selected
+    }),
+    locationProperties () {
+      return this.locations[this.selected[0]].properties
+    }
+  },
   methods: {
+    ...mapActions({
+      updatedSelected: 'locations/updateSelected',
+      updatePropObj: 'locations/updatePropObj',
+      addPropArr: 'locations/addPropArr',
+      updatePropArr: 'locations/updatePropArr',
+      removeAtPropArr: 'locations/removeAtPropArr'
+    }),
+    dependencyMet (f) {
+      let val = true
+      if (f.settings && f.settings.dependentOn) {
+        val = this.locationProperties[f.settings.dependentOn]
+      }
+      return val
+    },
+    getOptions (f) {
+      const dependency = f.settings.dependentOn
+      let options = f.settings.options
+      if (dependency) {
+        options = f.settings.options[this.locationProperties[dependency]].options
+      }
+      return options
+    },
     validUrl (str) {
       const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name

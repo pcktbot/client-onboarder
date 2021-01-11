@@ -1,6 +1,15 @@
 <template>
   <div>
     <primary-nav :show-branding="true">
+      <b-btn :to="`/${$nuxt._route.params.projectId}/users`" class="align-self-center mr-2" variant="outline-secondary">
+        Users
+      </b-btn>
+      <b-btn to="/projects" class="align-self-center mr-2" variant="outline-secondary">
+        Projects
+      </b-btn>
+      <b-btn :to="`/${$nuxt._route.params.projectId}`" class="align-self-center mr-2" variant="outline-secondary">
+        Project
+      </b-btn>
       <user-dropdown />
     </primary-nav>
     <div class="mt-5">

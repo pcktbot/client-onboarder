@@ -1,17 +1,17 @@
 <template>
   <div class="accordion py-1 px-3" role="tablist">
-    <b-breadcrumb class="bg-white mb-3">
+    <!-- <b-breadcrumb class="bg-white mb-3">
       <b-breadcrumb-item
         v-for="(cat, i) in toBreadcrumb(categories)"
         :key="`bcrumb-${i}`"
         :href="cat.href"
       >
-      <span style="max-width: 200px;" class="text-truncate">
-        <b-icon-check-circle-fill :variant="cat.status" scale="1.1em" />
-        {{ cat.text }}
-      </span>
+        <span style="max-width: 200px;" class="text-truncate">
+          <b-icon-check-circle-fill :variant="cat.status" scale="1.1em" />
+          {{ cat.text }}
+        </span>
       </b-breadcrumb-item>
-    </b-breadcrumb>
+    </b-breadcrumb> -->
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"
@@ -25,7 +25,7 @@
         role="tab"
       >
         <b-btn
-          v-b-toggle="cat.id"
+          v-b-toggle="`category-${cat.id}`"
           block
           variant="transparent"
           class="px-2 pt-1 pb-0 d-flex align-items-center justify-content-start"
@@ -38,12 +38,12 @@
             {{ cat.name }}
             <b-icon-question-circle variant="secondary-20" scale="0.5em" />
           </h4>
-          <span class="text-gray-30 small align-self-end font-italic mb-1">
+          <!-- <span class="text-gray-30 small align-self-end font-italic mb-1">
             est. time:
             <span class="font-weight-bold">
               {{ cat.time }}
             </span>
-          </span>
+          </span> -->
           <div class="flex-grow-1" />
           <span class="when-open text-secondary small text-uppercase">
             Close
@@ -56,13 +56,12 @@
         </b-btn>
       </b-card-header>
       <b-collapse
-        :id="cat.id"
+        :id="`category-${cat.id}`"
         :visible="i === 0"
         :accordion="`${prefix}-accordion`"
         role="tabpanel"
       >
-        <!-- <section-form v-bind="{ category: cat }" /> -->
-        {{ cat }}
+        <section-form v-bind="{ category: cat }" />
       </b-collapse>
     </b-card>
   </div>
@@ -92,7 +91,7 @@ export default {
         ? category.isReviewed
           ? 'secondary-70'
           : 'warning-70'
-        : 'error-70'
+        : 'error-30'
     },
     toBreadcrumb (categories) {
       return categories.map((cat) => {

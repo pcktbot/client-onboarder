@@ -1,6 +1,6 @@
 export const state = () => ({
-  locations: [],
-  selectedLocations: []
+  locations: {},
+  selected: []
 })
 export const getters = {}
 
@@ -9,40 +9,43 @@ export const actions = {
     try {
       const locations = await this.$axios
         .$get(`/api/v1/projects/${projectId}/locations`)
-      const updatedLocations = locations.map((location) => {
-        return {
-          ...location,
+      const updatedLocations = locations.reduce((acc, curr) => {
+        acc[curr.locationId] = {
+          ...curr,
           status: 'Incomplete',
           useCollected: true
         }
-      })
+        return acc
+      }, {})
       commit('SET', { locations: updatedLocations })
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e)
     }
   },
-  updateLocationProp ({ commit }, data) {
-    commit('UPDATE_LOCATION_PROP', data)
+  setSelected ({ commit }, ids) {
+    const val = ids || []
+    commit('SET_SELECTED', val)
   },
-  updateLocation ({ commit }, data) {
-    commit('UPDATE_LOCATION', data)
+  updateSelected ({ commit }, data) {
+    commit('UPDATE_SELECTED_LOCATION', data)
   },
-  set ({ commit }, payload) {
-    commit('SET', payload)
+  updatePropObj ({ commit }, data) {
+    commit('UPDATE_SELECTED_PROP_OBJ', data)
   }
 }
 
 export const mutations = {
   SET (state, obj) {
     const keys = Object.keys(obj)
-    // eslint-disable-next-line no-return-assign
-    keys.forEach(key => state[key] = obj[key])
+    keys.forEach((key) => {
+      state[key] = obj[key]
+    })
   },
-  UPDATE_LOCATION (state, { locIdx, key, val }) {
-    state.locations[locIdx][key] = val
+  SET_SELECTED (state, val) {
+    state.selected = val
   },
-  UPDATE_LOCATION_PROP (state, { locIdx, key, val }) {
-    state.locations[locIdx].properties[key] = val
+  UPDATE_SELECTED_LOCATION (state, { key, val }) {
+    state.locations[state.selected[0]].properties[key] = val
   }
 }

@@ -3,7 +3,7 @@
     <div class="px-3 mb-3">
       <search-input :filter="filter" @search="filter = $event" />
     </div>
-    <div class="px-3 mb-3">
+    <!-- <div class="px-3 mb-3">
       <b-input-group>
         <b-form-checkbox
           :checked="isEnabled"
@@ -15,10 +15,10 @@
           Update {{ isEnabled ? 'Multiple Locations' : 'Single Location' }}
         </b-input-group-append>
       </b-input-group>
-    </div>
+    </div> -->
     <b-table
       :fields="['location', { key: 'name', tdClass: 'd-none' }]"
-      :items="locations"
+      :items="locationsArr"
       :filter="filter"
       :select-mode="isEnabled ? 'multi' : 'single'"
       selectable
@@ -33,9 +33,9 @@
           <h4 class="mb-0 text-gray-80 flex-grow-1">
             {{ item.properties.name }}
           </h4>
-          <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-70 p-1">
-            <b-progress-bar :value="60" variant="primary-70" />
-          </b-progress>
+          <!-- <b-progress :max="100" style="max-width: 30px; width: 30px;" class="align-self-center border border-primary-30 p-1">
+            <b-progress-bar :value="60" variant="primary-70" style="border-radius: 10px;" />
+          </b-progress> -->
         </div>
       </template>
     </b-table>
@@ -45,32 +45,46 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Locations from '~/mixins/locations'
-import Fields from '~/mixins/fields'
 export default {
-  mixins: [Locations, Fields],
+  mixins: [Locations],
   data () {
     return {
       filter: ''
     }
   },
-  computed: mapState({
-    projectId: state => state.projects.selectedProject.projectId,
-    isEnabled: state => state.bulk.isEnabled
-  }),
+  computed: {
+    ...mapState({
+      projectId: state => state.projects.selectedProject.projectId,
+      isEnabled: state => state.bulk.isEnabled,
+      selected: state => state.selected.selected
+    }),
+    locationsArr () {
+      return Object.values(this.locations)
+    }
+  },
   methods: {
     ...mapActions({
       toggleBulkMode: 'bulk/toggleBulkMode',
-      setFields: 'fields/setFields'
+      setFields: 'fields/setFields',
+      setSelected: 'locations/setSelected'
     }),
-    onLocationSelect (selectedLocations) {
-      this.updateSelectedLocations({ selectedLocations })
-      // need to access vertical
-      this.setCategories({ vertical: 'mf', corp: false })
-      this.setFields({ projectId: this.projectId, locationId: selectedLocations[0].locationId })
+    getSelectedIds (selected) {
+      return selected.reduce((acc, curr) => {
+        acc.push(curr.locationId)
+        return acc
+      }, [])
+    },
+    onLocationSelect (selected) {
+      const selectedIds = this.getSelectedIds(selected)
+      const fieldsPayload = selectedIds.length > 0 && this.projectId
+        ? { projectId: this.projectId, locationId: selected[0].locationId }
+        : { projectId: null, locationId: null }
+      this.setSelected(selectedIds)
+      this.setFields(fieldsPayload)
     },
     updateBulkMode (val) {
       this.toggleBulkMode(val)
-      this.updateSelectedLocations({ selectedLocations: [] })
+      this.setSelected(null)
     }
   }
 }
@@ -92,10 +106,13 @@ export default {
 .table.b-table > tbody > .table-active,
 .table.b-table > tbody > .table-active > th,
 .table.b-table > tbody > .table-active > td {
-  background-color: #e3e3e3;
-  color: #2d8081;
+  background-color: var(--tertiary-30);
+  // background-color: #f7dddd;
+  color: var(--primary);
+  // color: #2d8081;
   // background-color: #4e6f96;
-  box-shadow: inset 10px 0 0 0 #2d8081;
+  box-shadow: inset 10px 0 0 0 var(--primary);
+  // box-shadow: inset 10px 0 0 0 #2d8081;
   // box-shadow: inset 10px 0 0 0 #6889b0;
 }
 </style>

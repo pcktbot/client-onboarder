@@ -53,7 +53,7 @@ $enable-gradients: false;
 $enable-transitions: true;
 $enable-print-styles: false;
 $bv-enable-table-stacked: false;
-$body-bg: white;
+$body-bg: #dfe7ed;
 // $body-bg: #304a69;
 
 // BOOTSTRAP VARIABLES DECLARED ABOVE
@@ -80,4 +80,28 @@ $body-bg: white;
 .btn.focus {
   outline: 0;
   box-shadow: none;
+}
+.global-checkbox {
+  & .custom-control-label::before {
+    width: 2rem;
+  }
+  & .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #256a6a;
+    background-color: #256a6a;
+  }
+  & .custom-control-label::after {
+    top: calc(0.25rem - 2px);
+    left: calc(-2.25rem - 2px);
+    width: calc(1rem + 4px);
+    height: calc(1rem + 4px);
+    box-shadow: 0 0 1px 1px rgba(37, 106, 107, 0.8);
+    border-radius: 50%;
+  }
+  & .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: white !important;
+    left: calc(-2rem - 2px);
+  }
+  & .custom-control-input:checked ~ .custom-control-label > span {
+    color: #256a6a;
+  }
 }
