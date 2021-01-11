@@ -37,13 +37,12 @@ const sequelize = new Sequelize(dbUrl, {
 })
 
 const updatableModels = require('@getg5/g5-updatable').models(sequelize)
-const db = {
-  ...updatableModels
-}
+const authModels = require('@getg5/g5-auth').models(sequelize)
 
-// db.user.associate = (models) => {
-//   models.user.hasMany(models.seoAssignment, { foreignKey: 'userId', sourceKey: 'id' })
-// }
+const db = {
+  ...updatableModels,
+  ...authModels
+}
 
 fs.readdirSync(__dirname)
   .filter(file => file.indexOf('.') !== 0 &&

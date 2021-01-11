@@ -54,7 +54,7 @@ app.use(async function (req, res, next) {
   next()
 })
 
-require('./controllers/queue')
+// require('./controllers/queue')
 require('./routes')(app)
 
 async function start () {
