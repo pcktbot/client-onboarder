@@ -33,7 +33,7 @@
             v-for="element in filteredList"
             :key="element.value"
             class="bg-white px-3 py-2 mb-2 d-flex align-items-center justify-content-between font-weight-bold"
-            style="cursor: grab; border-radius: 4px; box-shadow: 0 1px 1px #a8a8a8; border: 1px solid #a8a8a8;"
+            style="cursor: grab; border-radius: 4px; box-shadow: 0 0 5px #d8d8d8; border: 1px solid #a8a8a8;"
           >
             {{ element.text }}
           </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="accordion py-1 px-3" role="tablist">
-    <b-breadcrumb class="bg-white mb-3">
+    <!-- <b-breadcrumb class="bg-white mb-3">
       <b-breadcrumb-item
         v-for="(cat, i) in toBreadcrumb(categories)"
         :key="`bcrumb-${i}`"
@@ -11,7 +11,7 @@
           {{ cat.text }}
         </span>
       </b-breadcrumb-item>
-    </b-breadcrumb>
+    </b-breadcrumb> -->
     <b-card
       v-for="(cat, i) in categories"
       :key="`${prefix}-location-category-${i}`"

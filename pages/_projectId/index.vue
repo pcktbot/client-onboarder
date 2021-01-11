@@ -15,11 +15,19 @@
             <b-tabs v-model="currentTab" card>
               <b-tab title="Edit Location" title-link-class="p-4 text-uppercase text-muted font-weight-bold">
                 <accordion-wrapper v-if="categories.length > 0" />
+                <div v-else>
+                  Please select a location to get started.
+                </div>
               </b-tab>
               <b-tab title="Upload Assets" title-link-class="p-4 text-uppercase text-muted font-italic">
-                <b-btn @click="openCldWidget">
+                <b-btn
+                  class="px-4 py-3"
+                  @click="openCldWidget"
+                >
+                  <b-icon-cloud-upload-fill />
                   Upload
                 </b-btn>
+                <!-- <cld-assets /> -->
               </b-tab>
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
                 <flatten-test :items="fields" />
@@ -60,8 +68,33 @@ export default {
     createCldWidget () {
       const newWidget = cloudinary.createUploadWidget({
         cloudName: 'stratypus',
+        uploadPreset: 'qwdptiki',
+        showAdvancedOptions: true,
+        cropping: true,
         multiple: true,
-        maxFiles: 10
+        maxFiles: 10,
+        styles: {
+          palette: {
+            window: "#dfe7ed",
+            windowBorder: "#63798a",
+            tabIcon: "#0078FF",
+            menuIcons: "#6989b0",
+            textDark: "#000000",
+            textLight: "#FFFFFF",
+            link: "#2c8081",
+            action: "#2c8081",
+            inactiveTabIcon: "#ababab",
+            error: "#be2350",
+            inProgress: "#e2b632",
+            complete: "#006b2a",
+            sourceBg: "#E4EBF1"
+          },
+          fonts: {
+            default: {
+                active: true
+            }
+          }
+        }
       },
       (err, res) => {
         if (!err && res && res.event === 'success') {
