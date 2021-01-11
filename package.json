@@ -26,6 +26,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@getg5/g5-auth": "^2.0.9",
     "@getg5/g5-updatable": "^2.3.0",
     "@nuxtjs/axios": "^5.12.4",
     "@nuxtjs/cloudinary": "^1.0.1",
