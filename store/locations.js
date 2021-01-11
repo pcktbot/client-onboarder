@@ -29,6 +29,9 @@ export const actions = {
   },
   updateSelected ({ commit }, data) {
     commit('UPDATE_SELECTED_LOCATION', data)
+  },
+  updatePropObj ({ commit }, data) {
+    commit('UPDATE_SELECTED_PROP_OBJ', data)
   }
 }
 

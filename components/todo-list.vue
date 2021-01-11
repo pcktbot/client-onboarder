@@ -10,9 +10,8 @@
     >
       <b-input-group>
         <b-form-input
-          :value="items[i]"
-          style="border-width: 2px;"
-          @input="update(i, $event)"
+          :value="item"
+          @input="onInput($event, i)"
         />
         <b-input-group-append>
           <b-btn
@@ -31,7 +30,6 @@
       <b-icon-plus />
       Add
     </b-btn>
-    <!-- {{ items }} -->
   </div>
 </template>
 
@@ -55,21 +53,22 @@ export default {
   },
   data () {
     return {
-      defaultItem () {
-        return ''
-      }
     }
   },
   methods: {
-    update (i, evt) {
-      this.items[i] = evt
-      this.$emit('input', i, this.field.dataKey, evt)
+    onInput (val, index) {
+      const copy = [...this.items]
+      copy[index] = val
+      this.$emit('change', { key: this.field, val: copy })
     },
     add () {
-      this.items.push(this.defaultItem())
+      const val = [...this.items, '']
+      this.$emit('change', { key: this.field, val })
     },
     remove (i) {
-      this.items.splice(i, 1)
+      const val = [...this.items]
+      val.splice(i, 1)
+      this.$emit('change', { key: this.field, val })
     }
   }
 }
