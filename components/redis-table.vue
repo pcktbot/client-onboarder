@@ -147,12 +147,12 @@
         </b-progress>
       </template>
       <template v-slot:cell(processedOn)="data">
-        <!-- {{ processTime(data.value) }} -->
-        {{ data.value }}
+        {{ processTime(data.value) }}
+        <!-- {{ data.value }} -->
       </template>
       <template v-slot:cell(finishedOn)="data">
-        <!-- {{ processTime(data.value) }} -->
-        {{ data.value }}
+        {{ processTime(data.value) }}
+        <!-- {{ data.value }} -->
       </template>
       <template v-slot:cell(actions)="row">
         <b-btn-group class="w-100 d-flex">

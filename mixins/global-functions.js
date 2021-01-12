@@ -6,16 +6,17 @@ export default {
   computed: {
   },
   methods: {
-    titleCase(str) {
+    titleCase (str) {
       return str.replace(/_/g, ' ').toLowerCase().split(' ').map((word) => {
         return (`${word.charAt(0).toUpperCase()}${word.slice(1)}`)
       }).join(' ')
     },
-    processTime(val) {
+    processTime (val) {
       const date = new Date(val)
-      return new Intl.DateTimeFormat('en-US').format(date)
+      return date.toLocaleDateString()
+      // return new Intl.DateTimeFormat('en-US').format(date)
     },
-    validURL(string) {
+    validURL (string) {
       let url
       try {
         url = new URL(string)
