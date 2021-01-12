@@ -41,7 +41,17 @@ module.exports = (app) => {
   })
 
   app.post('/api/v1/hub/clients', async (req, res) => {
-    const { name, branded_name, city, country, domain, state, vertical, domain_type } = req.body
+    const {
+      name,
+      branded_name,
+      city,
+      country,
+      domain,
+      state,
+      vertical,
+      domain_type
+    } = req.body
+
     const client = {
       name,
       properties: {

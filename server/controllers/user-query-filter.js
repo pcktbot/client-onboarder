@@ -1,5 +1,5 @@
 class UserPermissionFilter {
-  constructor(query, rootModel, sequelize, Sequelize) {
+  constructor (query, rootModel, sequelize, Sequelize) {
     this.query = query
     this.rootModel = rootModel
     this.sequelize = sequelize
@@ -7,14 +7,18 @@ class UserPermissionFilter {
     this.Op = Sequelize.Op
     this.isGlobalUser = false
     this.userPerms = { clientUrn: [], locationUrn: [] }
-    this.userFilterModelNames = ['location', 'g5_updatable_client', 'g5_updatable_location']
+    this.userFilterModelNames = [
+      'location',
+      'g5_updatable_client',
+      'g5_updatable_location'
+    ]
     this.mapUpdatables = {
       'G5Updatable::Client': 'clientUrn',
       'G5Updatable::Location': 'locationUrn'
     }
   }
 
-  modifyQuery() {
+  modifyQuery () {
     if (this.query.userRoles) {
       this.getAllowedUrns()
       this.query = this.addUserPermFilter(this.rootModel.name, this.query)
@@ -25,7 +29,7 @@ class UserPermissionFilter {
     return this.query
   }
 
-  getAllowedUrns() {
+  getAllowedUrns () {
     this.query.userRoles.forEach((r) => {
       if (r.type === 'GLOBAL') {
         this.isGlobalUser = true
@@ -35,14 +39,14 @@ class UserPermissionFilter {
     })
   }
 
-  addUserPermFilter(modelName = this.rootModel.name, query) {
+  addUserPermFilter (modelName = this.rootModel.name, query) {
     if (this.userFilterModelNames.includes(modelName)) {
       query.where = this.addClientLocationFilter(query.where)
     }
     return query
   }
 
-  addClientLocationFilter(where) {
+  addClientLocationFilter (where) {
     if (!where) {
       where = {}
     }
@@ -60,7 +64,7 @@ class UserPermissionFilter {
     return where
   }
 
-  traverseAndReplace(query) {
+  traverseAndReplace (query) {
     for (const k in query) {
       if (k === 'model') {
         const modelName = query[k].name
