@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid style="max-width: 1400px; margin-top: 160px;">
+  <b-container fluid class="bg-white" style="max-width: 1400px; margin-top: 160px;">
     <top-nav :show="true">
       <b-btn
         variant="outline-secondary-20"
@@ -7,7 +7,7 @@
         size="sm"
         class="mr-2"
       >
-        Dev
+        Intake
       </b-btn>
       <b-btn
         variant="outline-secondary-20"
@@ -15,14 +15,7 @@
         size="sm"
         class="mr-2"
       >
-        Queues and Jobs
-      </b-btn>
-      <b-btn
-        variant="outline-secondary-20"
-        size="sm"
-        to="/intake/asset-scraper"
-      >
-        Asset Scraper
+        Queues
       </b-btn>
       <template v-slot:secondary-nav>
         <div class="d-flex mb-0 align-items-center justify-content-between w-100">
