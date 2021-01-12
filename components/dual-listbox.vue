@@ -117,7 +117,7 @@ export default {
         return this.fieldData
       },
       set (value) {
-        this.$emit('change', { val: value, key: this.field.dataKey })
+        this.$emit('change', { val: value, field: this.field })
       }
     },
     filteredList () {
@@ -148,14 +148,14 @@ export default {
         id
       }
       const val = [...this.myList, item]
-      this.$emit('change', { val, key: this.field.dataKey })
+      this.$emit('change', { val, field: this.field })
       this.addInput = ''
     },
     removeAt (id) {
       const index = this.myList.findIndex(item => item.id === id)
       const val = [...this.myList]
       val.splice(index, 1)
-      this.$emit('change', { val, key: this.field.dataKey })
+      this.$emit('change', { val, field: this.field })
     },
     camelize (str) {
       return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {

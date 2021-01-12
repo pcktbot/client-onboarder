@@ -27,65 +27,7 @@
           class="mr-2"
           style="flex: 1 1 auto;"
         >
-          <template v-slot:label>
-            {{ item.label }}
-            <b-icon-info-circle
-              v-if="item.description"
-              v-b-tooltip.click.v-tertiary-70="item.description"
-              variant="secondary-30"
-              style="cursor: pointer;"
-            />
-          </template>
-          <checkbox-group-expanded
-            v-if="item.component === 'checkbox-group-expanded'"
-            :field="item"
-          />
-          <dual-listbox
-            v-else-if="item.component === 'dual-listbox'"
-            :field="item"
-          />
-          <b-input-group
-            v-else-if="item.component === 'checkbox'"
-          >
-            <b-form-checkbox
-              switch
-              class="global-checkbox"
-            />
-            <b-input-group-append class="d-flex text-gray-60 align-items-baseline mt-1 px-3">
-              {{ item.settings.options }}
-            </b-input-group-append>
-          </b-input-group>
-          <b-form-textarea
-            v-else-if="item.component === 'text-area'"
-            rows="3"
-          />
-          <todo-list
-            v-else-if="item.component === 'todo-list'"
-          />
-          <span
-            v-else-if="item.component === 'select'"
-            class="section-group"
-          >
-            <b-form-select
-              :id="item.dataKey"
-              :options="item.settings ? item.settings.options : []"
-              class="section-group__select"
-            />
-            <span class="section-group__caret">
-              <b-icon-chevron-down
-                variant="gray-80"
-              />
-            </span>
-          </span>
-          <b-form-input
-            v-else-if="item.component === 'input'"
-            :type="item.type"
-            :placeholder="item.placeholder"
-            class="section-input"
-          />
-          <div v-else>
-            {{ item }}
-          </div>
+          <field-template v-bind="{ f: item }" />
         </b-form-group>
       </template>
     </b-table>

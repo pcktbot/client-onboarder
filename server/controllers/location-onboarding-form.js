@@ -45,7 +45,8 @@ class LocationOnboardingForm {
         {
           model: models.field
         }
-      ]
+      ],
+      order: [['fields', 'id']]
     })
   }
 

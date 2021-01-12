@@ -7,7 +7,7 @@
         :checked="isChecked(f.value)"
         switch
         class="ml-3 global-checkbox font-weight-bold"
-        @change="onChange(field.dataKey, f.value, $event)"
+        @change="onChange(f.value, $event)"
       >
         {{ f.text }}
       </b-form-checkbox>
@@ -49,18 +49,18 @@ export default {
     isChecked (prop) {
       return !!((this.fieldData[prop] || Array.isArray(this.fieldData[prop])))
     },
-    onChange (property, key, val) {
+    onChange (key, val) {
       if (key === 'other') {
         val = val ? [] : false
       }
       const replacement = Object.assign({}, this.fieldData)
       replacement[key] = val
-      this.$emit('change', { key: property, val: replacement })
+      this.$emit('change', { val: replacement, field: this.field })
     },
     onInput (val) {
       const replacement = Object.assign({}, this.fieldData)
       replacement.other = val.trim().split(',')
-      this.$emit('change', { key: this.field.dataKey, val: replacement })
+      this.$emit('change', { val: replacement, field: this.field })
     }
   }
 }

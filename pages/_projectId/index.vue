@@ -22,7 +22,7 @@
                 </b-btn>
               </b-tab>
               <b-tab title="All Fields" title-link-class="p-4 text-uppercase text-muted font-weight-bold" lazy>
-                <flatten-test :items="fields" />
+                <field-table :items="fields" />
               </b-tab>
             </b-tabs>
           </b-card>

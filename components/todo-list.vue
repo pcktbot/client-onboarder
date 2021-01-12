@@ -4,7 +4,7 @@
     style="border: 1px solid #c1c1c1; border-radius: 10px;"
   >
     <div
-      v-for="(item, i) in items"
+      v-for="(item, i) in fieldData"
       :key="`${field.dataKey}-${i}`"
       class="mb-3"
     >
@@ -44,7 +44,7 @@ export default {
         }
       }
     },
-    items: {
+    fieldData: {
       type: Array,
       default () {
         return ['']
@@ -57,18 +57,18 @@ export default {
   },
   methods: {
     onInput (val, index) {
-      const copy = [...this.items]
+      const copy = [...this.fieldData]
       copy[index] = val
-      this.$emit('change', { key: this.field, val: copy })
+      this.$emit('change', { val: copy, field: this.field })
     },
     add () {
-      const val = [...this.items, '']
-      this.$emit('change', { key: this.field, val })
+      const val = [...this.fieldData, '']
+      this.$emit('change', { val, field: this.field })
     },
     remove (i) {
-      const val = [...this.items]
+      const val = [...this.fieldData]
       val.splice(i, 1)
-      this.$emit('change', { key: this.field, val })
+      this.$emit('change', { val, field: this.field })
     }
   }
 }
