@@ -100,7 +100,7 @@
 
 <script>
 import cloudinaryMixin from '~/mixins/cld'
-import Locations from '~/mixins/locations'
+import Locations from '~/mixins/locationsOld'
 export default {
   mixins: [cloudinaryMixin, Locations],
   data() {

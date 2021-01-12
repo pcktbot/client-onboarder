@@ -52,7 +52,7 @@
 
 <script>
 import States from '~/mixins/states'
-import Locations from '~/mixins/locations'
+import Locations from '~/mixins/locationsOld'
 import GlobalFunctions from '~/mixins/global-functions'
 export default {
   mixins: [States, Locations, GlobalFunctions],

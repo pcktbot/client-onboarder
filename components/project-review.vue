@@ -50,7 +50,7 @@
 import LocationAmenities from '~/components/location-review/location-amenities'
 import LocationAssets from '~/components/location-review/location-assets'
 import LocationDetails from '~/components/location-review/location-details'
-import Locations from '~/mixins/locations'
+import Locations from '~/mixins/locationsOld'
 export default {
   components: {
     LocationAmenities,
