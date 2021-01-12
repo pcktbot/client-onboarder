@@ -5,19 +5,19 @@ export default {
   },
   computed: {
     ...mapState({
-      locations: state => state.locations.locations,
-      projectId: state => state.locations.projectId,
-      selectedLocation: state => state.locations.selectedLocation
+      locations: state => state.locationsOld.locations,
+      projectId: state => state.locationsOld.projectId,
+      selectedLocation: state => state.locationsOld.selectedLocation
     })
   },
   methods: {
     ...mapActions({
-      setSelectedLocation: 'locations/set',
-      setLocations: 'locations/init',
-      updateLocationProp: 'locations/updateLocationProp',
-      updateScraper: 'locations/updateScraper',
-      updateTemplate: 'locations/updateTemplate',
-      updateLocation: 'locations/updateLocation'
+      setSelectedLocation: 'locationsOld/set',
+      setLocations: 'locationsOld/init',
+      updateLocationProp: 'locationsOld/updateLocationProp',
+      updateScraper: 'locationsOld/updateScraper',
+      updateTemplate: 'locationsOld/updateTemplate',
+      updateLocation: 'locationsOld/updateLocation'
     }),
     locationById(locationId) {
       return this.locations.length > 0
@@ -35,12 +35,10 @@ export default {
       }
     },
     async saveLocation (projectId, locationId, body) {
-      await this.$axios
-        .$put(`/api/v1/projects/${projectId}/locations/${locationId}`, body)
+      await this.$axios.$put(`/api/v1/projects/${projectId}/locations/${locationId}`, body)
     },
     async saveLocations (projectId, locations) {
-      await this.$axios
-        .$put(`/api/v1/projects/${projectId}/locations`, locations)
+      await this.$axios.$put(`/api/v1/projects/${projectId}/locations`, locations)
     }
   }
 }

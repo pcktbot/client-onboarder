@@ -29,7 +29,7 @@
 export default {
   computed: {
     project () {
-      return this.$store.state.pDprojects.selectedProject
+      return this.$store.state.projects.selectedProject
     }
   }
 }

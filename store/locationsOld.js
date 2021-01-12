@@ -1,4 +1,4 @@
-import { scrapeDetails } from './../mixins/asset-scraper'
+import { scrapeDetails } from '../mixins/asset-scraper'
 export const state = () => ({
   locations: [],
   projectId: null,

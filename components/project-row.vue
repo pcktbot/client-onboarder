@@ -181,7 +181,7 @@
 
 <script>
 import LinkDiscoverer from '~/mixins/link-discoverer'
-import Locations from '~/mixins/locations'
+import Locations from '~/mixins/locationsOld'
 import Projects from '~/mixins/projects'
 import GlobalFunctions from '~/mixins/global-functions'
 import Clients from '~/mixins/clients'

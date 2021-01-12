@@ -2,13 +2,14 @@ export const state = () => ({
   locations: {},
   selected: []
 })
+
 export const getters = {}
 
 export const actions = {
   async init ({ commit }, projectId) {
     try {
-      const locations = await this.$axios
-        .$get(`/api/v1/projects/${projectId}/locations`)
+      const locations = await this.$axios.$get(`/api/v1/projects/${projectId}/locations`)
+
       const updatedLocations = locations.reduce((acc, curr) => {
         acc[curr.locationId] = {
           ...curr,
